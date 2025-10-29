@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+title: Bivariate Trajectory–Undercurrent Theory (BTUT)
+message: "If you use this work, please cite it as below."
+type: software
+authors:
+  - family-names: Kumaratilleke
+    given-names: Diren
+    affiliation: University of North Carolina at Chapel Hill
+repository-code: https://github.com/DirenKumaratilleke/BTUT
+license: Research / Academic Use
+version: 1.0.0
+date-released: 2025-10-17
+identifiers:
+  - type: doi
+    value: 10.0000/btut2025
+keywords:
+  - game theory
+  - kernel systems
+  - dynamic equilibrium
+  - scalable computation
+  - DARPA challenge 13
+
+
+
