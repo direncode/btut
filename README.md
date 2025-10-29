@@ -2,7 +2,7 @@
 [![BTUT Automated Validation](https://github.com/direnk/btut-darpa-submission/actions/workflows/btut_autotest.yml/badge.svg?branch=main)](https://github.com/direnk/btut-darpa-submission/actions/workflows/btut_autotest.yml)
 ![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
 ![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg)
-![Last Updated](https://img.shields.io/github/last-commit/direnk/btut-darpa-submission)
+![Last Updated](https://img.shields.io/github/last-commit/direnk/btut)
 
 # Bivariate Trajectory–Undercurrent Theory (BTUT)
 DARPA Mathematical Challenge 13 Submission  
@@ -86,6 +86,7 @@ python btut_random_sweep.py --nodes 10000 --seed 42 --kernel_tau 0.5 --latent_sc
 
 ### Export All Results
 zip -r BTUT_results_$(date +%Y%m%d_%H%M%S).zip results diagnostics
+
 
 
 
