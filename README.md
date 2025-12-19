@@ -44,11 +44,13 @@ Ideal for modeling emergent cooperation in:
 ## Developed by
 
 Diren Kumaratilleke  
-University of North Carolina at Chapel Hill (Class of 2029)  
+Independent Researcher
+University of North Carolina at Chapel Hill 
 
 AI-assisted development via Grok-4 (xAI) and GPT models.
 
 **License**: MIT  
+
 
 
 
