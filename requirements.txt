@@ -3,5 +3,8 @@ matplotlib>=3.8.0
 pillow>=9.0.0
 scipy>=1.11.0
 pandas>=2.1.0
-
-
+fastplotlib
+networkx
+plotly
+kaleido
+streamlit
