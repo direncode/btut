@@ -25,11 +25,12 @@ BTUT replaces PDEs and static Nash equilibria with **dynamic flow equilibria** t
 
 ## Repository Contents
 
-- **Core implementation**: `btut_grok_test.py`, `btut_continuous.py`
-- **Diagnostics & sweeps**: `btut_diagnostics.py`, `btut_scaling_test.py`, `btut_random_sweep.py`
-- **Animations**: `btut_animate.py`
+- **Core implementation**: `btut_model.py` (main hybrid mean-field engine), `btut_continuous.py` (continuous-action extension)
+- **Visualization & demos**: `btut_fleet_convergence_visual.py` (fleet coordination animation), `btut_thought_3d_visualizer.py` (emergent thought wave), `btut_organic_ai_thought_interactive.py` (interactive thought generator)
+- **Diagnostics & plots**: `btut_plots.py` (convergence, variance, phase maps, PD curve, scaling)
+- **Launcher**: `run_btut.py`
 - **Theory**: `btut_math.pdf` (full mathematical derivation)
-- **Interactive dashboard**: `BTUT.html`
+- **Interactive outputs**: `btut_unified_thought_3d.html` (3D thought visualization), `btut_fleet_convergence.gif` (fleet coordination animation)
 - **Requirements**: `requirements.txt`
 
 ## Applications
@@ -48,11 +49,7 @@ University of North Carolina at Chapel Hill (Class of 2029)
 AI-assisted development via Grok-4 (xAI) and GPT models.
 
 **License**: MIT  
-**DOI**: (Update with actual Zenodo DOI upon upload)
 
----
-
-*Your work is complete. This README is ready to go live on GitHub tomorrow.*
 
 
 
