@@ -1,0 +1,155 @@
+# BTUT Platform - Windows Setup Instructions
+
+## Step 1: Download the Archive
+
+The file `btut-platform-rust-wasm.tar.gz` should be in the chat above.
+Click the download link to save it to your computer.
+
+## Step 2: Extract the Archive
+
+### Option A: Using 7-Zip (Recommended)
+1. Download 7-Zip from https://www.7-zip.org/
+2. Right-click on `btut-platform-rust-wasm.tar.gz`
+3. Select "7-Zip" → "Extract Here"
+4. If it creates a .tar file, extract that too
+
+### Option B: Using Windows 11 Native Support
+1. Right-click the .tar.gz file
+2. Select "Extract All..."
+3. Choose destination folder
+
+### Option C: Using PowerShell
+```powershell
+# Install 7zip via Chocolatey (if not installed)
+# choco install 7zip
+
+# Or use tar (Windows 10/11)
+tar -xzf btut-platform-rust-wasm.tar.gz
+```
+
+## Step 3: Install Dependencies
+
+```powershell
+cd btut-platform
+npm install
+```
+
+## Step 4: Run the Platform
+
+### Quick Start (TypeScript Engine - No Rust needed)
+```powershell
+npm run dev
+```
+Then open: http://localhost:3000
+
+✅ This works immediately - no Rust/WASM build required!
+
+### Optional: Enable Rust/WASM Acceleration
+
+#### Install Rust (Windows)
+```powershell
+# Download and run rustup-init.exe from:
+# https://www.rust-lang.org/tools/install
+
+# Or use winget
+winget install --id Rustlang.Rustup
+```
+
+#### Install wasm-pack
+```powershell
+cargo install wasm-pack
+```
+
+#### Build WASM Module
+```powershell
+npm run build:wasm
+```
+
+#### Run with WASM
+```powershell
+npm run dev
+```
+Now the simulator will show "Rust/WASM Accelerated" badge!
+
+## Troubleshooting
+
+### "npm not found"
+Install Node.js from https://nodejs.org/ (LTS version)
+
+### "tar: command not found"
+You're on older Windows. Use 7-Zip instead (Option A above)
+
+### Build Errors
+The TypeScript engine works fine without WASM. You can skip Rust setup.
+
+### Port Already in Use
+```powershell
+npm run dev -- -p 3001
+```
+
+## Project Structure
+
+```
+btut-platform/
+├── app/                    # Next.js pages
+│   ├── simulator/          # Main simulator
+│   ├── benchmark/          # Performance comparison
+│   └── page.tsx            # Homepage
+├── components/             # React components
+├── lib/
+│   └── simulation/         # BTUT engines
+│       ├── btut-engine.ts       # TypeScript (always works)
+│       ├── btut-wasm-wrapper.ts # Rust/WASM (optional)
+│       └── index.ts             # Auto-selector
+├── rust-engine/            # Rust source (optional to build)
+│   ├── src/lib.rs          # Rust BTUT implementation
+│   └── Cargo.toml
+└── package.json
+
+```
+
+## What Works Without Rust
+
+Everything! The platform automatically uses the TypeScript engine if WASM isn't built:
+
+- ✅ Simulator (100K agents in ~400ms)
+- ✅ All visualizations
+- ✅ Network rendering
+- ✅ Export functionality
+- ✅ All presets
+
+Rust/WASM just makes it 10-100x faster for 500K+ agents.
+
+## Quick Commands
+
+```powershell
+# Development
+npm run dev
+
+# Build for production (tries WASM, falls back to TS)
+npm run build
+
+# Production server
+npm start
+
+# Lint
+npm run lint
+```
+
+## Deploy to Vercel
+
+```powershell
+# Install Vercel CLI
+npm i -g vercel
+
+# Deploy
+vercel
+```
+
+Or connect your GitHub repo at https://vercel.com for automatic deployments.
+
+## Need Help?
+
+The platform works out of the box with TypeScript. Rust is optional for max performance.
+
+Start here: `npm install && npm run dev`

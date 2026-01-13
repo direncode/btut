@@ -1,0 +1,8 @@
+# Rust
+/rust-engine/target/
+/rust-engine/Cargo.lock
+/rust-engine/pkg/
+
+# WASM build outputs
+/public/wasm/
+/lib/simulation/btut-wasm.d.ts
