@@ -146,7 +146,7 @@ export default function SimulatorPage() {
                   ) : (
                     <>
                       <Play className="w-5 h-5" />
-                      {state?.iteration > 0 ? 'Resume' : 'Run'}
+                      {(state?.iteration ?? 0) > 0 ? 'Resume' : 'Run'}
                     </>
                   )}
                 </button>
