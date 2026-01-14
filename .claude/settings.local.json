@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(wasm-pack build:*)",
+      "Bash(npm run build:*)"
+    ]
+  }
+}

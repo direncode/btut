@@ -1,7 +1,19 @@
+// BTUT - Bivariate Trajectory-Undercurrent Theory
+// Production-grade O(N) multi-agent coordination engine
+// DARPA Challenge 13 Solution
+
 use wasm_bindgen::prelude::*;
 use serde::{Deserialize, Serialize};
 use rand::prelude::*;
 use rand::rngs::SmallRng;
+
+mod core;
+mod agents;
+mod convergence;
+
+pub use core::{BTUTConfig, compute_expected_utilities, kernel_weight, mean_field_update, check_convergence};
+pub use agents::{Agent, Strategy, NetworkTopology, AgentStats};
+pub use convergence::{ConvergenceDetector, ConvergenceMetrics, AdaptiveConvergenceDetector};
 
 #[wasm_bindgen]
 extern "C" {
@@ -11,15 +23,6 @@ extern "C" {
 
 macro_rules! console_log {
     ($($t:tt)*) => (log(&format_args!($($t)*).to_string()))
-}
-
-#[derive(Serialize, Deserialize, Clone)]
-pub struct Agent {
-    pub id: usize,
-    pub degree: f64,
-    pub weight: f64,
-    pub strategy: u8, // 0 = B, 1 = A
-    pub utility: f64,
 }
 
 #[wasm_bindgen]
@@ -171,7 +174,7 @@ impl BTUTSimulator {
                 1.0
             };
 
-            let strategy = if self.rng.gen::<f64>() > 0.5 { 1 } else { 0 };
+            let strategy = if self.rng.gen::<f64>() > 0.5 { Strategy::A } else { Strategy::B };
 
             self.agents.push(Agent {
                 id,
@@ -220,7 +223,7 @@ impl BTUTSimulator {
         for agent in &mut self.agents {
             let u_a = agent.weight * agent.degree * mix * (eu_pd_a + eu_hd_a + eu_sh_a);
             let u_b = agent.weight * agent.degree * mix * (eu_pd_b + eu_hd_b + eu_sh_b);
-            agent.utility = if agent.strategy == 1 { u_a } else { u_b };
+            agent.utility = if agent.strategy == Strategy::A { u_a } else { u_b };
         }
 
         (eu_pd_a + eu_hd_a + eu_sh_a, eu_pd_b + eu_hd_b + eu_sh_b)
@@ -229,22 +232,34 @@ impl BTUTSimulator {
     fn update_strategies(&mut self) {
         let (u_a_total, u_b_total) = self.compute_utilities();
 
-        let mut count_a = 0usize;
+        let mut weighted_a = 0.0;
+        let mut total_weight = 0.0;
+
         for agent in &mut self.agents {
-            let choose_a = u_a_total * agent.weight * agent.degree 
-                > u_b_total * agent.weight * agent.degree;
-            
-            if choose_a {
-                agent.strategy = 1;
-                count_a += 1;
+            let agent_u_a = u_a_total * agent.weight * agent.degree;
+            let agent_u_b = u_b_total * agent.weight * agent.degree;
+
+            let new_strategy = if agent_u_a > agent_u_b {
+                Strategy::A
             } else {
-                agent.strategy = 0;
+                Strategy::B
+            };
+
+            agent.strategy = new_strategy;
+
+            if new_strategy == Strategy::A {
+                weighted_a += agent.weight;
             }
+            total_weight += agent.weight;
         }
 
-        let p_new = count_a as f64 / self.agents.len() as f64;
+        let p_new = if total_weight > 0.0 {
+            weighted_a / total_weight
+        } else {
+            self.p
+        };
 
-        // Momentum update
+        // Momentum update for stability
         self.p = 0.5 * self.p + 0.5 * p_new;
         self.history.push(self.p);
     }
@@ -259,7 +274,7 @@ impl BTUTSimulator {
             convergence_history: self.history.clone(),
             is_complete: self.history.len() >= self.config.iterations,
             agent_count: self.agents.len(),
-            strategy_a_count: self.agents.iter().filter(|a| a.strategy == 1).count(),
+            strategy_a_count: self.agents.iter().filter(|a| a.strategy == Strategy::A).count(),
         };
 
         serde_wasm_bindgen::to_value(&state).unwrap()
@@ -277,7 +292,7 @@ impl BTUTSimulator {
             convergence_history: self.history.clone(),
             is_complete: true,
             agent_count: self.agents.len(),
-            strategy_a_count: self.agents.iter().filter(|a| a.strategy == 1).count(),
+            strategy_a_count: self.agents.iter().filter(|a| a.strategy == Strategy::A).count(),
         };
 
         console_log!("Simulation complete: p* = {:.6}", self.p);
@@ -301,7 +316,7 @@ impl BTUTSimulator {
             convergence_history: self.history.clone(),
             is_complete: self.history.len() >= self.config.iterations,
             agent_count: self.agents.len(),
-            strategy_a_count: self.agents.iter().filter(|a| a.strategy == 1).count(),
+            strategy_a_count: self.agents.iter().filter(|a| a.strategy == Strategy::A).count(),
         };
 
         serde_wasm_bindgen::to_value(&state).unwrap()

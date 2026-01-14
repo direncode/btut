@@ -35,7 +35,7 @@ export default function MetricsPanel({ state, config }: MetricsPanelProps) {
       hubCount,
       hubPercentage: hubPercentage.toFixed(1),
       avgDegree: (state.agents.reduce((sum, a) => sum + a.degree, 0) / state.agents.length).toFixed(2),
-      throughput: ((config.N * state.iteration) / (state.runtime / 1000 || 1)).toFixed(0),
+      throughput: ((config.N * state.iteration) / ((state.runtime || 1000) / 1000)).toFixed(0),
     }
   }
 

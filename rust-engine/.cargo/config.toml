@@ -1,8 +1,6 @@
 [target.wasm32-unknown-unknown]
 rustflags = [
-  "-C", "opt-level=3",
-  "-C", "lto=fat",
-  "-C", "codegen-units=1",
+  "-C", "opt-level=s",
 ]
 
 [build]
