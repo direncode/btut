@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  BTUT-SUMO Example Network: 5x5 Urban Grid
+
+  Grid of 25 intersections connected by two-lane roads.
+  Suitable for testing vehicle coordination at scale.
+-->
+<net version="1.16" junctionCornerDetail="5" limitTurnSpeed="5.50" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/net_file.xsd">
+
+    <location netOffset="0.00,0.00" convBoundary="0.00,0.00,400.00,400.00" origBoundary="-10000000000.00,-10000000000.00,10000000000.00,10000000000.00" projParameter="!"/>
+
+    <!-- Edge Types -->
+    <type id="urban_road" priority="3" numLanes="2" speed="13.89" allow="passenger"/>
+
+    <!-- Junctions (5x5 grid at 100m spacing) -->
+    <junction id="J00" type="traffic_light" x="0.00" y="0.00" incLanes="" intLanes="" shape="-4.80,-4.80 4.80,-4.80 4.80,4.80 -4.80,4.80"/>
+    <junction id="J01" type="traffic_light" x="100.00" y="0.00" incLanes="" intLanes="" shape="95.20,-4.80 104.80,-4.80 104.80,4.80 95.20,4.80"/>
+    <junction id="J02" type="traffic_light" x="200.00" y="0.00" incLanes="" intLanes="" shape="195.20,-4.80 204.80,-4.80 204.80,4.80 195.20,4.80"/>
+    <junction id="J03" type="traffic_light" x="300.00" y="0.00" incLanes="" intLanes="" shape="295.20,-4.80 304.80,-4.80 304.80,4.80 295.20,4.80"/>
+    <junction id="J04" type="traffic_light" x="400.00" y="0.00" incLanes="" intLanes="" shape="395.20,-4.80 404.80,-4.80 404.80,4.80 395.20,4.80"/>
+
+    <junction id="J10" type="traffic_light" x="0.00" y="100.00" incLanes="" intLanes="" shape="-4.80,95.20 4.80,95.20 4.80,104.80 -4.80,104.80"/>
+    <junction id="J11" type="traffic_light" x="100.00" y="100.00" incLanes="" intLanes="" shape="95.20,95.20 104.80,95.20 104.80,104.80 95.20,104.80"/>
+    <junction id="J12" type="traffic_light" x="200.00" y="100.00" incLanes="" intLanes="" shape="195.20,95.20 204.80,95.20 204.80,104.80 195.20,104.80"/>
+    <junction id="J13" type="traffic_light" x="300.00" y="100.00" incLanes="" intLanes="" shape="295.20,95.20 304.80,95.20 304.80,104.80 295.20,104.80"/>
+    <junction id="J14" type="traffic_light" x="400.00" y="100.00" incLanes="" intLanes="" shape="395.20,95.20 404.80,95.20 404.80,104.80 395.20,104.80"/>
+
+    <junction id="J20" type="traffic_light" x="0.00" y="200.00" incLanes="" intLanes="" shape="-4.80,195.20 4.80,195.20 4.80,204.80 -4.80,204.80"/>
+    <junction id="J21" type="traffic_light" x="100.00" y="200.00" incLanes="" intLanes="" shape="95.20,195.20 104.80,195.20 104.80,204.80 95.20,204.80"/>
+    <junction id="J22" type="traffic_light" x="200.00" y="200.00" incLanes="" intLanes="" shape="195.20,195.20 204.80,195.20 204.80,204.80 195.20,204.80"/>
+    <junction id="J23" type="traffic_light" x="300.00" y="200.00" incLanes="" intLanes="" shape="295.20,195.20 304.80,195.20 304.80,204.80 295.20,204.80"/>
+    <junction id="J24" type="traffic_light" x="400.00" y="200.00" incLanes="" intLanes="" shape="395.20,195.20 404.80,195.20 404.80,204.80 395.20,204.80"/>
+
+    <junction id="J30" type="traffic_light" x="0.00" y="300.00" incLanes="" intLanes="" shape="-4.80,295.20 4.80,295.20 4.80,304.80 -4.80,304.80"/>
+    <junction id="J31" type="traffic_light" x="100.00" y="300.00" incLanes="" intLanes="" shape="95.20,295.20 104.80,295.20 104.80,304.80 95.20,304.80"/>
+    <junction id="J32" type="traffic_light" x="200.00" y="300.00" incLanes="" intLanes="" shape="195.20,295.20 204.80,295.20 204.80,304.80 195.20,304.80"/>
+    <junction id="J33" type="traffic_light" x="300.00" y="300.00" incLanes="" intLanes="" shape="295.20,295.20 304.80,295.20 304.80,304.80 295.20,304.80"/>
+    <junction id="J34" type="traffic_light" x="400.00" y="300.00" incLanes="" intLanes="" shape="395.20,295.20 404.80,295.20 404.80,304.80 395.20,304.80"/>
+
+    <junction id="J40" type="traffic_light" x="0.00" y="400.00" incLanes="" intLanes="" shape="-4.80,395.20 4.80,395.20 4.80,404.80 -4.80,404.80"/>
+    <junction id="J41" type="traffic_light" x="100.00" y="400.00" incLanes="" intLanes="" shape="95.20,395.20 104.80,395.20 104.80,404.80 95.20,404.80"/>
+    <junction id="J42" type="traffic_light" x="200.00" y="400.00" incLanes="" intLanes="" shape="195.20,395.20 204.80,395.20 204.80,404.80 195.20,404.80"/>
+    <junction id="J43" type="traffic_light" x="300.00" y="400.00" incLanes="" intLanes="" shape="295.20,395.20 304.80,395.20 304.80,404.80 295.20,304.80"/>
+    <junction id="J44" type="traffic_light" x="400.00" y="400.00" incLanes="" intLanes="" shape="395.20,395.20 404.80,395.20 404.80,404.80 395.20,404.80"/>
+
+    <!-- Horizontal Edges (East-West) -->
+    <!-- Row 0 -->
+    <edge id="E00_01" from="J00" to="J01" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E01_00" from="J01" to="J00" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E01_02" from="J01" to="J02" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E02_01" from="J02" to="J01" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E02_03" from="J02" to="J03" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E03_02" from="J03" to="J02" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E03_04" from="J03" to="J04" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E04_03" from="J04" to="J03" priority="3" numLanes="2" speed="13.89"/>
+
+    <!-- Row 1 -->
+    <edge id="E10_11" from="J10" to="J11" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E11_10" from="J11" to="J10" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E11_12" from="J11" to="J12" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E12_11" from="J12" to="J11" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E12_13" from="J12" to="J13" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E13_12" from="J13" to="J12" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E13_14" from="J13" to="J14" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E14_13" from="J14" to="J13" priority="3" numLanes="2" speed="13.89"/>
+
+    <!-- Row 2 -->
+    <edge id="E20_21" from="J20" to="J21" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E21_20" from="J21" to="J20" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E21_22" from="J21" to="J22" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E22_21" from="J22" to="J21" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E22_23" from="J22" to="J23" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E23_22" from="J23" to="J22" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E23_24" from="J23" to="J24" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E24_23" from="J24" to="J23" priority="3" numLanes="2" speed="13.89"/>
+
+    <!-- Row 3 -->
+    <edge id="E30_31" from="J30" to="J31" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E31_30" from="J31" to="J30" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E31_32" from="J31" to="J32" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E32_31" from="J32" to="J31" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E32_33" from="J32" to="J33" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E33_32" from="J33" to="J32" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E33_34" from="J33" to="J34" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E34_33" from="J34" to="J33" priority="3" numLanes="2" speed="13.89"/>
+
+    <!-- Row 4 -->
+    <edge id="E40_41" from="J40" to="J41" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E41_40" from="J41" to="J40" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E41_42" from="J41" to="J42" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E42_41" from="J42" to="J41" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E42_43" from="J42" to="J43" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E43_42" from="J43" to="J42" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E43_44" from="J43" to="J44" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E44_43" from="J44" to="J43" priority="3" numLanes="2" speed="13.89"/>
+
+    <!-- Vertical Edges (North-South) -->
+    <!-- Column 0 -->
+    <edge id="E00_10" from="J00" to="J10" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E10_00" from="J10" to="J00" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E10_20" from="J10" to="J20" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E20_10" from="J20" to="J10" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E20_30" from="J20" to="J30" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E30_20" from="J30" to="J20" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E30_40" from="J30" to="J40" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E40_30" from="J40" to="J30" priority="3" numLanes="2" speed="13.89"/>
+
+    <!-- Column 1 -->
+    <edge id="E01_11" from="J01" to="J11" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E11_01" from="J11" to="J01" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E11_21" from="J11" to="J21" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E21_11" from="J21" to="J11" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E21_31" from="J21" to="J31" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E31_21" from="J31" to="J21" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E31_41" from="J31" to="J41" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E41_31" from="J41" to="J31" priority="3" numLanes="2" speed="13.89"/>
+
+    <!-- Column 2 -->
+    <edge id="E02_12" from="J02" to="J12" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E12_02" from="J12" to="J02" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E12_22" from="J12" to="J22" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E22_12" from="J22" to="J12" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E22_32" from="J22" to="J32" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E32_22" from="J32" to="J22" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E32_42" from="J32" to="J42" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E42_32" from="J42" to="J32" priority="3" numLanes="2" speed="13.89"/>
+
+    <!-- Column 3 -->
+    <edge id="E03_13" from="J03" to="J13" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E13_03" from="J13" to="J03" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E13_23" from="J13" to="J23" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E23_13" from="J23" to="J13" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E23_33" from="J23" to="J33" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E33_23" from="J33" to="J23" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E33_43" from="J33" to="J43" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E43_33" from="J43" to="J33" priority="3" numLanes="2" speed="13.89"/>
+
+    <!-- Column 4 -->
+    <edge id="E04_14" from="J04" to="J14" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E14_04" from="J14" to="J04" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E14_24" from="J14" to="J24" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E24_14" from="J24" to="J14" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E24_34" from="J24" to="J34" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E34_24" from="J34" to="J24" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E34_44" from="J34" to="J44" priority="3" numLanes="2" speed="13.89"/>
+    <edge id="E44_34" from="J44" to="J34" priority="3" numLanes="2" speed="13.89"/>
+
+</net>

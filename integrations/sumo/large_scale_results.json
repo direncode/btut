@@ -1,0 +1,220 @@
+{
+  "results": {
+    "tau_0.0": [
+      {
+        "num_agents": 500,
+        "tau": 0.0,
+        "gamma": 1.32,
+        "cooperation": 0.0001220703125,
+        "convergence_iterations": 12,
+        "hub_cooperation": 0.0001220703125,
+        "periphery_cooperation": 0.0001220703125,
+        "degree_variance": 37.740864,
+        "effective_speed": 7.88073608532548,
+        "effective_wait": 30.2975341796875
+      },
+      {
+        "num_agents": 1000,
+        "tau": 0.0,
+        "gamma": 1.32,
+        "cooperation": 0.0001220703125,
+        "convergence_iterations": 12,
+        "hub_cooperation": 0.0001220703125,
+        "periphery_cooperation": 0.0001220703125,
+        "degree_variance": 40.38535099999999,
+        "effective_speed": 7.7607397487759595,
+        "effective_wait": 30.597509765625002
+      },
+      {
+        "num_agents": 2000,
+        "tau": 0.0,
+        "gamma": 1.32,
+        "cooperation": 0.0001220703125,
+        "convergence_iterations": 12,
+        "hub_cooperation": 0.0001220703125,
+        "periphery_cooperation": 0.0001220703125,
+        "degree_variance": 30.967543999999993,
+        "effective_speed": 7.520747075676918,
+        "effective_wait": 31.1974609375
+      },
+      {
+        "num_agents": 5000,
+        "tau": 0.0,
+        "gamma": 1.32,
+        "cooperation": 0.0001220703125,
+        "convergence_iterations": 12,
+        "hub_cooperation": 0.0001220703125,
+        "periphery_cooperation": 0.0001220703125,
+        "degree_variance": 38.413206040000006,
+        "effective_speed": 6.800769056379796,
+        "effective_wait": 32.997314453125
+      },
+      {
+        "num_agents": 10000,
+        "tau": 0.0,
+        "gamma": 1.32,
+        "cooperation": 0.0001220703125,
+        "convergence_iterations": 12,
+        "hub_cooperation": 0.0001220703125,
+        "periphery_cooperation": 0.0001220703125,
+        "degree_variance": 53.22070591000001,
+        "effective_speed": 5.600805690884591,
+        "effective_wait": 35.9970703125
+      }
+    ],
+    "tau_0.3": [
+      {
+        "num_agents": 500,
+        "tau": 0.3,
+        "gamma": 1.32,
+        "cooperation": 0.0001220703125,
+        "convergence_iterations": 12,
+        "hub_cooperation": 0.009722070312500001,
+        "periphery_cooperation": 0.0,
+        "degree_variance": 28.461676,
+        "effective_speed": 7.88073608532548,
+        "effective_wait": 30.2975341796875
+      },
+      {
+        "num_agents": 1000,
+        "tau": 0.3,
+        "gamma": 1.32,
+        "cooperation": 0.0001220703125,
+        "convergence_iterations": 12,
+        "hub_cooperation": 0.009722070312500001,
+        "periphery_cooperation": 0.0,
+        "degree_variance": 28.812311,
+        "effective_speed": 7.7607397487759595,
+        "effective_wait": 30.597509765625002
+      },
+      {
+        "num_agents": 2000,
+        "tau": 0.3,
+        "gamma": 1.32,
+        "cooperation": 0.0001220703125,
+        "convergence_iterations": 12,
+        "hub_cooperation": 0.009722070312500001,
+        "periphery_cooperation": 0.0,
+        "degree_variance": 38.036079,
+        "effective_speed": 7.520747075676918,
+        "effective_wait": 31.1974609375
+      },
+      {
+        "num_agents": 5000,
+        "tau": 0.3,
+        "gamma": 1.32,
+        "cooperation": 0.0001220703125,
+        "convergence_iterations": 12,
+        "hub_cooperation": 0.009722070312500001,
+        "periphery_cooperation": 0.0,
+        "degree_variance": 39.969769559999996,
+        "effective_speed": 6.800769056379796,
+        "effective_wait": 32.997314453125
+      },
+      {
+        "num_agents": 10000,
+        "tau": 0.3,
+        "gamma": 1.32,
+        "cooperation": 0.0001220703125,
+        "convergence_iterations": 12,
+        "hub_cooperation": 0.009722070312500001,
+        "periphery_cooperation": 0.0,
+        "degree_variance": 68.58338511000001,
+        "effective_speed": 5.600805690884591,
+        "effective_wait": 35.9970703125
+      }
+    ],
+    "tau_0.5": [
+      {
+        "num_agents": 500,
+        "tau": 0.5,
+        "gamma": 1.32,
+        "cooperation": 0.0001220703125,
+        "convergence_iterations": 12,
+        "hub_cooperation": 0.016122070312500004,
+        "periphery_cooperation": 0.0,
+        "degree_variance": 28.461676,
+        "effective_speed": 7.88073608532548,
+        "effective_wait": 30.2975341796875
+      },
+      {
+        "num_agents": 1000,
+        "tau": 0.5,
+        "gamma": 1.32,
+        "cooperation": 0.0001220703125,
+        "convergence_iterations": 12,
+        "hub_cooperation": 0.016122070312500004,
+        "periphery_cooperation": 0.0,
+        "degree_variance": 28.812311,
+        "effective_speed": 7.7607397487759595,
+        "effective_wait": 30.597509765625002
+      },
+      {
+        "num_agents": 2000,
+        "tau": 0.5,
+        "gamma": 1.32,
+        "cooperation": 0.0001220703125,
+        "convergence_iterations": 12,
+        "hub_cooperation": 0.016122070312500004,
+        "periphery_cooperation": 0.0,
+        "degree_variance": 38.036079,
+        "effective_speed": 7.520747075676918,
+        "effective_wait": 31.1974609375
+      },
+      {
+        "num_agents": 5000,
+        "tau": 0.5,
+        "gamma": 1.32,
+        "cooperation": 0.0001220703125,
+        "convergence_iterations": 12,
+        "hub_cooperation": 0.016122070312500004,
+        "periphery_cooperation": 0.0,
+        "degree_variance": 39.969769559999996,
+        "effective_speed": 6.800769056379796,
+        "effective_wait": 32.997314453125
+      },
+      {
+        "num_agents": 10000,
+        "tau": 0.5,
+        "gamma": 1.32,
+        "cooperation": 0.0001220703125,
+        "convergence_iterations": 12,
+        "hub_cooperation": 0.016122070312500004,
+        "periphery_cooperation": 0.0,
+        "degree_variance": 68.58338511000001,
+        "effective_speed": 5.600805690884591,
+        "effective_wait": 35.9970703125
+      }
+    ]
+  },
+  "analysis": {
+    "scale_effects": [
+      {
+        "agents": 500,
+        "speed_gain": 0.0,
+        "wait_reduction": 0.0
+      },
+      {
+        "agents": 1000,
+        "speed_gain": 0.0,
+        "wait_reduction": 0.0
+      },
+      {
+        "agents": 2000,
+        "speed_gain": 0.0,
+        "wait_reduction": 0.0
+      },
+      {
+        "agents": 5000,
+        "speed_gain": 0.0,
+        "wait_reduction": 0.0
+      },
+      {
+        "agents": 10000,
+        "speed_gain": 0.0,
+        "wait_reduction": 0.0
+      }
+    ],
+    "conclusion": "Mixed results: gains vary with scale. Further investigation needed."
+  }
+}

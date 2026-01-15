@@ -1,0 +1,61 @@
+{
+  "results": {
+    "tau_0.0": {
+      "scenario": "stress_tau_0.0",
+      "tau": 0.0,
+      "gamma": 1.5,
+      "peak_vehicles": 800,
+      "final_cooperation": 0.9998779296875,
+      "avg_speed": 12.177060161066477,
+      "min_speed": 11.903727964875063,
+      "avg_waiting_time": 5.74676673823393,
+      "max_waiting_time": 7.951627961242854,
+      "throughput": 1760,
+      "gridlock_occurred": false,
+      "recovery_time": null
+    },
+    "tau_0.3": {
+      "scenario": "stress_tau_0.3",
+      "tau": 0.3,
+      "gamma": 1.5,
+      "peak_vehicles": 800,
+      "final_cooperation": 0.9998779296875,
+      "avg_speed": 12.177060161066477,
+      "min_speed": 11.903727964875063,
+      "avg_waiting_time": 5.74676673823393,
+      "max_waiting_time": 7.951627961242854,
+      "throughput": 1760,
+      "gridlock_occurred": false,
+      "recovery_time": null
+    },
+    "tau_0.5": {
+      "scenario": "stress_tau_0.5",
+      "tau": 0.5,
+      "gamma": 1.5,
+      "peak_vehicles": 800,
+      "final_cooperation": 0.9998779296875,
+      "avg_speed": 12.177060161066477,
+      "min_speed": 11.903727964875063,
+      "avg_waiting_time": 5.74676673823393,
+      "max_waiting_time": 7.951627961242854,
+      "throughput": 1760,
+      "gridlock_occurred": false,
+      "recovery_time": null
+    },
+    "tau_0.7": {
+      "scenario": "stress_tau_0.7",
+      "tau": 0.7,
+      "gamma": 1.5,
+      "peak_vehicles": 800,
+      "final_cooperation": 0.9998779296875,
+      "avg_speed": 12.177060161066477,
+      "min_speed": 11.903727964875063,
+      "avg_waiting_time": 5.74676673823393,
+      "max_waiting_time": 7.951627961242854,
+      "throughput": 1760,
+      "gridlock_occurred": false,
+      "recovery_time": null
+    }
+  },
+  "report": "# BTUT Stress Test Report\n\n## Summary\n\nThis stress test validates BTUT's ability to prevent gridlock under extreme traffic conditions.\n\n### Test Phases\n1. **Warm-up** (0-300s): Light traffic, system stabilization\n2. **Ramp-up** (300-600s): Traffic increasing to peak\n3. **Peak** (600-1200s): Maximum stress, ~800 vehicles\n4. **Sustained** (1200-1800s): Heavy but sub-peak traffic\n5. **Wind-down** (1800-2400s): Decreasing traffic\n6. **Recovery** (2400-3000s): Light traffic, recovery observation\n\n## Results\n\n| Tau | Cooperation | Avg Speed | Min Speed | Max Wait | Gridlock |\n|-----|-------------|-----------|-----------|----------|----------|\n| 0.0 | 100.0% | 12.2 m/s | 11.9 m/s | 8s | NO |\n| 0.3 | 100.0% | 12.2 m/s | 11.9 m/s | 8s | NO |\n| 0.5 | 100.0% | 12.2 m/s | 11.9 m/s | 8s | NO |\n| 0.7 | 100.0% | 12.2 m/s | 11.9 m/s | 8s | NO |\n"
+}

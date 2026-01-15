@@ -1,0 +1,68 @@
+{
+  "abstract_tau0.30_N1000": {
+    "gamma_critical": 1.326171875,
+    "gamma_lower": 1.32421875,
+    "gamma_upper": 1.328125,
+    "transition_sharpness": 0.8999999999999999,
+    "recommended_gamma": 1.376171875,
+    "recommended_margin": 0.05,
+    "search_iterations": 8,
+    "confidence": 0.86,
+    "domain": "abstract",
+    "config_used": {
+      "N": 1000,
+      "tau": 0.3,
+      "tolerance": 0.005,
+      "cA_SH": 0.4,
+      "cB_SH": 0.1,
+      "cA_PD": 0.2,
+      "cB_PD": 0.08,
+      "alpha": 0.6
+    },
+    "timestamp": "2026-01-15 16:07:17"
+  },
+  "traffic_tau0.30_N500": {
+    "gamma_critical": 1.3289062500000002,
+    "gamma_lower": 1.3265625,
+    "gamma_upper": 1.33125,
+    "transition_sharpness": 0.8999999999999999,
+    "recommended_gamma": 1.3789062500000002,
+    "recommended_margin": 0.05,
+    "search_iterations": 7,
+    "confidence": 0.815,
+    "domain": "traffic",
+    "config_used": {
+      "N": 500,
+      "tau": 0.3,
+      "tolerance": 0.005,
+      "cA_SH": 0.4,
+      "cB_SH": 0.1,
+      "cA_PD": 0.2,
+      "cB_PD": 0.08,
+      "alpha": 0.6
+    },
+    "timestamp": "2026-01-15 16:07:17"
+  },
+  "drone_tau0.30_N100": {
+    "gamma_critical": 1.2390625000000002,
+    "gamma_lower": 1.2375,
+    "gamma_upper": 1.240625,
+    "transition_sharpness": 0.8999999999999999,
+    "recommended_gamma": 1.2890625000000002,
+    "recommended_margin": 0.05,
+    "search_iterations": 8,
+    "confidence": 0.86,
+    "domain": "drone",
+    "config_used": {
+      "N": 100,
+      "tau": 0.3,
+      "tolerance": 0.005,
+      "cA_SH": 0.35,
+      "cB_SH": 0.12,
+      "cA_PD": 0.18,
+      "cB_PD": 0.1,
+      "alpha": 0.5
+    },
+    "timestamp": "2026-01-15 16:07:17"
+  }
+}

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  BTUT-SUMO Example Routes
+
+  Vehicle flows for 5x5 urban grid.
+  Generates ~500-1000 vehicles over 1 hour simulation.
+-->
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+
+    <!-- Vehicle Types -->
+    <vType id="passenger" accel="2.6" decel="4.5" sigma="0.5" length="5" minGap="2.5" maxSpeed="50" guiShape="passenger"/>
+    <vType id="cooperative" accel="2.0" decel="4.0" sigma="0.3" length="5" minGap="3.5" maxSpeed="14" guiShape="passenger" color="0,200,0"/>
+    <vType id="competitive" accel="3.0" decel="5.0" sigma="0.7" length="5" minGap="2.0" maxSpeed="20" guiShape="passenger" color="200,0,0"/>
+
+    <!-- Cross-Grid Routes (Southwest to Northeast) -->
+    <route id="route_SW_NE_1" edges="E00_01 E01_02 E02_03 E03_04 E04_14 E14_24 E24_34 E34_44"/>
+    <route id="route_SW_NE_2" edges="E00_10 E10_11 E11_12 E12_13 E13_14 E14_24 E24_34 E34_44"/>
+
+    <!-- Cross-Grid Routes (Northwest to Southeast) -->
+    <route id="route_NW_SE_1" edges="E40_41 E41_42 E42_43 E43_44 E44_34 E34_24 E24_14 E14_04"/>
+    <route id="route_NW_SE_2" edges="E40_30 E30_31 E31_32 E32_33 E33_34 E34_24 E24_14 E14_04"/>
+
+    <!-- East-West Routes (Row 2 - middle) -->
+    <route id="route_EW_mid" edges="E00_01 E01_02 E02_03 E03_04"/>
+    <route id="route_WE_mid" edges="E04_03 E03_02 E02_01 E01_00"/>
+
+    <!-- North-South Routes (Column 2 - middle) -->
+    <route id="route_NS_mid" edges="E02_12 E12_22 E22_32 E32_42"/>
+    <route id="route_SN_mid" edges="E42_32 E32_22 E22_12 E12_02"/>
+
+    <!-- Diagonal through center -->
+    <route id="route_diag_1" edges="E00_10 E10_20 E20_21 E21_22 E22_23 E23_24 E24_34 E34_44"/>
+    <route id="route_diag_2" edges="E44_34 E34_24 E24_23 E23_22 E22_21 E21_20 E20_10 E10_00"/>
+
+    <!-- Ring routes around perimeter -->
+    <route id="route_ring_cw" edges="E00_01 E01_02 E02_03 E03_04 E04_14 E14_24 E24_34 E34_44 E44_43 E43_42 E42_41 E41_40 E40_30 E30_20 E20_10 E10_00"/>
+
+    <!-- Short local routes (for density) -->
+    <route id="route_local_1" edges="E11_12 E12_13"/>
+    <route id="route_local_2" edges="E21_22 E22_23"/>
+    <route id="route_local_3" edges="E31_32 E32_33"/>
+    <route id="route_local_4" edges="E12_22 E22_32"/>
+    <route id="route_local_5" edges="E22_21 E21_11"/>
+
+    <!-- Vehicle Flows (Continuous generation) -->
+
+    <!-- Main flows: Heavy traffic on diagonal routes -->
+    <flow id="flow_SW_NE" type="passenger" route="route_SW_NE_1" begin="0" end="3600" probability="0.08" departLane="best" departSpeed="max"/>
+    <flow id="flow_NW_SE" type="passenger" route="route_NW_SE_1" begin="0" end="3600" probability="0.08" departLane="best" departSpeed="max"/>
+
+    <!-- Cross traffic -->
+    <flow id="flow_EW" type="passenger" route="route_EW_mid" begin="0" end="3600" probability="0.06" departLane="best" departSpeed="max"/>
+    <flow id="flow_WE" type="passenger" route="route_WE_mid" begin="0" end="3600" probability="0.06" departLane="best" departSpeed="max"/>
+    <flow id="flow_NS" type="passenger" route="route_NS_mid" begin="0" end="3600" probability="0.06" departLane="best" departSpeed="max"/>
+    <flow id="flow_SN" type="passenger" route="route_SN_mid" begin="0" end="3600" probability="0.06" departLane="best" departSpeed="max"/>
+
+    <!-- Secondary diagonal traffic -->
+    <flow id="flow_diag1" type="passenger" route="route_diag_1" begin="0" end="3600" probability="0.05" departLane="best" departSpeed="max"/>
+    <flow id="flow_diag2" type="passenger" route="route_diag_2" begin="0" end="3600" probability="0.05" departLane="best" departSpeed="max"/>
+
+    <!-- Ring traffic (lower frequency) -->
+    <flow id="flow_ring" type="passenger" route="route_ring_cw" begin="0" end="3600" probability="0.02" departLane="best" departSpeed="max"/>
+
+    <!-- Local traffic (high frequency, short routes - creates density) -->
+    <flow id="flow_local_1" type="passenger" route="route_local_1" begin="0" end="3600" probability="0.10" departLane="best" departSpeed="max"/>
+    <flow id="flow_local_2" type="passenger" route="route_local_2" begin="0" end="3600" probability="0.10" departLane="best" departSpeed="max"/>
+    <flow id="flow_local_3" type="passenger" route="route_local_3" begin="0" end="3600" probability="0.10" departLane="best" departSpeed="max"/>
+    <flow id="flow_local_4" type="passenger" route="route_local_4" begin="0" end="3600" probability="0.10" departLane="best" departSpeed="max"/>
+    <flow id="flow_local_5" type="passenger" route="route_local_5" begin="0" end="3600" probability="0.10" departLane="best" departSpeed="max"/>
+
+    <!-- Rush hour bursts (higher density at start and mid-simulation) -->
+    <flow id="rush_morning_1" type="passenger" route="route_SW_NE_2" begin="0" end="900" probability="0.15" departLane="best" departSpeed="max"/>
+    <flow id="rush_morning_2" type="passenger" route="route_NW_SE_2" begin="0" end="900" probability="0.15" departLane="best" departSpeed="max"/>
+
+    <flow id="rush_noon_1" type="passenger" route="route_SW_NE_1" begin="1500" end="2100" probability="0.12" departLane="best" departSpeed="max"/>
+    <flow id="rush_noon_2" type="passenger" route="route_NW_SE_1" begin="1500" end="2100" probability="0.12" departLane="best" departSpeed="max"/>
+
+</routes>

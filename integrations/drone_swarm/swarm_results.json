@@ -1,0 +1,38 @@
+{
+  "n_50": {
+    "final_cooperation": 1.0,
+    "final_formation_error": 82.64046725564255,
+    "final_task_progress": 0.0,
+    "total_collisions": 0,
+    "avg_formation_error": 83.31916184527155,
+    "avg_speed": 0.4829505886997913,
+    "final_energy": 96.8541590963411,
+    "convergence_step": -1,
+    "runtime": 4.705190181732178,
+    "drones_per_second": 10.626563022707172
+  },
+  "n_100": {
+    "final_cooperation": 1.0,
+    "final_formation_error": 89.56948952078496,
+    "final_task_progress": 0.0,
+    "total_collisions": 42,
+    "avg_formation_error": 90.24642415309852,
+    "avg_speed": 0.48203834338856416,
+    "final_energy": 96.85521225659008,
+    "convergence_step": -1,
+    "runtime": 16.862494230270386,
+    "drones_per_second": 5.930320783771531
+  },
+  "n_200": {
+    "final_cooperation": 1.0,
+    "final_formation_error": 103.40554830493082,
+    "final_task_progress": 0.005,
+    "total_collisions": 294,
+    "avg_formation_error": 104.05464619125608,
+    "avg_speed": 0.47129946548855856,
+    "final_energy": 96.8566025554072,
+    "convergence_step": -1,
+    "runtime": 61.77155542373657,
+    "drones_per_second": 3.237736181775783
+  }
+}

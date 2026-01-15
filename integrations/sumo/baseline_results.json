@@ -1,0 +1,65 @@
+{
+  "BTUT (tau=0.0)": {
+    "name": "BTUT (tau=0.0)",
+    "description": "Hub-weighted coordination",
+    "cooperation_rate": 0.0001220703125,
+    "avg_speed": 7.0008544921875,
+    "avg_waiting_time": 29.99755859375,
+    "throughput": 200,
+    "stability": 0.95
+  },
+  "BTUT (tau=0.3)": {
+    "name": "BTUT (tau=0.3)",
+    "description": "Hub-weighted coordination",
+    "cooperation_rate": 0.0001220703125,
+    "avg_speed": 7.0008544921875,
+    "avg_waiting_time": 29.99755859375,
+    "throughput": 200,
+    "stability": 0.95
+  },
+  "BTUT (tau=0.5)": {
+    "name": "BTUT (tau=0.5)",
+    "description": "Hub-weighted coordination",
+    "cooperation_rate": 0.0001220703125,
+    "avg_speed": 7.0008544921875,
+    "avg_waiting_time": 29.99755859375,
+    "throughput": 200,
+    "stability": 0.95
+  },
+  "No Coordination": {
+    "name": "No Coordination",
+    "description": "Random 50/50 strategy",
+    "cooperation_rate": 0.4260706877110079,
+    "avg_speed": 9.982494813977056,
+    "avg_waiting_time": 21.478586245779844,
+    "throughput": 285,
+    "stability": 0.3
+  },
+  "Greedy (Nash)": {
+    "name": "Greedy (Nash)",
+    "description": "Selfish agents",
+    "cooperation_rate": 0.30718770216034647,
+    "avg_speed": 9.150313915122426,
+    "avg_waiting_time": 23.85624595679307,
+    "throughput": 261,
+    "stability": 0.6
+  },
+  "Threshold (50%)": {
+    "name": "Threshold (50%)",
+    "description": "Local majority rule",
+    "cooperation_rate": 0.5338496407494414,
+    "avg_speed": 10.73694748524609,
+    "avg_waiting_time": 19.32300718501117,
+    "throughput": 306,
+    "stability": 0.5
+  },
+  "Fixed 60%": {
+    "name": "Fixed 60%",
+    "description": "Mandated cooperation",
+    "cooperation_rate": 0.6,
+    "avg_speed": 11.2,
+    "avg_waiting_time": 18.0,
+    "throughput": 320,
+    "stability": 1.0
+  }
+}
