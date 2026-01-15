@@ -26,7 +26,7 @@ export default function Navigation() {
     { label: 'Home', href: '/' },
     { label: 'Simulator', href: '/simulator' },
     { label: 'Playground', href: '/playground' },
-    { label: 'Benchmark', href: '/benchmark' },
+    { label: 'Docs', href: '/docs' },
   ]
 
   const integrationItems = [
