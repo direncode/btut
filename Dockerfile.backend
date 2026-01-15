@@ -25,7 +25,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application code
 COPY api/ ./api/
-COPY lib/simulation/ ./lib/simulation/
+COPY lib/simulation/btut_engine.py ./lib/simulation/btut_engine.py
 
 # Create non-root user
 RUN useradd -m -u 1000 btut && chown -R btut:btut /app
