@@ -47,7 +47,6 @@ build
 **\downloads
 **\eggs
 **\.eggs
-**\lib
 **\lib64
 **\parts
 **\sdist
@@ -67,6 +66,9 @@ build
 **\venv
 **\ENV
 **\env
+
+# Include lib/simulation for backend deployment
+!lib/simulation/btut_engine.py
 
 # IDEs
 **\.vscode
