@@ -6,11 +6,14 @@ analytics/
 benchmarks/
 cloud/
 integration/
-integrations/
 lambda/
 engine/
 ros_ws/
 scripts/
+
+# Exclude Python integration scripts (but keep app/integrations/ Next.js page)
+integrations/ros/
+integrations/sumo/
 
 # Exclude Python files
 **/*.py
