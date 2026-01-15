@@ -25,6 +25,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application code
 COPY api/ ./api/
+
+# Create lib directory structure and copy Python engine
+RUN mkdir -p ./lib/simulation
 COPY lib/simulation/btut_engine.py ./lib/simulation/btut_engine.py
 
 # Create non-root user
