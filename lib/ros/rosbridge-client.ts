@@ -129,7 +129,7 @@ export function callRunSimulation(
       serviceType: 'btut_msgs/RunSimulation'
     })
 
-    const request = new ROSLIB.ServiceRequest({
+    const request = {
       config: {
         n: config.N,
         gamma: config.gamma,
@@ -141,7 +141,7 @@ export function callRunSimulation(
         alpha: config.alpha,
         m: config.m
       }
-    })
+    } as any
 
     service.callService(request, (response: any) => {
       if (response.success) {
@@ -203,7 +203,7 @@ export function publishParameterUpdate(
     messageType: 'btut_msgs/SimulationConfig'
   })
 
-  const message = new ROSLIB.Message({
+  const message = {
     n: params.N,
     gamma: params.gamma,
     tau: params.tau,
@@ -213,7 +213,7 @@ export function publishParameterUpdate(
     c_b_pd: params.cB_PD,
     alpha: params.alpha,
     m: params.m
-  })
+  } as any
 
   topic.publish(message)
 }
