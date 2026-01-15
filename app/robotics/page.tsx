@@ -65,7 +65,7 @@ export default function RoboticsPage() {
   }
 
   const handleConnect = (url: string) => {
-    connect({ url })
+    connect()
   }
 
   const handleDisconnect = () => {
