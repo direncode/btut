@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { Menu, X, Zap } from 'lucide-react'
+import ThemeToggle from '@/app/components/ThemeToggle'
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
@@ -38,8 +39,9 @@ export default function Navigation() {
             ))}
           </div>
 
-          {/* CTA Button */}
+          {/* CTA Button + Theme Toggle */}
           <div className="hidden md:flex items-center space-x-4">
+            <ThemeToggle />
             <Link
               href="/simulator"
               className="px-6 py-2 bg-gradient-to-r from-neon-blue to-neon-green text-black font-bold rounded-lg hover:shadow-lg hover:shadow-neon-blue/50 transition"
@@ -70,13 +72,16 @@ export default function Navigation() {
                 {item.label}
               </Link>
             ))}
-            <Link
-              href="/simulator"
-              onClick={() => setIsOpen(false)}
-              className="block px-6 py-2 bg-gradient-to-r from-neon-blue to-neon-green text-black font-bold rounded-lg text-center"
-            >
-              Launch Simulator
-            </Link>
+            <div className="flex items-center justify-between">
+              <ThemeToggle />
+              <Link
+                href="/simulator"
+                onClick={() => setIsOpen(false)}
+                className="px-6 py-2 bg-gradient-to-r from-neon-blue to-neon-green text-black font-bold rounded-lg text-center"
+              >
+                Launch Simulator
+              </Link>
+            </div>
           </div>
         )}
       </div>
