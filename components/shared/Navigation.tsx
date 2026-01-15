@@ -1,19 +1,39 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
-import { Menu, X, Zap } from 'lucide-react'
+import { useState, useRef, useEffect } from 'react'
+import { Menu, X, Zap, ChevronDown } from 'lucide-react'
 import ThemeToggle from '@/app/components/ThemeToggle'
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
+  const [integrationsOpen, setIntegrationsOpen] = useState(false)
+  const dropdownRef = useRef<HTMLDivElement>(null)
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIntegrationsOpen(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
 
   const navItems = [
     { label: 'Home', href: '/' },
     { label: 'Simulator', href: '/simulator' },
     { label: 'Playground', href: '/playground' },
     { label: 'Benchmark', href: '/benchmark' },
-    { label: 'Documentation', href: '/documentation' },
+  ]
+
+  const integrationItems = [
+    { label: 'Integration Hub', href: '/integrations' },
+    { label: 'Robotics (ROS)', href: '/robotics' },
+    { label: 'Traffic (SUMO)', href: '/traffic' },
+    { label: 'Research Workbench', href: '/research' },
   ]
 
   return (
@@ -37,6 +57,32 @@ export default function Navigation() {
                 {item.label}
               </Link>
             ))}
+
+            {/* Integrations Dropdown */}
+            <div className="relative" ref={dropdownRef}>
+              <button
+                onClick={() => setIntegrationsOpen(!integrationsOpen)}
+                className="flex items-center gap-1 text-gray-300 hover:text-neon-blue transition font-medium"
+              >
+                Integrations
+                <ChevronDown className={`w-4 h-4 transition-transform ${integrationsOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              {integrationsOpen && (
+                <div className="absolute top-full mt-2 right-0 w-56 bg-gray-900 border border-gray-800 rounded-lg shadow-xl overflow-hidden">
+                  {integrationItems.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setIntegrationsOpen(false)}
+                      className="block px-4 py-3 text-gray-300 hover:bg-gray-800 hover:text-neon-blue transition"
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
 
           {/* CTA Button + Theme Toggle */}
@@ -72,7 +118,23 @@ export default function Navigation() {
                 {item.label}
               </Link>
             ))}
-            <div className="flex items-center justify-between">
+
+            {/* Mobile Integrations */}
+            <div className="border-t border-gray-800 pt-4">
+              <div className="text-xs text-gray-500 mb-2 px-2">INTEGRATIONS</div>
+              {integrationItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setIsOpen(false)}
+                  className="block text-gray-300 hover:text-neon-blue transition py-2 px-2"
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
+
+            <div className="flex items-center justify-between pt-4">
               <ThemeToggle />
               <Link
                 href="/simulator"
