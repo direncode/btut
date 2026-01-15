@@ -17,7 +17,7 @@ export interface VehicleState {
   waitingTime: number
 }
 
-export interface TrafficMetrics {
+export interface TraCIMetrics {
   totalVehicles: number
   averageSpeed: number
   totalWaitingTime: number
@@ -41,7 +41,7 @@ export interface NetworkInfo {
 export interface SimulationStep {
   currentTime: number
   vehicles: VehicleState[]
-  metrics: TrafficMetrics
+  metrics: TraCIMetrics
 }
 
 export class TraCIClient {
@@ -85,7 +85,7 @@ export class TraCIClient {
           this.emit('step', data)
         })
 
-        this.socket.on('metrics', (data: TrafficMetrics) => {
+        this.socket.on('metrics', (data: TraCIMetrics) => {
           this.emit('metrics', data)
         })
 
@@ -269,7 +269,7 @@ export class TraCIClient {
   /**
    * Get traffic metrics
    */
-  async getMetrics(): Promise<TrafficMetrics> {
+  async getMetrics(): Promise<TraCIMetrics> {
     if (!this.socket) throw new Error('Not connected to SUMO')
 
     return new Promise((resolve, reject) => {

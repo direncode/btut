@@ -3,7 +3,7 @@
  */
 
 import { useState, useEffect, useCallback, useRef } from 'react'
-import { createTraCIClient, TraCIClient, type VehicleState, type TrafficMetrics, type SimulationStep, type NetworkInfo } from './traci-client'
+import { createTraCIClient, TraCIClient, type VehicleState, type TraCIMetrics, type SimulationStep, type NetworkInfo } from './traci-client'
 
 export interface UseSUMOConnectionOptions {
   host?: string
@@ -184,14 +184,14 @@ export function useVehicleData(client: TraCIClient | null) {
 /**
  * Hook for traffic metrics
  */
-export function useTrafficMetrics(client: TraCIClient | null) {
-  const [metrics, setMetrics] = useState<TrafficMetrics | null>(null)
+export function useTraCIMetrics(client: TraCIClient | null) {
+  const [metrics, setMetrics] = useState<TraCIMetrics | null>(null)
   const [lastUpdate, setLastUpdate] = useState(0)
 
   useEffect(() => {
     if (!client) return
 
-    const handleMetrics = (data: TrafficMetrics) => {
+    const handleMetrics = (data: TraCIMetrics) => {
       setMetrics(data)
       setLastUpdate(Date.now())
     }
@@ -341,8 +341,8 @@ function getContentType(format: string): string {
  * Hook for comparison mode (baseline vs BTUT)
  */
 export function useComparisonMode(client: TraCIClient | null) {
-  const [baselineMetrics, setBaselineMetrics] = useState<TrafficMetrics | null>(null)
-  const [btutMetrics, setBtutMetrics] = useState<TrafficMetrics | null>(null)
+  const [baselineMetrics, setBaselineMetrics] = useState<TraCIMetrics | null>(null)
+  const [btutMetrics, setBtutMetrics] = useState<TraCIMetrics | null>(null)
   const [mode, setMode] = useState<'baseline' | 'btut' | 'both'>('baseline')
 
   const runBaseline = useCallback(async (networkFile: string) => {

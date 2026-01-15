@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { Play, Square, Upload, Download, AlertCircle } from 'lucide-react'
-import { useSUMOConnection, useSimulationControl, useVehicleData, useTrafficMetrics, useBTUTCoordination, useComparisonMode } from '@/lib/sumo'
+import { useSUMOConnection, useSimulationControl, useVehicleData, useTraCIMetrics, useBTUTCoordination, useComparisonMode } from '@/lib/sumo'
 import SUMOConnection from '@/components/traffic/SUMOConnection'
 import TrafficMap from '@/components/traffic/TrafficMap'
 import TrafficMetrics from '@/components/traffic/TrafficMetrics'
@@ -27,7 +27,7 @@ export default function TrafficPage() {
   const { vehicles, vehicleCount } = useVehicleData(client)
 
   // Traffic Metrics
-  const { metrics, refreshMetrics } = useTrafficMetrics(client)
+  const { metrics, refreshMetrics } = useTraCIMetrics(client)
 
   // BTUT Coordination
   const { enabled: btutEnabled, gamma, tau, setGamma, setTau, applyCoordination } = useBTUTCoordination(client)

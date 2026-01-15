@@ -175,9 +175,9 @@ export function callGetStrategy(
       serviceType: 'btut_msgs/GetStrategy'
     })
 
-    const request = new ROSLIB.ServiceRequest({
+    const request = {
       agent_id: agentId
-    })
+    } as any
 
     service.callService(request, (response: any) => {
       if (response.success) {
