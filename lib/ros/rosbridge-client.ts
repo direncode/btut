@@ -3,7 +3,7 @@
  * Connects to ROS via rosbridge_suite WebSocket server
  */
 
-import ROSLIB from 'roslib'
+import * as ROSLIB from 'roslib'
 
 export interface ROSConnection {
   ros: ROSLIB.Ros

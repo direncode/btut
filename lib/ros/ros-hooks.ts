@@ -3,7 +3,7 @@
  */
 
 import { useState, useEffect, useCallback, useRef } from 'react'
-import ROSLIB from 'roslib'
+import * as ROSLIB from 'roslib'
 import {
   connectToROS,
   subscribeToAgentStates,

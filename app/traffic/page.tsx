@@ -216,8 +216,8 @@ export default function TrafficPage() {
 
             {/* Report Generator */}
             <ReportGenerator
-              baselineMetrics={baselineMetrics}
-              btutMetrics={btutMetrics}
+              baselineMetrics={null}
+              btutMetrics={null}
             />
           </div>
 
@@ -335,8 +335,8 @@ export default function TrafficPage() {
           {/* Right Column - Comparison */}
           <div className="lg:col-span-1">
             <ComparisonView
-              baselineMetrics={baselineMetrics}
-              btutMetrics={btutMetrics}
+              baselineMetrics={null}
+              btutMetrics={null}
             />
           </div>
         </div>

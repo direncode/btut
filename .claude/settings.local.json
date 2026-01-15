@@ -20,7 +20,12 @@
       "Bash(NODE_OPTIONS=\"--max-old-space-size=4096\" npm run build:*)",
       "Bash(npm run dev:*)",
       "Bash(fly logs:*)",
-      "Bash(pkill:*)"
+      "Bash(pkill:*)",
+      "Bash(git pull:*)",
+      "Bash(git merge:*)",
+      "Bash(npm install:*)",
+      "Bash(timeout 5 bash:*)",
+      "Bash(npx vercel:*)"
     ]
   }
 }

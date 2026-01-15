@@ -36,7 +36,7 @@ export default function ExperimentConfig({ onRun }: ExperimentConfigProps) {
   const [seedEnd, setSeedEnd] = useState(5)
 
   const addParameter = (param: typeof AVAILABLE_PARAMS[0]) => {
-    const values = []
+    const values: number[] = []
     for (let v = param.min; v <= param.max; v += param.step) {
       values.push(Number(v.toFixed(3)))
     }
