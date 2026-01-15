@@ -1,0 +1,9 @@
+# AWS Lambda requirements for BTUT
+
+# Core dependencies
+numpy>=1.20.0,<2.0.0
+
+# Optional: for faster numpy operations
+# numba>=0.55.0
+
+# Keep it minimal - Lambda has size limits

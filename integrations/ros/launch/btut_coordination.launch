@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- BTUT Coordination Launch File -->
+
+  <!-- Parameters -->
+  <arg name="num_robots" default="10" />
+  <arg name="gamma" default="1.5" />
+  <arg name="tau" default="0.3" />
+  <arg name="alpha" default="0.1" />
+  <arg name="update_rate" default="1.0" />
+  <arg name="coordination_rate" default="0.5" />
+
+  <!-- BTUT Node -->
+  <node name="btut_coordination" pkg="btut_ros" type="btut_node.py" output="screen">
+    <param name="update_rate" value="$(arg update_rate)" />
+    <param name="default_gamma" value="$(arg gamma)" />
+    <param name="default_tau" value="$(arg tau)" />
+    <param name="default_alpha" value="$(arg alpha)" />
+  </node>
+
+  <!-- Swarm Coordinator -->
+  <node name="swarm_coordinator" pkg="btut_ros" type="coordinator.py" output="screen">
+    <param name="num_robots" value="$(arg num_robots)" />
+    <param name="gamma" value="$(arg gamma)" />
+    <param name="tau" value="$(arg tau)" />
+    <param name="coordination_rate" value="$(arg coordination_rate)" />
+    <param name="robot_namespace" value="/robot" />
+  </node>
+
+  <!-- RViz for visualization (optional) -->
+  <arg name="use_rviz" default="false" />
+  <node if="$(arg use_rviz)" name="rviz" pkg="rviz" type="rviz"
+        args="-d $(find btut_ros)/config/coordination.rviz" />
+
+</launch>

@@ -1,0 +1,70 @@
+groups:
+  - name: btut_alerts
+    interval: 30s
+    rules:
+      # High error rate
+      - alert: HighSimulationErrorRate
+        expr: |
+          rate(btut_simulations_total{status="failed"}[5m])
+          /
+          rate(btut_simulations_total[5m])
+          > 0.05
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High simulation error rate"
+          description: "Simulation error rate is {{ $value | humanizePercentage }} (threshold: 5%)"
+
+      # Slow simulations
+      - alert: SlowSimulations
+        expr: |
+          histogram_quantile(0.95, rate(btut_simulation_duration_seconds_bucket[5m])) > 30
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Simulations running slowly"
+          description: "95th percentile simulation time is {{ $value }}s (threshold: 30s)"
+
+      # API latency
+      - alert: HighAPILatency
+        expr: |
+          histogram_quantile(0.95, rate(btut_http_request_duration_seconds_bucket[5m])) > 1.0
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High API latency"
+          description: "95th percentile API latency is {{ $value }}s (threshold: 1s)"
+
+      # High memory usage
+      - alert: HighMemoryUsage
+        expr: |
+          btut_memory_usage_bytes / 1024 / 1024 / 1024 > 1.5
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High memory usage"
+          description: "Memory usage is {{ $value }}GB (threshold: 1.5GB)"
+
+      # Service down
+      - alert: BTUTAPIDown
+        expr: up{job="btut-api"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "BTUT API is down"
+          description: "BTUT API has been down for more than 1 minute"
+
+      # Too many active simulations
+      - alert: TooManyActiveSimulations
+        expr: btut_simulations_active > 100
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Too many concurrent simulations"
+          description: "{{ $value }} simulations running concurrently (threshold: 100)"

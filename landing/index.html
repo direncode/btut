@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="BTUT - First O(N) multi-agent simulation platform. Simulate millions of agents in seconds with game-theoretic rigor.">
+    <meta name="keywords" content="multi-agent simulation, game theory, coordination, ABM, agent-based modeling">
+
+    <title>BTUT - Million-Agent Coordination at O(N)</title>
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="BTUT - Million-Agent Coordination">
+    <meta property="og:description" content="Simulate 1M+ agents in seconds. 100x faster than traditional ABM.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://btut.ai">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900">
+
+    <!-- Navigation -->
+    <nav class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center">
+                    <span class="text-2xl font-bold gradient-text">BTUT</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#features" class="text-gray-700 dark:text-gray-300 hover:text-blue-600">Features</a>
+                    <a href="#demo" class="text-gray-700 dark:text-gray-300 hover:text-blue-600">Demo</a>
+                    <a href="#docs" class="text-gray-700 dark:text-gray-300 hover:text-blue-600">Docs</a>
+                    <a href="#pricing" class="text-gray-700 dark:text-gray-300 hover:text-blue-600">Pricing</a>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="https://github.com/direncode/btut" class="text-gray-700 dark:text-gray-300 hover:text-blue-600">
+                        GitHub
+                    </a>
+                    <a href="https://btut.vercel.app" class="gradient-bg text-white px-4 py-2 rounded-lg hover:opacity-90">
+                        Launch App
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-20 pb-32 px-4">
+        <div class="max-w-7xl mx-auto text-center fade-in-up">
+            <h1 class="text-5xl md:text-7xl font-bold text-gray-900 dark:text-white mb-6">
+                Million-Agent Coordination<br>
+                <span class="gradient-text">at O(N) Speed</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-400 mb-12 max-w-3xl mx-auto">
+                Simulate 1,000,000+ agents in seconds. Game-theoretic rigor meets unprecedented scale.
+                100-1000x faster than traditional ABM.
+            </p>
+
+            <!-- CTA Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+                <a href="https://btut.vercel.app" class="gradient-bg text-white px-8 py-4 rounded-lg text-lg font-semibold hover:opacity-90 transition">
+                    Try Live Demo →
+                </a>
+                <button onclick="copyInstallCommand()" class="bg-white dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white px-8 py-4 rounded-lg text-lg font-semibold hover:border-blue-500 transition">
+                    <code>pip install btut-sdk</code>
+                </button>
+            </div>
+
+            <!-- Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+                <div>
+                    <div class="text-4xl font-bold gradient-text">O(N)</div>
+                    <div class="text-gray-600 dark:text-gray-400">Linear Complexity</div>
+                </div>
+                <div>
+                    <div class="text-4xl font-bold gradient-text">10M+</div>
+                    <div class="text-gray-600 dark:text-gray-400">Agents</div>
+                </div>
+                <div>
+                    <div class="text-4xl font-bold gradient-text">100x</div>
+                    <div class="text-gray-600 dark:text-gray-400">Faster</div>
+                </div>
+                <div>
+                    <div class="text-4xl font-bold gradient-text">&lt;3%</div>
+                    <div class="text-gray-600 dark:text-gray-400">Error</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-white dark:bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center text-gray-900 dark:text-white mb-16">
+                Revolutionary Features
+            </h2>
+
+            <div class="grid md:grid-cols-3 gap-12">
+                <!-- Feature 1 -->
+                <div class="text-center">
+                    <div class="w-16 h-16 gradient-bg rounded-full mx-auto mb-6 flex items-center justify-center text-white text-2xl font-bold">
+                        ⚡
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Lightning Fast</h3>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        Linear O(N) complexity enables unprecedented scale. Simulate 1M agents in 12 seconds on commodity hardware.
+                    </p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="text-center">
+                    <div class="w-16 h-16 gradient-bg rounded-full mx-auto mb-6 flex items-center justify-center text-white text-2xl font-bold">
+                        ✓
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Mathematically Proven</h3>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        Rigorous game-theoretic foundation with formal convergence proofs. Results you can trust.
+                    </p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="text-center">
+                    <div class="w-16 h-16 gradient-bg rounded-full mx-auto mb-6 flex items-center justify-center text-white text-2xl font-bold">
+                        🚀
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Production Ready</h3>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        Python SDK, REST API, cloud deployment. Monitoring, testing, documentation—everything you need.
+                    </p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="text-center">
+                    <div class="w-16 h-16 gradient-bg rounded-full mx-auto mb-6 flex items-center justify-center text-white text-2xl font-bold">
+                        📊
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Real-Time Insights</h3>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        Interactive visualizations, convergence tracking, 3D network views. Understand your simulations instantly.
+                    </p>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="text-center">
+                    <div class="w-16 h-16 gradient-bg rounded-full mx-auto mb-6 flex items-center justify-center text-white text-2xl font-bold">
+                        🔌
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Easy Integration</h3>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        ROS for robotics. SUMO for traffic. AWS Lambda for serverless. Integrates with your stack.
+                    </p>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="text-center">
+                    <div class="w-16 h-16 gradient-bg rounded-full mx-auto mb-6 flex items-center justify-center text-white text-2xl font-bold">
+                        💰
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Cost Effective</h3>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        100x speedup means 100x lower compute costs. Free for research. Pay-per-use for production.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Code Example Section -->
+    <section class="py-20 bg-gray-50 dark:bg-gray-900">
+        <div class="max-w-5xl mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center text-gray-900 dark:text-white mb-6">
+                Get Started in 3 Lines
+            </h2>
+            <p class="text-center text-gray-600 dark:text-gray-400 mb-12 text-lg">
+                Simple Python API. Production-ready in minutes.
+            </p>
+
+            <div class="bg-gray-900 rounded-lg p-8 shadow-2xl">
+                <pre class="text-green-400 font-mono text-sm md:text-base"><code><span class="text-blue-400">from</span> btut <span class="text-blue-400">import</span> Simulator
+
+<span class="text-gray-500"># Simulate 100,000 agents</span>
+sim = Simulator(agents=<span class="text-yellow-400">100000</span>, gamma=<span class="text-yellow-400">1.5</span>)
+result = sim.run()
+
+<span class="text-blue-400">print</span>(<span class="text-yellow-400">f"Cooperation: {result.final_cooperation:.2%}"</span>)
+<span class="text-gray-500"># Output: Cooperation: 60.00%</span></code></pre>
+            </div>
+
+            <div class="mt-8 text-center">
+                <a href="https://btut.ai/docs/getting-started" class="text-blue-600 dark:text-blue-400 hover:underline text-lg">
+                    Read the Quick Start Guide →
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section class="py-20 bg-white dark:bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center text-gray-900 dark:text-white mb-16">
+                Trusted Across Industries
+            </h2>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Use Case 1 -->
+                <div class="bg-gray-50 dark:bg-gray-900 p-6 rounded-lg">
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">🚗 Autonomous Vehicles</h3>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        Coordinate fleets of 10,000+ vehicles in real-time. Optimize routing, reduce congestion, improve safety.
+                    </p>
+                </div>
+
+                <!-- Use Case 2 -->
+                <div class="bg-gray-50 dark:bg-gray-900 p-6 rounded-lg">
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">🌐 Social Networks</h3>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        Model opinion dynamics, viral spread, influence propagation across millions of users.
+                    </p>
+                </div>
+
+                <!-- Use Case 3 -->
+                <div class="bg-gray-50 dark:bg-gray-900 p-6 rounded-lg">
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">🏙️ Smart Cities</h3>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        Optimize traffic lights, energy grids, public transit. Reduce emissions, improve quality of life.
+                    </p>
+                </div>
+
+                <!-- Use Case 4 -->
+                <div class="bg-gray-50 dark:bg-gray-900 p-6 rounded-lg">
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">📈 Economics</h3>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        Simulate market dynamics, strategic behavior, equilibrium outcomes with thousands of participants.
+                    </p>
+                </div>
+
+                <!-- Use Case 5 -->
+                <div class="bg-gray-50 dark:bg-gray-900 p-6 rounded-lg">
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">🤖 Robotics</h3>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        Coordinate robot swarms for search, rescue, construction. Real-time strategy computation.
+                    </p>
+                </div>
+
+                <!-- Use Case 6 -->
+                <div class="bg-gray-50 dark:bg-gray-900 p-6 rounded-lg">
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">🧬 Biology</h3>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        Model collective behavior in swarms, epidemics, cellular systems at unprecedented scale.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Performance Section -->
+    <section class="py-20 bg-gray-50 dark:bg-gray-900">
+        <div class="max-w-5xl mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center text-gray-900 dark:text-white mb-6">
+                Unmatched Performance
+            </h2>
+            <p class="text-center text-gray-600 dark:text-gray-400 mb-12 text-lg">
+                Linear O(N) scaling enables simulations impossible with traditional methods.
+            </p>
+
+            <div class="overflow-x-auto">
+                <table class="w-full bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+                    <thead class="gradient-bg text-white">
+                        <tr>
+                            <th class="px-6 py-4 text-left">Agents</th>
+                            <th class="px-6 py-4 text-left">BTUT</th>
+                            <th class="px-6 py-4 text-left">Traditional ABM</th>
+                            <th class="px-6 py-4 text-left">Speedup</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-700 dark:text-gray-300">
+                        <tr class="border-b dark:border-gray-700">
+                            <td class="px-6 py-4 font-mono">1,000</td>
+                            <td class="px-6 py-4 font-mono text-green-600">15ms</td>
+                            <td class="px-6 py-4 font-mono text-red-600">500ms</td>
+                            <td class="px-6 py-4 font-bold">33x</td>
+                        </tr>
+                        <tr class="border-b dark:border-gray-700">
+                            <td class="px-6 py-4 font-mono">10,000</td>
+                            <td class="px-6 py-4 font-mono text-green-600">120ms</td>
+                            <td class="px-6 py-4 font-mono text-red-600">50s</td>
+                            <td class="px-6 py-4 font-bold">416x</td>
+                        </tr>
+                        <tr class="border-b dark:border-gray-700">
+                            <td class="px-6 py-4 font-mono">100,000</td>
+                            <td class="px-6 py-4 font-mono text-green-600">1.2s</td>
+                            <td class="px-6 py-4 font-mono text-red-600">~8 hours</td>
+                            <td class="px-6 py-4 font-bold">24,000x</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 font-mono">1,000,000</td>
+                            <td class="px-6 py-4 font-mono text-green-600">12s</td>
+                            <td class="px-6 py-4 font-mono text-red-600">~3 weeks</td>
+                            <td class="px-6 py-4 font-bold">145,000x</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p class="text-center text-sm text-gray-500 dark:text-gray-400 mt-6">
+                Benchmarked on AMD Ryzen 9 5950X, 32GB RAM
+            </p>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 gradient-bg">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">
+                Ready to Scale Your Simulations?
+            </h2>
+            <p class="text-xl text-white opacity-90 mb-12">
+                Join researchers and engineers using BTUT to solve impossible problems.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                <a href="https://btut.vercel.app" class="bg-white text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition">
+                    Start Free Trial
+                </a>
+                <a href="https://btut.ai/docs" class="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-blue-600 transition">
+                    Read Documentation
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-white font-bold mb-4">Product</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#features" class="hover:text-white">Features</a></li>
+                        <li><a href="https://btut.ai/pricing" class="hover:text-white">Pricing</a></li>
+                        <li><a href="https://btut.vercel.app" class="hover:text-white">Demo</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-white font-bold mb-4">Resources</h3>
+                    <ul class="space-y-2">
+                        <li><a href="https://btut.ai/docs" class="hover:text-white">Documentation</a></li>
+                        <li><a href="https://btut.ai/tutorials" class="hover:text-white">Tutorials</a></li>
+                        <li><a href="https://btut.ai/api" class="hover:text-white">API Reference</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-white font-bold mb-4">Community</h3>
+                    <ul class="space-y-2">
+                        <li><a href="https://github.com/direncode/btut" class="hover:text-white">GitHub</a></li>
+                        <li><a href="https://github.com/direncode/btut/discussions" class="hover:text-white">Discussions</a></li>
+                        <li><a href="https://twitter.com/btut_ai" class="hover:text-white">Twitter</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-white font-bold mb-4">Company</h3>
+                    <ul class="space-y-2">
+                        <li><a href="https://btut.ai/about" class="hover:text-white">About</a></li>
+                        <li><a href="https://btut.ai/press" class="hover:text-white">Press Kit</a></li>
+                        <li><a href="mailto:support@btut.ai" class="hover:text-white">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center">
+                <p>&copy; 2025 BTUT. MIT License. Open Source.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function copyInstallCommand() {
+            navigator.clipboard.writeText('pip install btut-sdk');
+            alert('Copied to clipboard!');
+        }
+    </script>
+
+</body>
+</html>

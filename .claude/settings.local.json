@@ -2,7 +2,25 @@
   "permissions": {
     "allow": [
       "Bash(wasm-pack build:*)",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "Bash(powershell -Command:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nOptimize backend deployment configuration\n\n- Update Dockerfile.backend to copy only required Python engine file\n- Enhance fly.toml with improved resource allocation \\(2GB RAM, 2 CPUs\\)\n- Add comprehensive .dockerignore for efficient Docker builds\n- Configure health checks and auto-scaling for production\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(python:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nFix Dockerfile.backend to create lib directory before copying\n\n- Add RUN mkdir -p command to create lib/simulation directory structure\n- Ensures Docker COPY command succeeds by creating parent directories first\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git commit:*)",
+      "Bash(curl:*)",
+      "Bash(ls:*)",
+      "Bash(vercel whoami:*)",
+      "Bash(git config:*)",
+      "Bash(vercel --prod --force:*)",
+      "Bash(vercel:*)",
+      "Bash(git push:*)",
+      "Bash(npx tsc:*)",
+      "Bash(NODE_OPTIONS=\"--max-old-space-size=4096\" npm run build:*)",
+      "Bash(npm run dev:*)",
+      "Bash(fly logs:*)",
+      "Bash(pkill:*)"
     ]
   }
 }

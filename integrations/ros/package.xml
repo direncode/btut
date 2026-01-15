@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>btut_ros</name>
+  <version>1.0.0</version>
+  <description>ROS integration for BTUT multi-agent coordination</description>
+
+  <maintainer email="support@btut.ai">BTUT Team</maintainer>
+
+  <license>MIT</license>
+
+  <url type="website">https://btut.ai</url>
+  <url type="bugtracker">https://github.com/direncode/btut/issues</url>
+  <url type="repository">https://github.com/direncode/btut</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <depend>rospy</depend>
+  <depend>std_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>nav_msgs</depend>
+
+  <exec_depend>python3-numpy</exec_depend>
+  <exec_depend>python3-btut-sdk</exec_depend>
+
+  <export>
+  </export>
+</package>

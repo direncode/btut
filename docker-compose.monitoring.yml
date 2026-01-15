@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: btut-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./monitoring/alerts.yml:/etc/prometheus/alerts.yml
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--web.enable-lifecycle'
+    restart: unless-stopped
+    networks:
+      - btut-monitoring
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: btut-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=btut_admin_2026
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - ./analytics/dashboard.json:/etc/grafana/provisioning/dashboards/btut.json
+      - grafana-data:/var/lib/grafana
+    depends_on:
+      - prometheus
+    restart: unless-stopped
+    networks:
+      - btut-monitoring
+
+  alertmanager:
+    image: prom/alertmanager:latest
+    container_name: btut-alertmanager
+    ports:
+      - "9093:9093"
+    volumes:
+      - ./monitoring/alertmanager.yml:/etc/alertmanager/alertmanager.yml
+      - alertmanager-data:/alertmanager
+    command:
+      - '--config.file=/etc/alertmanager/alertmanager.yml'
+      - '--storage.path=/alertmanager'
+    restart: unless-stopped
+    networks:
+      - btut-monitoring
+
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: btut-node-exporter
+    ports:
+      - "9100:9100"
+    restart: unless-stopped
+    networks:
+      - btut-monitoring
+
+volumes:
+  prometheus-data:
+  grafana-data:
+  alertmanager-data:
+
+networks:
+  btut-monitoring:
+    driver: bridge

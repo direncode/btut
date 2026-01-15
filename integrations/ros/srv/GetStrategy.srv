@@ -1,0 +1,14 @@
+# Service to get recommended strategy for an agent
+
+# Request
+int32 agent_id
+geometry_msgs/Pose current_pose
+float64[] neighbor_strategies  # Strategies of nearby agents
+
+---
+
+# Response
+bool success
+string recommended_strategy  # "A" or "B"
+float64 confidence           # 0.0 to 1.0
+string reasoning

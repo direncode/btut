@@ -1,0 +1,11 @@
+# Service to run BTUT simulation
+
+# Request
+SimulationConfig config
+
+---
+
+# Response
+bool success
+string message
+CoordinationResult result

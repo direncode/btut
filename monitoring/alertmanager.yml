@@ -1,0 +1,47 @@
+global:
+  resolve_timeout: 5m
+  smtp_smarthost: 'smtp.gmail.com:587'
+  smtp_from: 'alerts@btut.ai'
+  smtp_auth_username: 'alerts@btut.ai'
+  smtp_auth_password: 'SMTP_PASSWORD_HERE'
+
+route:
+  group_by: ['alertname', 'cluster']
+  group_wait: 10s
+  group_interval: 10s
+  repeat_interval: 12h
+  receiver: 'btut-team'
+  routes:
+    - match:
+        severity: critical
+      receiver: 'btut-oncall'
+      continue: true
+    - match:
+        severity: warning
+      receiver: 'btut-team'
+
+receivers:
+  - name: 'btut-team'
+    email_configs:
+      - to: 'team@btut.ai'
+        headers:
+          Subject: '[BTUT] {{ .GroupLabels.alertname }}'
+
+  - name: 'btut-oncall'
+    email_configs:
+      - to: 'oncall@btut.ai'
+        headers:
+          Subject: '[CRITICAL] {{ .GroupLabels.alertname }}'
+    # Add Slack/PagerDuty here
+    slack_configs:
+      - api_url: 'SLACK_WEBHOOK_URL_HERE'
+        channel: '#btut-alerts'
+        title: '{{ .GroupLabels.alertname }}'
+        text: '{{ range .Alerts }}{{ .Annotations.description }}{{ end }}'
+
+inhibit_rules:
+  - source_match:
+      severity: 'critical'
+    target_match:
+      severity: 'warning'
+    equal: ['alertname', 'cluster']

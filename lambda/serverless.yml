@@ -1,0 +1,152 @@
+service: btut-lambda
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: python3.11
+  region: ${opt:region, 'us-east-1'}
+  stage: ${opt:stage, 'dev'}
+  memorySize: 3008  # Maximum memory for faster execution
+  timeout: 300      # 5 minutes max
+  architecture: arm64  # Graviton2 for better price/performance
+
+  # IAM Role
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - logs:CreateLogGroup
+            - logs:CreateLogStream
+            - logs:PutLogEvents
+          Resource: '*'
+
+  # Environment variables
+  environment:
+    STAGE: ${self:provider.stage}
+    LOG_LEVEL: INFO
+
+  # API Gateway configuration
+  httpApi:
+    cors:
+      allowedOrigins:
+        - '*'
+      allowedHeaders:
+        - Content-Type
+        - X-Amz-Date
+        - Authorization
+        - X-Api-Key
+      allowedMethods:
+        - GET
+        - POST
+        - OPTIONS
+
+functions:
+  # Main simulation endpoint
+  simulate:
+    handler: handler.lambda_handler
+    description: Run BTUT simulation
+    events:
+      - httpApi:
+          path: /simulate
+          method: post
+    environment:
+      MAX_AGENTS: 1000000
+
+  # Health check
+  health:
+    handler: handler.health_check
+    description: Health check endpoint
+    events:
+      - httpApi:
+          path: /health
+          method: get
+
+  # Batch simulations
+  batch:
+    handler: handler.batch_handler
+    description: Run multiple simulations in batch
+    timeout: 900  # 15 minutes for batch
+    events:
+      - httpApi:
+          path: /batch
+          method: post
+    environment:
+      MAX_BATCH_SIZE: 100
+
+# Package configuration
+package:
+  individually: false
+  patterns:
+    - '!.git/**'
+    - '!.github/**'
+    - '!node_modules/**'
+    - '!.serverless/**'
+    - '!venv/**'
+    - '!__pycache__/**'
+    - '!*.pyc'
+    - '!tests/**'
+    - '!docs/**'
+    - 'handler.py'
+    - 'python-sdk/**'
+
+# Plugins
+plugins:
+  - serverless-python-requirements
+  - serverless-offline
+
+# Python requirements
+custom:
+  pythonRequirements:
+    dockerizePip: true
+    layer: true
+    zip: true
+    slim: true
+    strip: false
+    noDeploy:
+      - boto3
+      - botocore
+    pipCmdExtraArgs:
+      - --platform manylinux2014_aarch64
+      - --only-binary=:all:
+
+# Resources
+resources:
+  Resources:
+    # API Gateway
+    HttpApi:
+      Type: AWS::ApiGatewayV2::Api
+      Properties:
+        Name: btut-api-${self:provider.stage}
+        Description: BTUT Simulation API
+        ProtocolType: HTTP
+        CorsConfiguration:
+          AllowOrigins:
+            - '*'
+          AllowMethods:
+            - GET
+            - POST
+            - OPTIONS
+          AllowHeaders:
+            - '*'
+
+    # CloudWatch Log Group
+    SimulateLogGroup:
+      Type: AWS::Logs::LogGroup
+      Properties:
+        LogGroupName: /aws/lambda/${self:service}-${self:provider.stage}-simulate
+        RetentionInDays: 7
+
+  Outputs:
+    ApiEndpoint:
+      Description: API Gateway endpoint URL
+      Value:
+        Fn::Sub: 'https://${HttpApi}.execute-api.${AWS::Region}.amazonaws.com'
+
+    SimulateFunctionArn:
+      Description: Lambda function ARN
+      Value:
+        Fn::GetAtt:
+          - SimulateLambdaFunction
+          - Arn

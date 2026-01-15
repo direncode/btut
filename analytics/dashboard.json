@@ -1,0 +1,113 @@
+{
+  "dashboard": {
+    "title": "BTUT Production Dashboard",
+    "tags": ["btut", "simulations", "production"],
+    "timezone": "browser",
+    "panels": [
+      {
+        "title": "Simulation Rate",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "rate(btut_simulations_total[5m])",
+            "legendFormat": "Simulations/sec"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0}
+      },
+      {
+        "title": "Active Simulations",
+        "type": "singlestat",
+        "targets": [
+          {
+            "expr": "btut_simulations_active"
+          }
+        ],
+        "gridPos": {"h": 4, "w": 6, "x": 12, "y": 0}
+      },
+      {
+        "title": "Success Rate",
+        "type": "gauge",
+        "targets": [
+          {
+            "expr": "rate(btut_simulations_total{status=\"success\"}[5m]) / rate(btut_simulations_total[5m])"
+          }
+        ],
+        "gridPos": {"h": 4, "w": 6, "x": 18, "y": 0}
+      },
+      {
+        "title": "Simulation Duration (p95)",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, rate(btut_simulation_duration_seconds_bucket[5m]))",
+            "legendFormat": "95th percentile"
+          },
+          {
+            "expr": "histogram_quantile(0.50, rate(btut_simulation_duration_seconds_bucket[5m]))",
+            "legendFormat": "50th percentile"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8}
+      },
+      {
+        "title": "Agent Count Distribution",
+        "type": "heatmap",
+        "targets": [
+          {
+            "expr": "rate(btut_simulation_agent_count_bucket[5m])"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 8}
+      },
+      {
+        "title": "HTTP Request Rate",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "rate(btut_http_requests_total[5m])",
+            "legendFormat": "{{method}} {{endpoint}}"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 16}
+      },
+      {
+        "title": "HTTP Latency",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, rate(btut_http_request_duration_seconds_bucket[5m]))",
+            "legendFormat": "p95"
+          },
+          {
+            "expr": "histogram_quantile(0.99, rate(btut_http_request_duration_seconds_bucket[5m]))",
+            "legendFormat": "p99"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 16}
+      },
+      {
+        "title": "Memory Usage",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "btut_memory_usage_bytes / 1024 / 1024",
+            "legendFormat": "Memory (MB)"
+          }
+        ],
+        "gridPos": {"h": 6, "w": 12, "x": 0, "y": 24}
+      },
+      {
+        "title": "CPU Usage",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "btut_cpu_usage_percent",
+            "legendFormat": "CPU %"
+          }
+        ],
+        "gridPos": {"h": 6, "w": 12, "x": 12, "y": 24}
+      }
+    ]
+  }
+}
