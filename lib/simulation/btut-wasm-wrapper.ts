@@ -13,18 +13,11 @@ export async function initWasm(): Promise<boolean> {
     return true;
   }
 
-  try {
-    // Dynamically import WASM module
-    // @ts-ignore - WASM module is generated at build time
-    const module = await import('../../rust-engine/pkg/btut_wasm');
-    await module.default();
-    wasmModule = module;
-    isInitialized = true;
-    return true;
-  } catch (error) {
-    console.warn('WASM initialization failed, falling back to TypeScript:', error);
-    return false;
-  }
+  // WASM is optional and not yet implemented
+  // This function is here for future WASM integration
+  // For now, always return false to use TypeScript implementation
+  console.info('WASM module not built, using TypeScript implementation');
+  return false;
 }
 
 export function isWasmAvailable(): boolean {
