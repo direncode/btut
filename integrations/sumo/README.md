@@ -1,18 +1,39 @@
 # BTUT-SUMO Traffic Integration
 
-Integrate BTUT multi-agent coordination with SUMO traffic simulation for intelligent traffic management.
+Validate BTUT (Bivariate Trajectory-Undercurrent Theory) multi-agent coordination using Eclipse SUMO traffic simulation. This provides a digital twin for testing BTUT's phase transition behavior in realistic traffic scenarios before hardware deployment.
+
+## Quick Start
+
+```bash
+# 1. Check your setup
+python quickstart.py --check
+
+# 2. Run mock demo (no SUMO required)
+python quickstart.py
+
+# 3. Run with SUMO (requires SUMO installed)
+python quickstart.py --sumo
+
+# 4. Run full validation experiment
+python quickstart.py --full
+```
 
 ## Overview
 
-This integration uses BTUT to compute optimal coordination strategies for vehicles in SUMO traffic simulations. Vehicles dynamically adjust their behaviors based on game-theoretic equilibria, resulting in improved traffic flow and reduced congestion.
+This integration bridges BTUT's abstract game-theoretic coordination with SUMO's spatial traffic simulation:
+
+- **Agents → Vehicles**: Each SUMO vehicle becomes a BTUT agent
+- **Network Topology → Spatial Proximity**: Neighbors detected within communication range (50m)
+- **Hub Influence (τ)** → Vehicles at congested intersections have higher "degree"
+- **Cooperation Rate** → Directly controls vehicle behavior (speed, gap, lane changes)
 
 ## Features
 
-- **Real-time Coordination**: Update vehicle behaviors during simulation
-- **Game-Theoretic Strategies**: Cooperative vs competitive driving
-- **Traffic Optimization**: Reduce waiting times and improve flow
-- **Statistics Tracking**: Monitor performance metrics
-- **Configurable Parameters**: Adjust gamma (cooperation bonus) and tau (hub influence)
+- **Spatial Neighbor Detection**: Bridges mean-field theory to spatial reality
+- **Baseline Comparison**: Automatic tau=0 vs optimal tau experiments
+- **Phase Transition Validation**: Detects critical tau where cooperation emerges
+- **Publication-Ready Output**: Plots, metrics, and markdown reports
+- **Mock Mode**: Test visualization without SUMO installation
 
 ## Installation
 
@@ -343,6 +364,88 @@ traci.start(["sumo", "-c", config_file])  # Faster (no GUI)
 4. **Validate Results**: Compare with baseline (no coordination)
 5. **Save Statistics**: Log results for analysis
 
+## File Structure
+
+```
+integrations/sumo/
+├── README.md                    # This file
+├── quickstart.py                # Quick setup verification and demo
+├── btut_sumo_bridge.py          # Main coordination bridge
+├── validation_experiment.py     # Full validation workflow
+├── traffic_coordinator.py       # Original simple coordinator
+├── example_scenario.sumocfg     # SUMO configuration
+├── network.net.xml              # 5x5 urban grid network
+├── routes.rou.xml               # Vehicle routes and flows
+└── viewsettings.xml             # SUMO GUI settings
+```
+
+## Validation Workflow
+
+### 1. Baseline Comparison
+
+```bash
+python btut_sumo_bridge.py --config example_scenario.sumocfg --experiment comparison
+```
+
+Runs tau=0 (no hub influence) vs tau=0.3 vs tau=0.5 and compares:
+- Average vehicle speed
+- Average waiting time
+- Cooperation rate
+- Throughput
+
+### 2. Full Parameter Sweep
+
+```bash
+python btut_sumo_bridge.py --config example_scenario.sumocfg --experiment sweep
+```
+
+Tests tau from 0.0 to 0.8 in 0.1 increments to find optimal hub influence.
+
+### 3. Validation Experiment
+
+```bash
+python validation_experiment.py --full
+```
+
+Generates:
+- `tau_sweep_*.png`: Cooperation/speed/wait vs tau
+- `metrics_comparison_*.png`: Bar chart comparison
+- `convergence_dynamics_*.png`: Time series plots
+- `validation_report_*.md`: Markdown report
+- `validation_results_*.json`: Raw data
+
+## Expected Results
+
+Based on BTUT theory, you should observe:
+
+| Metric | tau=0 (Baseline) | tau=0.3-0.5 (Optimal) | Improvement |
+|--------|------------------|------------------------|-------------|
+| Cooperation | ~50-55% | ~60-68% | +15-25% |
+| Avg Speed | ~8-10 m/s | ~11-13 m/s | +20-40% |
+| Avg Wait | ~18-22s | ~10-14s | -30-45% |
+
+The key validation point is observing a **phase transition**: a sharp increase in cooperation rate around a critical tau value (typically 0.25-0.35).
+
+## Scaling Up
+
+### 10K-50K Vehicles (Laptop)
+
+Use larger networks from OpenStreetMap:
+```bash
+# Download and convert OSM network
+python $SUMO_HOME/tools/osmWebWizard.py
+
+# Or use netconvert directly
+netconvert --osm-files city.osm -o city.net.xml
+```
+
+### 100K+ Vehicles (Cloud)
+
+- Run headless: `--gui false`
+- Use `sumo` instead of `sumo-gui`
+- Deploy on AWS/GCP with multi-core instances
+- Consider SUMO's parallel simulation features
+
 ## Citation
 
 ```bibtex
@@ -357,16 +460,10 @@ traci.start(["sumo", "-c", config_file])  # Faster (no GUI)
 ## Resources
 
 - **SUMO Documentation**: https://sumo.dlr.de/docs/
-- **BTUT Documentation**: https://btut.ai/docs
-- **TraCI Tutorial**: https://sumo.dlr.de/docs/TraCI.html
-- **Example Scenarios**: https://github.com/eclipse/sumo/tree/main/tests
-
-## Support
-
-- Issues: https://github.com/direncode/btut/issues
-- Discussions: https://github.com/direncode/btut/discussions
-- Email: support@btut.ai
+- **TraCI Python API**: https://sumo.dlr.de/docs/TraCI/Interfacing_TraCI_from_Python.html
+- **BTUT Theory**: See `docs/mathematics/` in main repository
+- **Example Networks**: https://github.com/eclipse/sumo/tree/main/tests
 
 ## License
 
-MIT License - see LICENSE file for details.
+MIT License - see LICENSE file in repository root.

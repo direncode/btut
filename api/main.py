@@ -30,6 +30,7 @@ import os
 # Add lib directory to path
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'lib', 'simulation'))
 from btut_engine import BTUTSimulator, PRESETS, benchmark_performance
+from critical_point_finder import CriticalPointFinder, Domain, get_critical_gamma, AutoCalibrator
 
 # ============================================================================
 # Application Setup
@@ -139,6 +140,28 @@ class ParameterSweepRequest(BaseModel):
     parameter: Literal["gamma", "tau", "N", "alpha"]
     values: List[float] = Field(..., min_items=2, max_items=50)
     parallel: bool = Field(True)
+
+
+class CriticalPointRequest(BaseModel):
+    domain: Literal["abstract", "traffic", "drone", "robot"] = Field("abstract", description="Application domain")
+    tau: float = Field(0.3, ge=0, le=1, description="Hub influence parameter")
+    N: int = Field(1000, ge=50, le=100000, description="Number of agents for calibration")
+    force_recalculate: bool = Field(False, description="Force recalculation even if cached")
+
+
+class CriticalPointResponse(BaseModel):
+    gamma_critical: float
+    gamma_lower: float
+    gamma_upper: float
+    transition_sharpness: float
+    recommended_gamma: float
+    recommended_margin: float
+    search_iterations: int
+    confidence: float
+    domain: str
+    config_used: Dict[str, Any]
+    timestamp: str
+    cached: bool = False
 
 
 class ProjectCreate(BaseModel):
@@ -267,6 +290,9 @@ def root():
             "sweep": "POST /api/simulate/sweep",
             "presets": "GET /api/presets",
             "benchmark": "POST /api/benchmark",
+            "calibrate": "POST /api/calibrate",
+            "calibrate_recommended": "GET /api/calibrate/recommended/{domain}",
+            "calibrate_all": "POST /api/calibrate/all",
             "stats": "GET /api/stats",
             "projects": "POST /api/projects",
             "websocket": "WS /ws"
@@ -545,6 +571,129 @@ def delete_simulation(simulation_id: str):
 
     del simulations_db[simulation_id]
     return {"message": "Simulation deleted", "simulation_id": simulation_id}
+
+
+# ============================================================================
+# Critical Point Discovery Endpoints
+# ============================================================================
+
+@app.post("/api/calibrate", response_model=CriticalPointResponse)
+async def calibrate_critical_point(
+    request: CriticalPointRequest,
+    http_request: Request
+):
+    """
+    Discover the critical gamma for a specific domain.
+
+    This finds the phase transition point where cooperation emerges.
+    Results are cached for efficiency.
+
+    - **domain**: Application domain (abstract, traffic, drone, robot)
+    - **tau**: Hub influence parameter (0-1)
+    - **N**: Number of agents for calibration
+    - **force_recalculate**: Force fresh calculation even if cached
+    """
+
+    await rate_limit(http_request, max_requests=10)
+
+    try:
+        calibrator = AutoCalibrator()
+        domain_enum = Domain(request.domain)
+
+        result = calibrator.calibrate(
+            domain=domain_enum,
+            tau=request.tau,
+            N=request.N,
+            force=request.force_recalculate
+        )
+
+        # Check if result was cached
+        key = f"{request.domain}_tau{request.tau:.2f}_N{request.N}"
+        cached = key in calibrator.calibrations and not request.force_recalculate
+
+        return CriticalPointResponse(
+            gamma_critical=result.gamma_critical,
+            gamma_lower=result.gamma_lower,
+            gamma_upper=result.gamma_upper,
+            transition_sharpness=result.transition_sharpness,
+            recommended_gamma=result.recommended_gamma,
+            recommended_margin=result.recommended_margin,
+            search_iterations=result.search_iterations,
+            confidence=result.confidence,
+            domain=result.domain,
+            config_used=result.config_used,
+            timestamp=result.timestamp,
+            cached=cached
+        )
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Calibration failed: {str(e)}")
+
+
+@app.get("/api/calibrate/recommended/{domain}")
+async def get_recommended_gamma(
+    domain: str = "abstract",
+    tau: float = 0.3,
+    N: int = 1000
+):
+    """
+    Quick endpoint to get recommended gamma for a domain.
+
+    Returns just the optimal gamma value for immediate use in simulations.
+    """
+
+    try:
+        gamma = get_critical_gamma(domain, tau, N)
+        return {
+            "domain": domain,
+            "tau": tau,
+            "N": N,
+            "recommended_gamma": gamma,
+            "description": f"Optimal gamma for {domain} domain with tau={tau}"
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/api/calibrate/all")
+async def calibrate_all_domains(
+    tau: float = 0.3,
+    http_request: Request = None
+):
+    """
+    Calibrate all supported domains at once.
+
+    Useful for initializing a deployment with optimal parameters.
+    """
+
+    if http_request:
+        await rate_limit(http_request, max_requests=5)
+
+    try:
+        calibrator = AutoCalibrator()
+        results = calibrator.calibrate_all_domains(tau)
+
+        return {
+            "calibration_id": str(uuid.uuid4()),
+            "tau": tau,
+            "timestamp": datetime.utcnow().isoformat(),
+            "domains": {
+                domain: {
+                    "gamma_critical": r.gamma_critical,
+                    "recommended_gamma": r.recommended_gamma,
+                    "transition_sharpness": r.transition_sharpness,
+                    "confidence": r.confidence
+                }
+                for domain, r in results.items()
+            },
+            "summary": {
+                "abstract": results.get("abstract", {}).recommended_gamma if "abstract" in results else None,
+                "traffic": results.get("traffic", {}).recommended_gamma if "traffic" in results else None,
+                "drone": results.get("drone", {}).recommended_gamma if "drone" in results else None
+            }
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Calibration failed: {str(e)}")
 
 
 @app.get("/api/stats")
