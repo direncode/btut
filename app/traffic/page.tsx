@@ -44,7 +44,7 @@ export default function TrafficPage() {
   } = useComparisonMode(client)
 
   const handleConnect = (host: string, port: number) => {
-    connect({ host, port })
+    connect()
   }
 
   const handleDisconnect = () => {
