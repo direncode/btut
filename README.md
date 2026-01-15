@@ -295,3 +295,4 @@ MIT License - see [LICENSE](LICENSE) for details.
   
   **[Try Demo](https://btut.vercel.app)** • **[Read Docs](https://docs.btut.ai)** • **[API Reference](https://api.btut.ai/docs)**
 </div>
+# BTUT Platform v1.0 - Production Ready
