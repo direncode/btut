@@ -203,14 +203,14 @@ export default function TrafficPage() {
             {/* Traffic Metrics */}
             {metrics && (
               <TrafficMetrics
-                averageSpeed={metrics.meanSpeed}
+                averageSpeed={metrics.averageSpeed}
                 totalVehicles={metrics.totalVehicles}
-                waitingVehicles={metrics.waitingVehicles}
-                meanWaitingTime={metrics.meanWaitingTime}
+                waitingVehicles={metrics.totalWaitingTime / (metrics.totalVehicles || 1)}
+                meanWaitingTime={metrics.totalWaitingTime / (metrics.totalVehicles || 1)}
                 throughput={metrics.throughput}
-                totalFuel={metrics.totalFuel}
-                totalCO2={metrics.totalCO2}
-                congestionLevel={metrics.congestionLevel}
+                totalFuel={metrics.fuelConsumption}
+                totalCO2={metrics.co2Emissions}
+                congestionLevel={0}
               />
             )}
 
