@@ -11,9 +11,15 @@ engine/
 ros_ws/
 scripts/
 
-# Exclude Python integration scripts (but keep app/integrations/ Next.js page)
+# Exclude Python integration scripts (but keep JSON data files for frontend)
 integrations/ros/
-integrations/sumo/
+integrations/sumo/*.py
+integrations/sumo/*.cfg
+integrations/sumo/*.sumocfg
+integrations/sumo/*.net.xml
+integrations/sumo/*.rou.xml
+# Keep JSON data files
+!integrations/sumo/*.json
 
 # Exclude Python files
 **/*.py
