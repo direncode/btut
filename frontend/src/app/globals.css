@@ -1,0 +1,134 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --apple-blue: #0071e3;
+  --apple-green: #34c759;
+  --apple-red: #ff3b30;
+  --apple-orange: #ff9500;
+  --apple-purple: #af52de;
+  --apple-gray-100: #f5f5f7;
+  --apple-gray-400: #86868b;
+  --apple-gray-900: #1d1d1f;
+}
+
+@layer base {
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-white text-apple-gray-900 font-sans;
+  }
+
+  ::selection {
+    @apply bg-apple-blue/20 text-apple-gray-900;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-white/70 backdrop-blur-apple border border-white/20;
+  }
+
+  .glass-dark {
+    @apply bg-apple-gray-900/70 backdrop-blur-apple border border-white/10;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-apple-blue via-purple-500 to-apple-purple bg-clip-text text-transparent;
+  }
+
+  .gradient-bg {
+    @apply bg-gradient-to-br from-apple-gray-50 via-white to-apple-gray-100;
+  }
+
+  .card {
+    @apply bg-white rounded-apple-lg shadow-apple border border-apple-gray-200/50 overflow-hidden;
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-apple-lg hover:-translate-y-1;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-6 py-3
+           bg-apple-blue text-white font-medium rounded-full
+           transition-all duration-200
+           hover:bg-apple-blue-light active:scale-[0.98]
+           shadow-apple hover:shadow-glow;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-6 py-3
+           bg-apple-gray-100 text-apple-gray-900 font-medium rounded-full
+           transition-all duration-200
+           hover:bg-apple-gray-200 active:scale-[0.98];
+  }
+
+  .input-field {
+    @apply w-full px-4 py-3 bg-apple-gray-100 rounded-apple
+           border-2 border-transparent
+           text-apple-gray-900 placeholder:text-apple-gray-400
+           transition-all duration-200
+           focus:outline-none focus:border-apple-blue focus:bg-white
+           focus:ring-4 focus:ring-apple-blue/10;
+  }
+
+  .stat-card {
+    @apply relative overflow-hidden p-6 rounded-apple-lg
+           bg-gradient-to-br from-white to-apple-gray-50
+           border border-apple-gray-200/50 shadow-apple-sm;
+  }
+
+  .chart-container {
+    @apply relative p-6 rounded-apple-lg bg-white
+           border border-apple-gray-200/50 shadow-apple;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .animate-in {
+    animation: fadeIn 0.5s ease-out forwards;
+  }
+
+  .stagger-1 { animation-delay: 0.1s; }
+  .stagger-2 { animation-delay: 0.2s; }
+  .stagger-3 { animation-delay: 0.3s; }
+  .stagger-4 { animation-delay: 0.4s; }
+  .stagger-5 { animation-delay: 0.5s; }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d2d2d7;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #86868b;
+}
+
+/* Number font feature for charts */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
