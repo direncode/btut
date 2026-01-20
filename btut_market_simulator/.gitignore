@@ -1,0 +1,25 @@
+# Rust build artifacts
+/target/
+**/*.rs.bk
+Cargo.lock
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Output files
+output/
+output_*/
+*.csv
+*.json
+!Cargo.lock
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Python artifacts (from old init)
+__pycache__/
+*.py[cod]
