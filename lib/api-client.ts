@@ -1,9 +1,7 @@
 /**
  * API Client for BTUT Backend
- * TypeScript client for interacting with FastAPI backend
+ * Uses built-in Next.js API routes - no external backend or configuration required
  */
-
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
 export interface SimulationConfig {
   N: number;
@@ -48,7 +46,8 @@ export interface BenchmarkResult {
 class BTUTAPIClient {
   private baseURL: string;
 
-  constructor(baseURL: string = API_BASE_URL) {
+  constructor(baseURL: string = '') {
+    // Default to empty string = same-origin relative URLs (Next.js API routes)
     this.baseURL = baseURL;
   }
 
@@ -184,7 +183,54 @@ class BTUTAPIClient {
     total_simulations: number;
     uptime_seconds: number;
   }> {
-    return this.request('/health');
+    return this.request('/api/health');
+  }
+
+  // ==================== Calibration Endpoints ====================
+
+  async calibrate(
+    domain: string = 'abstract',
+    tau: number = 0.3,
+    N: number = 1000
+  ): Promise<{
+    gamma_critical: number;
+    recommended_gamma: number;
+    transition_sharpness: number;
+    confidence: number;
+    domain: string;
+  }> {
+    return this.request('/api/calibrate', {
+      method: 'POST',
+      body: JSON.stringify({ domain, tau, N }),
+    });
+  }
+
+  async getRecommendedGamma(
+    domain: string = 'abstract',
+    tau: number = 0.3,
+    N: number = 1000
+  ): Promise<{
+    domain: string;
+    tau: number;
+    N: number;
+    recommended_gamma: number;
+    description: string;
+  }> {
+    return this.request(`/api/calibrate/recommended/${domain}?tau=${tau}&N=${N}`);
+  }
+
+  async calibrateAll(
+    tau: number = 0.3
+  ): Promise<{
+    calibration_id: string;
+    tau: number;
+    domains: Record<string, any>;
+    summary: Record<string, number | null>;
+  }> {
+    return this.request('/api/calibrate/all', {
+      method: 'POST',
+      body: JSON.stringify({ tau }),
+    });
   }
 
   // ==================== Project Endpoints ====================
@@ -235,36 +281,10 @@ class BTUTAPIClient {
       }
     );
   }
-
-  // ==================== WebSocket Connection ====================
-
-  connectWebSocket(
-    onMessage: (data: any) => void,
-    onError?: (error: Event) => void
-  ): WebSocket {
-    const wsURL = this.baseURL.replace('http', 'ws') + '/ws';
-    const ws = new WebSocket(wsURL);
-
-    ws.onmessage = (event) => {
-      try {
-        const data = JSON.parse(event.data);
-        onMessage(data);
-      } catch (error) {
-        console.error('Failed to parse WebSocket message:', error);
-      }
-    };
-
-    ws.onerror = (error) => {
-      console.error('WebSocket error:', error);
-      if (onError) onError(error);
-    };
-
-    return ws;
-  }
 }
 
-// Export singleton instance
+// Export singleton instance - works out of the box with no configuration
 export const apiClient = new BTUTAPIClient();
 
-// Export class for custom instances
+// Export class for custom instances (e.g., pointing to external server)
 export default BTUTAPIClient;
