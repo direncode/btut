@@ -466,4 +466,4 @@ netconvert --osm-files city.osm -o city.net.xml
 
 ## License
 
-MIT License - see LICENSE file in repository root.
+Apache License 2.0 - see LICENSE file in repository root.

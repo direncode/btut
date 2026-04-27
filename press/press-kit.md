@@ -77,7 +77,7 @@ Built on rigorous game theory with proven convergence to Nash equilibria.
 - **Python SDK**: `pip install btut-sdk` and start in minutes
 - **REST API**: Language-agnostic HTTP interface
 - **Cloud-Ready**: Deploy on AWS Lambda, Google Cloud, Azure
-- **Open Source**: MIT licensed
+- **Open Source**: Apache 2.0 licensed
 
 ### Production-Ready
 - **Monitoring**: Built-in Prometheus/Grafana integration
@@ -293,7 +293,7 @@ Built on rigorous game theory with proven convergence to Nash equilibria.
 **A:** Yes, a web-based platform at btut.vercel.app. Also Python SDK and REST API for programmatic access.
 
 ### Q: What's the licensing?
-**A:** MIT license for research/academic use. Contact for commercial licensing.
+**A:** Apache 2.0 license for research/academic use. Contact for commercial licensing.
 
 ---
 

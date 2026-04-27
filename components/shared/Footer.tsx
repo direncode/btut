@@ -62,7 +62,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
           <div className="text-sm text-gray-400 mb-4 md:mb-0">
-            © 2025 BTUT Platform. MIT License.
+            © 2025 BTUT Platform. Apache License 2.0.
           </div>
           <div className="flex items-center space-x-4">
             <span className="text-sm text-gray-400">Powered by</span>

@@ -168,7 +168,7 @@ export function GetStarted() {
         <div className="mt-8 text-center text-sm text-gray-500">
           <span>BTUT v1.0.0</span>
           <span className="mx-2">|</span>
-          <span>MIT License</span>
+          <span>Apache License 2.0</span>
           <span className="mx-2">|</span>
           <Link href="https://github.com/direncode/btut/releases" className="hover:text-gray-400">
             Release Notes

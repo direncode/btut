@@ -522,7 +522,7 @@ Configuration:                 ~700 lines
 - ✅ HTTPS enforced
 
 ### **Compliance**
-- ✅ MIT License applied
+- ✅ Apache License 2.0 applied
 - ✅ Dependencies vetted
 - ✅ No GPL contamination
 - ✅ Attribution included

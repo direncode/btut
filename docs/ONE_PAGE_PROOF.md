@@ -159,7 +159,7 @@ Total time: 0.4 seconds
 
 ## Traction & Validation
 
-- ✅ **Open Source** (MIT License)
+- ✅ **Open Source** (Apache License 2.0)
 - ✅ **Live Web Demo** at btut.vercel.app
 - ✅ **Python SDK** available via pip
 - ✅ **REST API** for language-agnostic integration

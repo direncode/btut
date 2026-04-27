@@ -4,7 +4,7 @@
 **Solves DARPA Mathematical Challenge 13**
 
 [![GitHub stars](https://img.shields.io/github/stars/direnakkocdemir/btut?style=social)](https://github.com/direnakkocdemir/btut)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![Live Demo](https://img.shields.io/badge/demo-live-success)](https://btut.vercel.app)
 [![Python](https://img.shields.io/badge/python-3.8%2B-blue)](https://pypi.org/project/btut-sdk/)
 [![Built with Grok-4](https://img.shields.io/badge/built%20with-Grok--4-purple)](https://x.ai)
@@ -285,7 +285,7 @@ If BTUT is useful for your work, please **star this repository** to help others 
 
 ## 📄 License
 
-MIT License - see [LICENSE](LICENSE) for details.
+Apache License 2.0 - see [LICENSE](LICENSE) for details.
 
 ---
 

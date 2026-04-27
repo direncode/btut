@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "BTUT: Scalable Multi-Agent Coordination - Solves DARPA Challenge 13",
   "author": "Diren Akkocdemir <diren@btut.ai>",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/direnakkocdemir/btut"
