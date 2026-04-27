@@ -8,7 +8,7 @@ version = "1.0.0"
 description = "Python SDK for BTUT multi-agent simulations"
 readme = "README.md"
 requires-python = ">=3.8"
-license = {text = "MIT"}
+license = {text = "Apache-2.0"}
 authors = [
     {name = "Diren Akkocdemir", email = "diren@btut.ai"}
 ]
@@ -18,7 +18,7 @@ classifiers = [
     "Intended Audience :: Science/Research",
     "Intended Audience :: Developers",
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
-    "License :: OSI Approved :: MIT License",
+    "License :: OSI Approved :: Apache Software License",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",

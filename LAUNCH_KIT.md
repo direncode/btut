@@ -223,7 +223,7 @@ Coordinates autonomous agents using game theory. Think: robot swarms, traffic ne
 btut.vercel.app (runs entirely in browser)
 
 **Code:**
-github.com/direnakkocdemir/btut (MIT License)
+github.com/direnakkocdemir/btut (Apache License 2.0)
 
 Built to solve DARPA Challenge 13. Open to contributions!
 ```

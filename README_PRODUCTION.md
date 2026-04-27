@@ -2,7 +2,7 @@
 
 **Production-Grade O(N) Multi-Agent Coordination Engine | DARPA Challenge 13 Solution**
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue)](https://www.typescriptlang.org/)
 [![Rust](https://img.shields.io/badge/Rust-1.75-orange)](https://www.rust-lang.org/)
 [![Python](https://img.shields.io/badge/Python-3.11-green)](https://www.python.org/)
@@ -392,7 +392,7 @@ Contributions welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## 📄 License
 
-MIT License - see [LICENSE](LICENSE) file.
+Apache License 2.0 - see [LICENSE](LICENSE) file.
 
 ---
 
