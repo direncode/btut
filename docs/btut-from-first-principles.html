@@ -1,0 +1,1692 @@
+<title>BTUT From First Principles</title>
+
+<style>
+/* ============================================================
+   BTUT From First Principles — long-form report
+   Single column, serif, read front to back.
+   ============================================================ */
+
+:root {
+  --ground:  #FBFBF8;
+  --raised:  #F3F3EE;
+  --ink:     #1B1B19;
+  --ink-2:   #5F625B;
+  --ink-3:   #8A8D85;
+  --rule:    #E1E1D8;
+  --rule-2:  #C8C9BE;
+  --accent:  #1F4E6B;
+  --accent-2:#EDF1F3;
+  --coop:    #0B6257;
+  --defect:  #99361A;
+  --mark:    #FBF0D8;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground:  #15171A;
+    --raised:  #1D2024;
+    --ink:     #E3E4DF;
+    --ink-2:   #9DA199;
+    --ink-3:   #767A72;
+    --rule:    #292C31;
+    --rule-2:  #3A3E44;
+    --accent:  #85B8D6;
+    --accent-2:#1B2A33;
+    --coop:    #3ACFBA;
+    --defect:  #F0805A;
+    --mark:    #33290F;
+  }
+}
+
+:root[data-theme="dark"] {
+  --ground:  #15171A;
+  --raised:  #1D2024;
+  --ink:     #E3E4DF;
+  --ink-2:   #9DA199;
+  --ink-3:   #767A72;
+  --rule:    #292C31;
+  --rule-2:  #3A3E44;
+  --accent:  #85B8D6;
+  --accent-2:#1B2A33;
+  --coop:    #3ACFBA;
+  --defect:  #F0805A;
+  --mark:    #33290F;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  background: var(--ground);
+  color: var(--ink);
+  font-family: Charter, "Bitstream Charter", "Sitka Text", Cambria, "Palatino Linotype", Georgia, serif;
+  font-size: 19px;
+  line-height: 1.72;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page { max-width: 1080px; margin: 0 auto; padding: 0 28px 160px 28px; }
+.col  { max-width: 700px; margin: 0 auto; }
+
+/* wide elements break out of the reading column */
+.wide { max-width: 1000px; margin-left: auto; margin-right: auto; }
+
+.sans, figcaption, .toc, .lede-meta, .tag, th, .fnote {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+code, pre, .mono { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; }
+
+/* ---------- title ---------- */
+
+.title { padding: 90px 0 0 0; }
+.title h1 {
+  font-size: clamp(34px, 5.4vw, 52px);
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: -.015em;
+  margin: 0 0 20px 0;
+  text-wrap: balance;
+}
+.title .standfirst {
+  font-size: 21px;
+  color: var(--ink-2);
+  line-height: 1.6;
+  margin: 0 0 28px 0;
+}
+.lede-meta {
+  font-size: 13.5px;
+  color: var(--ink-3);
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  padding: 14px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 26px;
+}
+.lede-meta span b { color: var(--ink-2); font-weight: 600; }
+
+/* ---------- contents ---------- */
+
+.toc { margin: 54px 0 0 0; font-size: 15px; }
+.toc h2 {
+  font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink-3); font-weight: 600; margin: 0 0 16px 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+.toc ol { list-style: none; margin: 0; padding: 0; }
+.toc > ol > li { border-top: 1px solid var(--rule); }
+.toc > ol > li:last-child { border-bottom: 1px solid var(--rule); }
+.toc a {
+  display: grid; grid-template-columns: 34px 1fr; gap: 4px;
+  padding: 11px 0; text-decoration: none; color: var(--ink); align-items: baseline;
+}
+.toc a:hover { color: var(--accent); }
+.toc a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.toc .n { color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.toc .d { display: block; color: var(--ink-3); font-size: 13.5px; line-height: 1.45; margin-top: 2px; }
+
+/* ---------- headings ---------- */
+
+h2.sec {
+  font-size: 30px;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -.012em;
+  margin: 96px 0 8px 0;
+  padding-top: 26px;
+  border-top: 2px solid var(--ink);
+  text-wrap: balance;
+}
+h2.sec .n {
+  display: block;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 12px; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--ink-3); font-weight: 600; margin-bottom: 12px;
+}
+h2.sec + .dek { color: var(--ink-2); font-size: 19px; margin: 0 0 34px 0; }
+
+h3 {
+  font-size: 21px; font-weight: 700; line-height: 1.3;
+  margin: 48px 0 14px 0; letter-spacing: -.008em;
+  text-wrap: balance;
+}
+h3 .n { color: var(--ink-3); font-weight: 400; margin-right: 8px; font-variant-numeric: tabular-nums; }
+
+h4 {
+  font-size: 17px; font-weight: 700; margin: 32px 0 10px 0;
+}
+
+p { margin: 0 0 20px 0; }
+strong { font-weight: 700; }
+a { color: var(--accent); text-underline-offset: 2px; }
+
+ul, ol.body { padding-left: 24px; margin: 0 0 22px 0; }
+ul li, ol.body li { margin-bottom: 10px; }
+
+/* emphasis device: a marked sentence, used sparingly */
+mark { background: var(--mark); color: inherit; padding: 1px 2px; }
+
+blockquote.key {
+  margin: 30px 0;
+  padding: 4px 0 4px 22px;
+  border-left: 3px solid var(--accent);
+  font-size: 20px;
+  line-height: 1.55;
+  color: var(--ink);
+}
+blockquote.key p:last-child { margin-bottom: 0; }
+
+/* ---------- code ---------- */
+
+.src { margin: 26px 0 10px 0; }
+.src-hd {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 12.5px;
+  color: var(--ink-3);
+  display: flex; flex-wrap: wrap; gap: 6px 14px; justify-content: space-between;
+  padding-bottom: 7px;
+  border-bottom: 1px solid var(--rule-2);
+  margin-bottom: 0;
+}
+.src-hd .path { color: var(--ink-2); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+.src pre {
+  margin: 0;
+  padding: 15px 0 4px 0;
+  overflow-x: auto;
+  font-size: 13px;
+  line-height: 1.6;
+  tab-size: 4;
+  color: var(--ink);
+}
+p code, li code, td code, figcaption code, .fnote code {
+  font-size: .84em;
+  background: var(--raised);
+  padding: 1.5px 5px;
+  border-radius: 3px;
+}
+
+.fnote { font-size: 14px; color: var(--ink-2); line-height: 1.55; margin: 10px 0 30px 0; }
+.fnote b { color: var(--ink); }
+
+/* ---------- figures ---------- */
+
+figure { margin: 40px 0 40px 0; }
+figure .figwrap { overflow-x: auto; }
+figure svg { max-width: 100%; height: auto; display: block; color: var(--ink); }
+figcaption {
+  font-size: 14px; color: var(--ink-2); line-height: 1.55;
+  margin-top: 14px; max-width: 760px;
+}
+figcaption .fignum { color: var(--ink); font-weight: 600; margin-right: 7px; }
+
+/* ---------- tables ---------- */
+
+.tblwrap { overflow-x: auto; margin: 26px 0 10px 0; }
+table.data { width: 100%; border-collapse: collapse; font-size: 15px; font-variant-numeric: tabular-nums; }
+table.data th {
+  text-align: left; padding: 8px 14px 8px 0;
+  border-bottom: 1.5px solid var(--rule-2);
+  font-size: 12.5px; letter-spacing: .05em; text-transform: uppercase;
+  color: var(--ink-3); font-weight: 600; white-space: nowrap;
+}
+table.data td { padding: 9px 14px 9px 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+table.data td.m { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13.5px; }
+table.data .num { text-align: right; padding-right: 20px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13.5px; }
+table.data tr:last-child td { border-bottom: none; }
+
+/* ---------- why-box: the design rationale device ---------- */
+
+.why {
+  background: var(--accent-2);
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--accent);
+  padding: 20px 24px;
+  margin: 30px 0;
+  font-size: 17.5px;
+  line-height: 1.62;
+}
+.why .lbl {
+  display: block;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 11.5px; letter-spacing: .13em; text-transform: uppercase;
+  color: var(--accent); font-weight: 700; margin-bottom: 9px;
+}
+.why p:last-child { margin-bottom: 0; }
+.why p { margin-bottom: 13px; }
+
+.tag {
+  display: inline-block; font-size: 11.5px; letter-spacing: .05em;
+  text-transform: uppercase; font-weight: 600;
+  padding: 2px 8px; border-radius: 3px; vertical-align: middle;
+}
+.tag.ok   { color: var(--coop);   background: var(--raised); }
+.tag.no   { color: var(--defect); background: var(--raised); }
+.tag.part { color: var(--accent); background: var(--raised); }
+
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 24px 30px; margin: 30px 0; }
+.stats .k { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 12px; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-3); font-weight: 600; margin-bottom: 3px; }
+.stats .v { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 25px; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.stats .v small { font-size: 13px; color: var(--ink-2); }
+
+hr.br { border: none; border-top: 1px solid var(--rule); margin: 44px auto; width: 90px; }
+
+@media (max-width: 760px) {
+  body { font-size: 18px; }
+  .page { padding: 0 18px 100px 18px; }
+  .title { padding-top: 54px; }
+}
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+
+<div class="page">
+
+<div class="col">
+
+<header class="title">
+  <h1>BTUT From First Principles</h1>
+  <p class="standfirst">A complete walkthrough of the BTUT coordination platform — what each part computes, why it was built that way, and what it actually does when you run it. Written to be read straight through.</p>
+  <div class="lede-meta">
+    <span><b>Repository</b> direncode/btut</span>
+    <span><b>Revision</b> d137615</span>
+    <span><b>Volume</b> 34,341 lines · 318 files</span>
+    <span><b>Languages</b> Rust · Python · TypeScript</span>
+    <span><b>Measurements</b> taken on this checkout</span>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Contents">
+  <h2>Contents</h2>
+  <ol>
+    <li><a href="#s1"><span class="n">1</span><span>The problem, and the trade BTUT makes<span class="d">Why coordination is expensive, and what you give up to make it linear.</span></span></a></li>
+    <li><a href="#s2"><span class="n">2</span><span>The system on one page<span class="d">Every component, what talks to what, and why the repository has the shape it has.</span></span></a></li>
+    <li><a href="#s3"><span class="n">3</span><span>Engine A: the algorithm everything runs on<span class="d">Five steps, three implementations, read line by line.</span></span></a></li>
+    <li><a href="#s4"><span class="n">4</span><span>What Engine A does when you run it<span class="d">The closed-form solution, measured. What holds and what doesn't.</span></span></a></li>
+    <li><a href="#s5"><span class="n">5</span><span>Engine B: the market kernel<span class="d">A second, unrelated algorithm — and why it exists.</span></span></a></li>
+    <li><a href="#s6"><span class="n">6</span><span>The market simulator<span class="d">Order books, trader classes, crash detection, and one honest approximation.</span></span></a></li>
+    <li><a href="#s7"><span class="n">7</span><span>Calibration: choosing gamma<span class="d">The one parameter that decides everything, and the search that finds it.</span></span></a></li>
+    <li><a href="#s8"><span class="n">8</span><span>The service layer<span class="d">Fourteen HTTP routes, and the three shortcuts inside them.</span></span></a></li>
+    <li><a href="#s9"><span class="n">9</span><span>The client surfaces<span class="d">Two web apps, two browser engines, one SDK that isn't an engine.</span></span></a></li>
+    <li><a href="#s10"><span class="n">10</span><span>The domain bridges<span class="d">Traffic, drones, robots — and the one place the model genuinely changes.</span></span></a></li>
+    <li><a href="#s11"><span class="n">11</span><span>Deployment and verification<span class="d">Four targets, 36 Rust tests, 66 Python tests.</span></span></a></li>
+    <li><a href="#s12"><span class="n">12</span><span>Everything that is wrong or unfinished<span class="d">The complete list, with evidence.</span></span></a></li>
+    <li><a href="#s13"><span class="n">13</span><span>What to do next<span class="d">An ordered plan, cheapest and highest-value first.</span></span></a></li>
+  </ol>
+</nav>
+
+<hr class="br">
+
+<!-- ==================== 1 ==================== -->
+
+<h2 class="sec" id="s1"><span class="n">Section One</span>The problem, and the trade BTUT makes</h2>
+<p class="dek">Before any code: what makes multi-agent coordination expensive, and what BTUT gives up in exchange for making it cheap.</p>
+
+<p>Suppose you have a million autonomous things — vehicles, drones, traders — and each one's best move depends on what the others do. The honest way to model this is to write down every interaction. With N agents that is N² pairs, and if you go further and model the population as a continuous density evolving under a partial differential equation, solving it numerically costs more still. This is the standard picture, and it is the reason academic agent-based tools fall over in the tens of thousands. The repository's own framing points at DARPA's Mathematical Challenge 13, which asks how to coordinate very large numbers of autonomous agents efficiently.</p>
+
+<p>BTUT's answer is a mean-field approximation, which is an old and respectable idea. Instead of letting agent <em>i</em> respond to each of its neighbours individually, you let it respond to a single number that summarises the entire population — here, the fraction of agents currently cooperating. You compute that number once per round by sweeping all N agents, then you sweep all N agents again to update them against it. Two linear passes. No adjacency matrix is ever allocated, so memory is linear too.</p>
+
+<blockquote class="key">
+<p>The whole system is built on one substitution: replace "what are my neighbours doing" with "what is everyone doing, on average, weighted by importance." Everything else in the repository is delivery around that substitution.</p>
+</blockquote>
+
+<p>What you give up is real and worth naming up front. In a genuine network, an agent surrounded by defectors behaves differently from an agent surrounded by cooperators, even when the global average is identical. Mean-field erases that. Local structure — clusters, bridges, isolated pockets — stops existing. In exchange you get a model that runs on a million agents in seconds, and whose behaviour you can often characterise analytically. For some questions that trade is excellent; for others it removes the phenomenon you were trying to study.</p>
+
+<h3><span class="n">1.1</span> Where the "network" went</h3>
+
+<p>BTUT does not throw the network away entirely. It keeps one summary statistic of it: each agent's <em>degree</em> — how many neighbours it would have had. Degrees are drawn directly from the distribution a scale-free network would have produced, without ever building the network. Agents with high degree get more weight in the global average, on the reasoning that hubs matter more.</p>
+
+<p>The exponent controlling that, called τ, is one of the system's two important knobs. At τ = 0 every agent counts equally. At τ = 1 an agent's influence is proportional to its degree, and a handful of hubs dominate the population average. This is the repository's stand-in for network topology: not a graph, but a single number describing how unequal the influence distribution is.</p>
+
+<div class="why">
+<span class="lbl">Why sample degrees instead of building a graph</span>
+<p>Building a Barabási–Albert graph for a million nodes means storing several million edges and doing preferential-attachment bookkeeping during construction. Sampling from the resulting degree distribution costs one uniform random number per agent and stores one float. Since the algorithm only ever uses degree — never the identity of a neighbour — the graph would be constructed and then never traversed.</p>
+<p>The inverse-CDF trick makes it exact rather than approximate: for a degree distribution P(k) ∝ k⁻³, drawing u uniformly and computing k = m/√(1−u) produces exactly that distribution. It's one line, and it is mathematically the right one line.</p>
+</div>
+
+<h3><span class="n">1.2</span> The second knob: gamma</h3>
+
+<p>The other important parameter is γ, and it deserves early billing because it turns out to control almost everything. Agents in BTUT are imagined to be playing a mixture of three classical two-player games — Prisoner's Dilemma, Hawk–Dove, and Stag Hunt. γ is the cooperation bonus in the Stag Hunt component: how much better off you are if you cooperate and everyone else does too.</p>
+
+<p>Stag Hunt is the game with two stable equilibria — everyone hunts stag, or everyone hunts hare — and which one you land in depends on expectations rather than on payoffs alone. That structure is what gives BTUT a <em>phase transition</em>: below a critical value of γ the population collapses to universal defection, above it the population saturates at universal cooperation, and the switch between the two is abrupt. Section 4 measures exactly how abrupt. Section 7 covers the machinery built to find that critical value automatically, which exists precisely because getting γ wrong doesn't degrade the result gracefully — it inverts it.</p>
+
+<!-- ==================== 2 ==================== -->
+
+<h2 class="sec" id="s2"><span class="n">Section Two</span>The system on one page</h2>
+<p class="dek">What exists, what calls what, and why 34,000 lines were needed to deliver a loop that fits on a screen.</p>
+
+<p>The repository has three tiers. At the bottom is the algorithm, implemented four times. In the middle are the ways you can reach it: an HTTP service, a web application, and two client libraries. At the top are four application domains that map the abstract model onto something physical.</p>
+
+</div>
+
+<div class="wide">
+<figure>
+<div class="figwrap">
+<svg viewBox="0 0 1000 480" role="img" aria-label="Three-tier map of the BTUT platform: four engine implementations, three delivery surfaces, four application domains">
+  <defs>
+    <marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+    </marker>
+    <marker id="a1b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/>
+    </marker>
+  </defs>
+
+  <g font-family="-apple-system, Helvetica, Arial, sans-serif" font-size="11" letter-spacing="1.3" fill="var(--ink-3)">
+    <text x="8" y="30">TIER 1 — THE ALGORITHM</text>
+    <text x="8" y="196">TIER 2 — HOW YOU REACH IT</text>
+    <text x="8" y="348">TIER 3 — WHAT IT CONTROLS</text>
+  </g>
+
+  <g font-family="ui-monospace, Menlo, monospace" font-size="11.5">
+    <rect x="8" y="44" width="222" height="72" fill="none" stroke="var(--coop)" stroke-width="1.6"/>
+    <text x="20" y="64" fill="var(--coop)" font-size="10.5">LINEAGE A · PYTHON + TYPESCRIPT</text>
+    <text x="20" y="83" fill="currentColor">lib/simulation/btut_engine.py</text>
+    <text x="20" y="99" fill="currentColor">lib/simulation/btut-engine.ts</text>
+    <text x="20" y="112" fill="var(--ink-3)" font-size="10">263 + 321 lines</text>
+
+    <rect x="246" y="44" width="222" height="72" fill="none" stroke="var(--coop)" stroke-width="1.6"/>
+    <text x="258" y="64" fill="var(--coop)" font-size="10.5">LINEAGE A · RUST → WASM</text>
+    <text x="258" y="83" fill="currentColor">rust-engine/src/lib.rs</text>
+    <text x="258" y="99" fill="currentColor">+ core, agents, convergence</text>
+    <text x="258" y="112" fill="var(--ink-3)" font-size="10">1,142 lines · runs in the browser</text>
+
+    <rect x="530" y="44" width="252" height="72" fill="none" stroke="var(--defect)" stroke-width="1.6"/>
+    <text x="542" y="64" fill="var(--defect)" font-size="10.5">LINEAGE B · NATIVE RUST</text>
+    <text x="542" y="83" fill="currentColor">btut_market_simulator/</text>
+    <text x="542" y="99" fill="currentColor">src/btut/kernel.rs</text>
+    <text x="542" y="112" fill="var(--ink-3)" font-size="10">a different algorithm — see §5</text>
+
+    <rect x="798" y="44" width="194" height="72" fill="none" stroke="var(--rule-2)" stroke-dasharray="4 3"/>
+    <text x="810" y="64" fill="var(--ink-3)" font-size="10.5">CALIBRATOR</text>
+    <text x="810" y="83" fill="currentColor">critical_point_finder.py</text>
+    <text x="810" y="99" fill="var(--ink-3)" font-size="10">binary-searches for γ_c</text>
+    <text x="810" y="112" fill="var(--ink-3)" font-size="10">553 lines</text>
+  </g>
+
+  <path d="M895,116 L895,148 L360,148" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#a1b)"/>
+  <text x="600" y="142" font-size="11" font-family="ui-monospace, monospace" fill="var(--accent)">supplies the one parameter that decides the outcome</text>
+
+  <g font-family="ui-monospace, Menlo, monospace" font-size="11.5">
+    <rect x="8" y="208" width="300" height="66" fill="var(--raised)" stroke="currentColor"/>
+    <text x="20" y="228" fill="var(--ink-3)" font-size="10.5">HTTP SERVICE</text>
+    <text x="20" y="247" fill="currentColor">api/main.py — FastAPI, 834 lines</text>
+    <text x="20" y="264" fill="var(--ink-3)" font-size="10">14 routes + a WebSocket</text>
+
+    <rect x="324" y="208" width="300" height="66" fill="var(--raised)" stroke="currentColor"/>
+    <text x="336" y="228" fill="var(--ink-3)" font-size="10.5">WEB APPLICATION</text>
+    <text x="336" y="247" fill="currentColor">app/ — Next.js 14, 9 routes</text>
+    <text x="336" y="264" fill="var(--ink-3)" font-size="10">runs the engine client-side, in the browser</text>
+
+    <rect x="640" y="208" width="352" height="66" fill="var(--raised)" stroke="currentColor"/>
+    <text x="652" y="228" fill="var(--ink-3)" font-size="10.5">CLIENT LIBRARIES</text>
+    <text x="652" y="247" fill="currentColor">python-sdk/btut · lib/api-client.ts</text>
+    <text x="652" y="264" fill="var(--defect)" font-size="10">both are HTTP wrappers — neither contains the algorithm</text>
+  </g>
+
+  <path d="M118,116 L118,208" fill="none" stroke="currentColor" stroke-width="1.3" marker-end="url(#a1)"/>
+  <text x="126" y="168" font-size="10.5" font-family="ui-monospace, monospace" fill="var(--ink-2)">import</text>
+  <path d="M357,116 L357,208" fill="none" stroke="currentColor" stroke-width="1.3" marker-end="url(#a1)"/>
+  <text x="365" y="168" font-size="10.5" font-family="ui-monospace, monospace" fill="var(--ink-2)">bundled as wasm</text>
+  <path d="M308,241 L324,241" fill="none" stroke="currentColor" stroke-width="1.3" marker-end="url(#a1)"/>
+  <path d="M624,241 L640,241" fill="none" stroke="currentColor" stroke-width="1.3" marker-end="url(#a1)"/>
+  <text x="700" y="200" font-size="10.5" font-family="ui-monospace, monospace" fill="var(--ink-2)">POST /api/simulate</text>
+
+  <path d="M656,116 L656,166 L920,166 L920,306" fill="none" stroke="var(--defect)" stroke-width="1.3" stroke-dasharray="5 3" marker-end="url(#a1)"/>
+  <text x="668" y="161" font-size="10.5" font-family="ui-monospace, monospace" fill="var(--defect)">reachable only from its own CLI — nothing else calls it</text>
+
+  <g font-family="ui-monospace, Menlo, monospace" font-size="11.5">
+    <rect x="8" y="360" width="212" height="80" fill="none" stroke="currentColor"/>
+    <text x="20" y="380" fill="var(--ink-3)" font-size="10.5">TRAFFIC</text>
+    <text x="20" y="398" fill="currentColor">integrations/sumo/</text>
+    <text x="20" y="414" fill="var(--ink-2)" font-size="10">SUMO via TraCI</text>
+    <text x="20" y="430" fill="var(--coop)" font-size="10">degree = cars within 50 m</text>
+
+    <rect x="236" y="360" width="212" height="80" fill="none" stroke="currentColor"/>
+    <text x="248" y="380" fill="var(--ink-3)" font-size="10.5">DRONE SWARM</text>
+    <text x="248" y="398" fill="currentColor">integrations/drone_swarm/</text>
+    <text x="248" y="414" fill="var(--ink-2)" font-size="10">standalone or ROS 2</text>
+    <text x="248" y="430" fill="var(--coop)" font-size="10">degree = 3-D neighbours</text>
+
+    <rect x="464" y="360" width="212" height="80" fill="none" stroke="currentColor"/>
+    <text x="476" y="380" fill="var(--ink-3)" font-size="10.5">ROBOT FLEET</text>
+    <text x="476" y="398" fill="currentColor">integrations/ros/</text>
+    <text x="476" y="414" fill="var(--ink-2)" font-size="10">rospy node + rosbridge</text>
+    <text x="476" y="430" fill="var(--ink-2)" font-size="10">calls the SDK over HTTP</text>
+
+    <rect x="692" y="360" width="300" height="80" fill="none" stroke="var(--defect)"/>
+    <text x="704" y="380" fill="var(--defect)" font-size="10.5">FINANCIAL MARKET</text>
+    <text x="704" y="398" fill="currentColor">btut_market_simulator/ — 5,264 lines</text>
+    <text x="704" y="414" fill="var(--ink-2)" font-size="10">limit order book, 4 trader classes, crash detection</text>
+    <text x="704" y="430" fill="var(--ink-2)" font-size="10">distance = proximity to the book</text>
+  </g>
+
+  <path d="M114,274 L114,360" fill="none" stroke="currentColor" stroke-width="1.3" marker-end="url(#a1)"/>
+  <path d="M342,274 L342,360" fill="none" stroke="currentColor" stroke-width="1.3" marker-end="url(#a1)"/>
+  <path d="M570,274 L570,360" fill="none" stroke="currentColor" stroke-width="1.3" marker-end="url(#a1)"/>
+</svg>
+</div>
+<figcaption><span class="fignum">Figure 1.</span>The whole platform. Two engine lineages sit at the top and never meet — Lineage A (teal) is what every user-facing path runs; Lineage B (rust-red) is a separate algorithm reachable only from its own command line. The calibrator is the single component whose output feeds every Lineage A run.</figcaption>
+</figure>
+</div>
+
+<div class="col">
+
+<h3><span class="n">2.1</span> Why the algorithm exists four times</h3>
+
+<p>Writing one algorithm four times is normally a mistake. Here each copy has a defensible reason, and understanding those reasons explains most of the repository's structure.</p>
+
+<p>The <strong>Python</strong> copy exists because the HTTP service is FastAPI and needs to call the engine in-process. It uses NumPy for setup and a plain loop for the update.</p>
+
+<p>The <strong>Rust-to-WASM</strong> copy exists because the web application runs simulations <em>in the visitor's browser</em> rather than on a server. That is a deliberate and rather good product decision: a demo that runs client-side has no per-visitor server cost, no queue, no rate limit, and no cold start. A hundred thousand agents at sixty frames a second is not something you want to serve from a Python process.</p>
+
+<p>The <strong>TypeScript</strong> copy exists as the fallback for when the WASM module fails to load — an old browser, a strict content policy, a failed fetch. Without it the demo page would show an error instead of a simulation.</p>
+
+<p>The <strong>native Rust</strong> copy is the one that isn't a copy at all. It is a different algorithm, and Section 5 is about it.</p>
+
+<div class="why">
+<span class="lbl">Why this is defensible, and where it went wrong</span>
+<p>Three ports of one algorithm across three runtimes is the standard cost of wanting the same computation on a server, in a browser, and at native speed. There is no single language that does all three well, and WebAssembly plus a JavaScript fallback is the conventional answer.</p>
+<p>The failure isn't the duplication — it's that no test pins the three implementations to each other. If a single test ran all three on the same seed and asserted matching output, the divergence documented in Section 3.4 would have been caught the day it was introduced. Instead the three drifted, and the browser now silently runs a different model depending on whether WASM loaded.</p>
+</div>
+
+<h3><span class="n">2.2</span> Why there are two different algorithms called BTUT</h3>
+
+<p>This is the single fact that makes the repository legible, and no document in it states the fact. The market simulator's kernel shares vocabulary with Lineage A — kernel, weight, cooperation, convergence — and shares nothing else: different state, different update rule, different parameters, different files, no calls between them.</p>
+
+<div class="tblwrap">
+<table class="data">
+<thead><tr><th></th><th>Lineage A — mean-field game</th><th>Lineage B — market kernel</th></tr></thead>
+<tbody>
+<tr><td>Agent state</td><td class="m">degree, weight, strategy ∈ {A, B}</td><td class="m">cooperation ∈ [0,1] continuous</td></tr>
+<tr><td>What drives it</td><td>Three mixed games producing two payoff scalars</td><td>No games. A weighted population average.</td></tr>
+<tr><td>Update</td><td class="m">adopt argmax(U_A·wᵢkᵢ, U_B·wᵢkᵢ)</td><td class="m">sᵢ ← sᵢ + (1−α)·Kᵢ·(ḡ − sᵢ)</td></tr>
+<tr><td>Per-agent variation</td><td><span class="tag no">Cancels out</span> — see §4.1</td><td><span class="tag ok">Survives</span> via the kernel Kᵢ</td></tr>
+<tr><td>Key parameter</td><td class="m">γ — sharp phase transition</td><td class="m">λ — smooth relaxation rate</td></tr>
+<tr><td>Convergence</td><td>Geometric to 0 or 1, ~12 rounds</td><td>To the weighted mean, then frozen</td></tr>
+<tr><td>Who calls it</td><td>API, web app, SDK, all bridges</td><td>Its own CLI, nothing else</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="why">
+<span class="lbl">Why a second algorithm was written</span>
+<p>The market simulator needed something Lineage A cannot provide: <em>graded</em> cooperation. A market maker doesn't binary-choose between quoting and not quoting; it quotes at a width. Lineage A's strategies are labels — A or B — so the market model needs a continuous variable in [0,1], and once you need that, the argmax update no longer makes sense and you need a relaxation instead.</p>
+<p>The second thing it needed was heterogeneity that persists. In a market, market makers, HFTs, institutions and retail should not converge at the same rate. Lineage B gets that from the exponential kernel over "distance from the centre of the market," which is a genuinely different mechanism from Lineage A's degree weighting.</p>
+<p>So the fork is justified. What isn't justified is calling both of them BTUT with no note anywhere that they differ, and leaving the more sophisticated of the two unreachable from the product.</p>
+</div>
+
+<h3><span class="n">2.3</span> Where the code actually is</h3>
+
+<div class="tblwrap">
+<table class="data">
+<thead><tr><th>Area</th><th class="num">Lines</th><th>What's in it</th></tr></thead>
+<tbody>
+<tr><td class="m">btut_market_simulator/src</td><td class="num">5,264</td><td>Kernel, order book, agents, metrics, config, CLI — the best-engineered code here</td></tr>
+<tr><td class="m">components/ + app/</td><td class="num">~4,600</td><td>Nine Next.js routes and their React components</td></tr>
+<tr><td class="m">integrations/</td><td class="num">~3,900</td><td>SUMO, drone swarm, ROS, plus validation experiments</td></tr>
+<tr><td class="m">lib/</td><td class="num">~2,800</td><td>Engines, WASM loader, TraCI / ROS / AWS clients, React hooks</td></tr>
+<tr><td class="m">api/</td><td class="num">~1,900</td><td>FastAPI service, middleware, error handling, collaboration</td></tr>
+<tr><td class="m">tests/ + benchmarks/</td><td class="num">1,792</td><td>66 Python tests across unit, integration, e2e; two benchmark suites</td></tr>
+<tr><td class="m">rust-engine/src</td><td class="num">1,142</td><td>Lineage A compiled to WebAssembly</td></tr>
+<tr><td class="m">17 root <code>*.md</code> files</td><td class="num">~1,600</td><td>Overlapping deployment and status narratives, several contradicting each other</td></tr>
+</tbody>
+</table>
+</div>
+<p class="fnote">The core algorithm — the thing the entire platform exists to run — is about 260 lines. Everything else is delivery, integration, presentation, or the market simulator.</p>
+
+</div>
+
+<div class="col">
+
+<!-- ==================== 3 ==================== -->
+
+<h2 class="sec" id="s3"><span class="n">Section Three</span>Engine A: the algorithm everything runs on</h2>
+<p class="dek">Five steps. Two run once at construction, three run every round. Read in the order the code executes them.</p>
+
+<p>Everything the platform shows a user comes out of this loop. It exists in Python, TypeScript and Rust; the Python is quoted below because the API runs it, with the others shown where they differ.</p>
+
+</div>
+
+<div class="wide">
+<figure>
+<div class="figwrap">
+<svg viewBox="0 0 980 300" role="img" aria-label="Five-step pipeline: sample degrees, compute weights, evaluate three games, update strategies, test convergence, with p fed back">
+  <defs>
+    <marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+    </marker>
+    <marker id="a2b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/>
+    </marker>
+  </defs>
+
+  <rect x="8" y="58" width="272" height="112" fill="none" stroke="var(--rule-2)" stroke-dasharray="4 3"/>
+  <text x="18" y="48" font-family="-apple-system, Helvetica, sans-serif" font-size="11" letter-spacing="1.2" fill="var(--ink-3)">RUNS ONCE — AT CONSTRUCTION</text>
+
+  <g font-family="ui-monospace, Menlo, monospace" font-size="11.5">
+    <rect x="24" y="76" width="112" height="78" fill="var(--raised)" stroke="currentColor"/>
+    <text x="34" y="95" fill="var(--accent)" font-size="10.5">STEP 1</text>
+    <text x="34" y="114" fill="currentColor">sample kᵢ</text>
+    <text x="34" y="131" fill="var(--ink-2)" font-size="10">power law</text>
+    <text x="34" y="146" fill="var(--ink-2)" font-size="10">k = m/√(1−u)</text>
+
+    <rect x="156" y="76" width="112" height="78" fill="var(--raised)" stroke="currentColor"/>
+    <text x="166" y="95" fill="var(--accent)" font-size="10.5">STEP 2</text>
+    <text x="166" y="114" fill="currentColor">weights wᵢ</text>
+    <text x="166" y="131" fill="var(--ink-2)" font-size="10">(kᵢ/k_max)^τ</text>
+    <text x="166" y="146" fill="var(--ink-2)" font-size="10">hub emphasis</text>
+  </g>
+
+  <path d="M136,115 L156,115" stroke="currentColor" stroke-width="1.3" marker-end="url(#a2)" fill="none"/>
+  <path d="M268,115 L320,115" stroke="currentColor" stroke-width="1.3" marker-end="url(#a2)" fill="none"/>
+
+  <rect x="320" y="58" width="652" height="196" fill="none" stroke="var(--accent)"/>
+  <text x="330" y="48" font-family="-apple-system, Helvetica, sans-serif" font-size="11" letter-spacing="1.2" fill="var(--accent)">RUNS EVERY ROUND</text>
+
+  <g font-family="ui-monospace, Menlo, monospace" font-size="11.5">
+    <rect x="338" y="76" width="190" height="78" fill="var(--raised)" stroke="currentColor"/>
+    <text x="348" y="95" fill="var(--accent)" font-size="10.5">STEP 3</text>
+    <text x="348" y="114" fill="currentColor">three games → U_A, U_B</text>
+    <text x="348" y="131" fill="var(--ink-2)" font-size="10">PD + Hawk–Dove + Stag Hunt</text>
+    <text x="348" y="146" fill="var(--ink-2)" font-size="10">input p, output two scalars</text>
+
+    <rect x="548" y="76" width="190" height="78" fill="var(--raised)" stroke="currentColor"/>
+    <text x="558" y="95" fill="var(--accent)" font-size="10.5">STEP 4</text>
+    <text x="558" y="114" fill="currentColor">update all N strategies</text>
+    <text x="558" y="131" fill="var(--ink-2)" font-size="10">compare U_A·wᵢkᵢ vs U_B·wᵢkᵢ</text>
+    <text x="558" y="146" fill="var(--ink-2)" font-size="10">then p ← ½p + ½p_new</text>
+
+    <rect x="758" y="76" width="198" height="78" fill="var(--raised)" stroke="currentColor"/>
+    <text x="768" y="95" fill="var(--accent)" font-size="10.5">STEP 5</text>
+    <text x="768" y="114" fill="currentColor">convergence test</text>
+    <text x="768" y="131" fill="var(--ink-2)" font-size="10">var(last 5 p values) &lt; 1e-6</text>
+    <text x="768" y="146" fill="var(--ink-2)" font-size="10">and round ≥ 10</text>
+  </g>
+
+  <path d="M528,115 L548,115" stroke="currentColor" stroke-width="1.3" marker-end="url(#a2)" fill="none"/>
+  <path d="M738,115 L758,115" stroke="currentColor" stroke-width="1.3" marker-end="url(#a2)" fill="none"/>
+
+  <path d="M857,154 L857,196 L433,196 L433,154" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#a2b)"/>
+  <text x="560" y="214" font-family="ui-monospace, monospace" font-size="11" fill="var(--accent)">p fed back — this single edge is the entire channel between agents</text>
+
+  <path d="M905,154 L905,236" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="3 3" marker-end="url(#a2)"/>
+  <text x="905" y="252" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="var(--ink-2)">converged → return</text>
+
+  <text x="8" y="288" font-family="ui-monospace, monospace" font-size="11" fill="var(--ink-2)">Cost per round: one O(N) pass. No adjacency list is ever allocated — which is why the complexity is linear rather than quadratic.</text>
+</svg>
+</div>
+<figcaption><span class="fignum">Figure 2.</span>Engine A's control flow. Steps 1 and 2 build per-agent state that never changes afterwards. Steps 3 to 5 loop. The feedback edge carrying <code>p</code> is what replaces the interaction graph.</figcaption>
+</figure>
+</div>
+
+<div class="col">
+
+<h3><span class="n">3.1</span> Step 1 — drawing the degrees</h3>
+
+<p>Each agent gets a degree: a number standing in for how many neighbours it would have had if a graph existed. The graph never exists. The degree is drawn straight from the distribution a Barabási–Albert graph would have produced.</p>
+
+<div class="src">
+<div class="src-hd"><span class="path">lib/simulation/btut_engine.py</span><span>lines 130–140</span></div>
+<pre><code>def _sample_degrees(self) -&gt; np.ndarray:
+    """Sample degrees from Barabási-Albert power-law distribution"""
+    u = np.random.uniform(0, 1, size=self.N)
+    degrees = self.m / np.sqrt(1 - u)
+    return np.maximum(degrees, self.m)
+
+def _compute_weights(self) -&gt; np.ndarray:
+    """Compute kernel weights: w_i = (k_i / k_max)^tau"""
+    if self.tau == 0 or self.max_degree == 0:
+        return np.ones(self.N)
+    return (self.degrees / self.max_degree) ** self.tau</code></pre>
+</div>
+<p class="fnote">Both steps in one place, since they run back to back. The Rust and TypeScript versions <code>floor()</code> the degree to an integer where Python leaves it continuous — a small quantisation of the weights, not a behavioural difference.</p>
+
+<h3><span class="n">3.2</span> Step 3 — three games, mixed in equal thirds</h3>
+
+<p>This is where the model's substance lives. Rather than picking one game, BTUT averages three, on the reasoning that real coordination problems have elements of all of them: the temptation to free-ride (Prisoner's Dilemma), the cost of mutual escalation (Hawk–Dove), and the payoff to matching expectations (Stag Hunt). Each takes the current cooperating fraction <code>p</code> and returns a payoff for choosing A and a payoff for choosing B.</p>
+
+<div class="src">
+<div class="src-hd"><span class="path">lib/simulation/btut_engine.py</span><span>lines 142–170, complete</span></div>
+<pre><code>def _compute_expected_utilities(self, p: float) -&gt; Tuple[float, float]:
+    """Compute expected utilities for both strategies"""
+
+    # Base payoffs (log-scaled)
+    u_A_PD = np.log(2.0)
+    u_B_PD = np.log(1.2)
+    u_A_HD = np.log(2.2)
+    u_B_HD = np.log(1.5)
+    u_A_SH = np.log(2.5)
+    u_B_SH = np.log(1.2)
+
+    # Prisoner's Dilemma
+    EU_PD_A = 0.5 * (u_A_PD + (p * u_A_PD + (1 - p) * u_B_PD)) - self.cA_PD * u_A_PD
+    EU_PD_B = 0.5 * (u_B_PD + (p * u_A_PD + (1 - p) * u_B_PD)) - self.cB_PD * u_B_PD
+
+    # Hawk-Dove
+    EU_HD_A = 0.5 * (u_A_HD + p * u_A_HD + (1 - p) * u_B_HD) * (p * self.alpha + (1 - p)) - 0.22 * u_A_HD
+    EU_HD_B = 0.5 * (u_B_HD + p * u_A_HD + (1 - p) * u_B_HD) * (p + (1 - p) * 1.08) - 0.12 * u_B_HD
+
+    # Stag Hunt
+    EU_SH_A = 0.5 * (u_A_SH + p * u_A_SH + (1 - p) * u_B_SH) * (p * self.gamma + (1 - p) * 0.03) - self.cA_SH * u_A_SH
+    EU_SH_B = 0.5 * (u_B_SH + p * u_A_SH + (1 - p) * u_B_SH) * (p * 0.03 + (1 - p)) - self.cB_SH * u_B_SH
+
+    # Mixed game (equal weighting)
+    mix = 1.0 / 3.0
+    U_A = mix * (EU_PD_A + EU_HD_A + EU_SH_A)
+    U_B = mix * (EU_PD_B + EU_HD_B + EU_SH_B)
+
+    return U_A, U_B</code></pre>
+</div>
+
+<p>Three things to notice. <mark>γ appears in exactly one of those six expressions</mark> — the Stag Hunt multiplier <code>(p·γ + (1−p)·0.03)</code>. Tuning γ is tuning that one term. The Hawk–Dove costs, 0.22 and 0.12, are hard-coded where the other four costs are parameters. And every base payoff is log-scaled: <code>ln(2.5)</code> rather than <code>2.5</code>.</p>
+
+<div class="why">
+<span class="lbl">Why log-scaled payoffs</span>
+<p>The TypeScript port annotates this as "log-scaled for stability," and the reasoning holds. The three games' payoffs get multiplied by terms containing γ, which the API allows up to 10. Raw payoffs of 2.0 to 2.5 multiplied by a factor of 10 and then summed across three games produces numbers that swing hard as p moves; compressing to 0.18–0.92 via the logarithm keeps every intermediate in the same order of magnitude.</p>
+<p>It also has the effect of preserving <em>ratios</em> rather than differences between the games, so the equal-thirds mixing weights mean something consistent regardless of how the raw payoffs are chosen.</p>
+</div>
+
+<p>The important structural fact about this stage: <strong>whatever N is, it produces exactly two numbers.</strong> Every agent in the population is about to be compared against the same pair. Section 4 is about what follows from that.</p>
+
+<h3><span class="n">3.3</span> Step 4 — the update</h3>
+
+<p>Each agent scales both payoffs by its own weight and degree, adopts whichever is larger, and the new population fraction is blended with the old one at equal weight.</p>
+
+<div class="src">
+<div class="src-hd"><span class="path">lib/simulation/btut_engine.py</span><span>lines 172–196, complete</span></div>
+<pre><code>def _update_strategies(self):
+    """O(N) strategy update using mean-field approximation"""
+    U_A, U_B = self._compute_expected_utilities(self.p)
+
+    # Weighted voting for each agent
+    weighted_A = 0.0
+    total_weight = 0.0
+
+    for i in range(self.N):
+        agent_U_A = U_A * self.weights[i] * self.degrees[i]
+        agent_U_B = U_B * self.weights[i] * self.degrees[i]
+
+        if agent_U_A &gt; agent_U_B:
+            self.strategies[i] = 1
+            weighted_A += self.weights[i]
+        else:
+            self.strategies[i] = 0
+
+        total_weight += self.weights[i]
+
+    p_new = weighted_A / total_weight if total_weight &gt; 0 else self.p
+
+    # Momentum update
+    self.p = 0.5 * self.p + 0.5 * p_new
+    self.history.append(self.p)</code></pre>
+</div>
+
+<div class="why">
+<span class="lbl">Why the momentum term</span>
+<p>Without it, a population that all switches at once oscillates: everyone defects because p is low, which makes p low, which makes everyone defect. Best-response dynamics in games with strategic complements do this routinely.</p>
+<p>Blending the new fraction with the old at ½ damps the oscillation into a smooth approach. It is the same reason gradient descent uses a learning rate below one. Section 4.2 shows the damping is so effective that it fully determines the trajectory.</p>
+</div>
+
+<h3><span class="n">3.4</span> Where the three implementations disagree</h3>
+
+<p>Python and Rust do what you just read. TypeScript does something else: rather than adopting the better strategy outright, each agent computes a probability of switching from a logistic function of the payoff difference, and flips a coin.</p>
+
+<div class="src">
+<div class="src-hd"><span class="path">lib/simulation/btut-engine.ts</span><span>lines 162–177 — a different rule</span></div>
+<pre><code>for (const agent of agents) {
+  const weight = agent.weight;
+
+  const current_u = agent.strategy === 'A' ? u_a : u_b;
+  const other_u   = agent.strategy === 'A' ? u_b : u_a;
+
+  const delta_u = other_u - current_u;
+  const prob_switch = 1 / (1 + Math.exp(-gamma * weight * delta_u));
+
+  if (this.rng() &lt; prob_switch) {
+    agent.strategy = agent.strategy === 'A' ? 'B' : 'A';
+  }
+
+  agent.utility = current_u;
+}</code></pre>
+</div>
+
+<div class="tblwrap">
+<table class="data">
+<thead><tr><th></th><th>Python and Rust/WASM</th><th>TypeScript</th></tr></thead>
+<tbody>
+<tr><td>Decision rule</td><td>Deterministic — take the better one</td><td>Logistic switching probability</td></tr>
+<tr><td>Role of γ</td><td>Payoffs only</td><td>Payoffs, <em>and</em> as the logistic steepness</td></tr>
+<tr><td>Momentum on p</td><td>Yes</td><td>No — p is recounted directly</td></tr>
+<tr><td>Can agents differ?</td><td><span class="tag no">No</span></td><td><span class="tag ok">Yes</span> — weight survives inside the exponent</td></tr>
+<tr><td>Reached when</td><td>API call, or browser with WASM</td><td>Browser where WASM failed to load</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>This is a real behavioural fork, not an optimisation. The same configuration produces a qualitatively different simulation depending on whether a visitor's browser loaded a WebAssembly module. The simulator page does display which engine is live, so the difference is visible — but it is never described as a difference in the model.</p>
+
+<h3><span class="n">3.5</span> Step 5 — stopping</h3>
+
+<div class="src">
+<div class="src-hd"><span class="path">lib/simulation/btut_engine.py</span><span>lines 214–226</span></div>
+<pre><code>            if state['converged'] and iteration &gt;= 10:
+                break
+
+        return states
+
+    def _check_convergence(self, window: int = 5, threshold: float = 1e-6) -&gt; bool:
+        """Check if simulation has converged"""
+        if len(self.history) &lt; window:
+            return False
+
+        recent = self.history[-window:]
+        variance = np.var(recent)
+        return bool(variance &lt; threshold)</code></pre>
+</div>
+<p class="fnote">A variance test over the last five values of p, with a floor of ten rounds before early exit is allowed. The TypeScript engine uses the same test with a window of <b>100</b> samples rather than 5 — so with the 100-iteration <code>quick</code> preset it can only ever evaluate convergence on the final step.</p>
+
+<!-- ==================== 4 ==================== -->
+
+<h2 class="sec" id="s4"><span class="n">Section Four</span>What Engine A does when you run it</h2>
+<p class="dek">Reading code tells you what it computes. Running it tells you what it does. This engine has a closed-form solution its documentation doesn't mention.</p>
+
+<h3><span class="n">4.1</span> The per-agent factor cancels</h3>
+
+<p>Return to the two lines the deterministic update turns on:</p>
+
+<div class="src">
+<div class="src-hd"><span class="path">lib/simulation/btut_engine.py</span><span>lines 181–184</span></div>
+<pre><code>agent_U_A = U_A * self.weights[i] * self.degrees[i]
+agent_U_B = U_B * self.weights[i] * self.degrees[i]
+
+if agent_U_A &gt; agent_U_B:</code></pre>
+</div>
+
+<p><code>U_A</code> and <code>U_B</code> are the same two scalars for every agent — Step 3 produced exactly two numbers. The factor <code>weights[i] * degrees[i]</code> is strictly positive: weight is <code>(k/k_max)^τ</code> which lies in (0, 1], and degree is at least <code>m ≥ 1</code>. Multiplying both sides of a comparison by the same positive number cannot change which side is larger. So the comparison reduces, for every agent, to <code>U_A &gt; U_B</code>.</p>
+
+</div>
+
+<div class="wide">
+<figure>
+<div class="figwrap">
+<svg viewBox="0 0 940 250" role="img" aria-label="The per-agent multiplier appears on both sides of the comparison and cancels, collapsing N decisions into one">
+  <defs>
+    <marker id="a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+    </marker>
+  </defs>
+
+  <text x="8" y="26" font-family="-apple-system, Helvetica, sans-serif" font-size="11" letter-spacing="1.2" fill="var(--ink-3)">AS WRITTEN — N INDEPENDENT COMPARISONS</text>
+
+  <g font-family="ui-monospace, Menlo, monospace" font-size="13">
+    <rect x="8" y="40" width="428" height="116" fill="var(--raised)" stroke="currentColor"/>
+    <text x="26" y="68"  fill="currentColor">agent 0:    U_A·<tspan fill="var(--accent)">w₀k₀</tspan>  &gt;  U_B·<tspan fill="var(--accent)">w₀k₀</tspan>  ?</text>
+    <text x="26" y="93"  fill="currentColor">agent 1:    U_A·<tspan fill="var(--accent)">w₁k₁</tspan>  &gt;  U_B·<tspan fill="var(--accent)">w₁k₁</tspan>  ?</text>
+    <text x="26" y="118" fill="var(--ink-3)">    ⋮</text>
+    <text x="26" y="143" fill="currentColor">agent N−1:  U_A·<tspan fill="var(--accent)">wₙkₙ</tspan>  &gt;  U_B·<tspan fill="var(--accent)">wₙkₙ</tspan>  ?</text>
+  </g>
+
+  <path d="M436,98 L510,98" stroke="currentColor" stroke-width="1.4" marker-end="url(#a3)" fill="none"/>
+  <text x="473" y="88" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="var(--ink-2)">divide by</text>
+  <text x="473" y="118" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="var(--accent)">wᵢkᵢ &gt; 0</text>
+
+  <text x="520" y="26" font-family="-apple-system, Helvetica, sans-serif" font-size="11" letter-spacing="1.2" fill="var(--ink-3)">WHAT IT EVALUATES TO</text>
+
+  <g font-family="ui-monospace, Menlo, monospace" font-size="13">
+    <rect x="520" y="40" width="412" height="116" fill="var(--accent-2)" stroke="var(--accent)" stroke-width="1.6"/>
+    <text x="538" y="72" fill="currentColor">every agent:   U_A  &gt;  U_B  ?</text>
+    <text x="538" y="100" fill="var(--ink-2)" font-size="11.5">one scalar comparison, evaluated N times</text>
+    <text x="538" y="124" fill="var(--defect)" font-size="11.5">⇒ all N agents adopt the same strategy</text>
+    <text x="538" y="145" fill="var(--defect)" font-size="11.5">⇒ p_new is exactly 0 or exactly 1, never between</text>
+  </g>
+
+  <text x="8" y="188" font-family="-apple-system, Helvetica, sans-serif" font-size="11" letter-spacing="1.2" fill="var(--ink-3)">SO THE OUTER LOOP BECOMES</text>
+  <rect x="8" y="200" width="924" height="40" fill="var(--raised)" stroke="currentColor"/>
+  <text x="26" y="225" font-family="ui-monospace, Menlo, monospace" font-size="13" fill="currentColor">p ← ½·p + ½·p_new   with p_new ∈ {0, 1}   ⇒   p halves its distance to 0 or 1 every single round</text>
+</svg>
+</div>
+<figcaption><span class="fignum">Figure 3.</span>Why the N-agent loop is a scalar recurrence in disguise. The weight and degree are computed, stored, and multiplied in — then divided straight back out by the comparison operator. The identical cancellation is present in <code>rust-engine/src/lib.rs</code> lines 239–246.</figcaption>
+</figure>
+</div>
+
+<div class="col">
+
+<h3><span class="n">4.2</span> Measured: every agent agrees, every round</h3>
+
+<p>That gives a testable prediction — at any round, the number of distinct strategy values across the whole population should be exactly one. Importing the shipped engine unmodified, stepping it, and counting distinct values after each step:</p>
+
+<div class="src">
+<div class="src-hd"><span class="path">measured — N = 1000, γ = 1.45, τ = 0.30</span><span>verification run</span></div>
+<pre><code>round 1: p=0.750000  distinct strategies among 1000 agents = [1]
+round 2: p=0.875000  distinct strategies among 1000 agents = [1]
+round 3: p=0.937500  distinct strategies among 1000 agents = [1]
+round 4: p=0.968750  distinct strategies among 1000 agents = [1]
+round 5: p=0.984375  distinct strategies among 1000 agents = [1]
+round 6: p=0.992188  distinct strategies among 1000 agents = [1]</code></pre>
+</div>
+
+<p>And the p values are not arbitrary. With p₀ = 0.5 and p_new pinned at 1, the recurrence <code>p ← ½p + ½</code> unrolls exactly:</p>
+
+<p class="mono" style="font-size:18px; margin: 22px 0 26px 0;">p<sub>t</sub> = 1 − 2<sup>−(t+1)</sup> &nbsp;&nbsp;<span style="font-family:Charter,Georgia,serif; color:var(--ink-2); font-size:16px;">(cooperating branch)</span>&nbsp;&nbsp;&nbsp;&nbsp; p<sub>t</sub> = 2<sup>−(t+1)</sup> &nbsp;&nbsp;<span style="font-family:Charter,Georgia,serif; color:var(--ink-2); font-size:16px;">(defecting branch)</span></p>
+
+</div>
+
+<div class="wide">
+<figure>
+<div class="figwrap">
+<svg viewBox="0 0 920 320" role="img" aria-label="Cooperation trajectory plotted against the closed form one minus two to the minus t plus one, showing exact agreement, with the convergence test firing at round twelve">
+  <line x1="72" y1="30" x2="72" y2="250" stroke="currentColor" stroke-width="1.2"/>
+  <line x1="72" y1="250" x2="800" y2="250" stroke="currentColor" stroke-width="1.2"/>
+
+  <g stroke="var(--rule)" stroke-width="1">
+    <line x1="72" y1="30" x2="800" y2="30"/>
+    <line x1="72" y1="85" x2="800" y2="85"/>
+    <line x1="72" y1="140" x2="800" y2="140"/>
+    <line x1="72" y1="195" x2="800" y2="195"/>
+  </g>
+
+  <g font-family="ui-monospace, Menlo, monospace" font-size="11" fill="var(--ink-2)">
+    <text x="64" y="34" text-anchor="end">1.00</text>
+    <text x="64" y="89" text-anchor="end">0.75</text>
+    <text x="64" y="144" text-anchor="end">0.50</text>
+    <text x="64" y="199" text-anchor="end">0.25</text>
+    <text x="64" y="254" text-anchor="end">0.00</text>
+    <text x="72"  y="270" text-anchor="middle">0</text>
+    <text x="184" y="270" text-anchor="middle">2</text>
+    <text x="296" y="270" text-anchor="middle">4</text>
+    <text x="408" y="270" text-anchor="middle">6</text>
+    <text x="520" y="270" text-anchor="middle">8</text>
+    <text x="632" y="270" text-anchor="middle">10</text>
+    <text x="744" y="270" text-anchor="middle">12</text>
+  </g>
+  <text x="436" y="292" text-anchor="middle" font-family="-apple-system, Helvetica, sans-serif" font-size="11.5" fill="var(--ink-3)">round t</text>
+  <text x="26" y="140" text-anchor="middle" font-family="-apple-system, Helvetica, sans-serif" font-size="11.5" fill="var(--ink-3)" transform="rotate(-90 26 140)">p — cooperating fraction</text>
+
+  <polyline points="72,140 128,85 184,57.5 240,43.8 296,36.9 352,33.4 408,31.7 464,30.9 520,30.4 576,30.2 632,30.1 688,30.1 744,30"
+            fill="none" stroke="var(--coop)" stroke-width="2.2"/>
+  <g fill="var(--coop)">
+    <circle cx="72" cy="140" r="3.6"/><circle cx="128" cy="85" r="3.6"/><circle cx="184" cy="57.5" r="3.6"/>
+    <circle cx="240" cy="43.8" r="3.6"/><circle cx="296" cy="36.9" r="3.6"/><circle cx="352" cy="33.4" r="3.6"/>
+    <circle cx="408" cy="31.7" r="3.6"/><circle cx="464" cy="30.9" r="3.6"/><circle cx="520" cy="30.4" r="3.6"/>
+    <circle cx="576" cy="30.2" r="3.6"/><circle cx="632" cy="30.1" r="3.6"/><circle cx="688" cy="30.1" r="3.6"/>
+    <circle cx="744" cy="30" r="5"/>
+  </g>
+
+  <polyline points="72,140 128,195 184,222.5 240,236.2 296,243.1 352,246.6 408,248.3 464,249.1 520,249.6 576,249.8 632,249.9 688,249.9 744,250"
+            fill="none" stroke="var(--defect)" stroke-width="2" stroke-dasharray="6 4"/>
+  <g fill="var(--defect)">
+    <circle cx="72" cy="140" r="3.2"/><circle cx="128" cy="195" r="3.2"/><circle cx="184" cy="222.5" r="3.2"/>
+    <circle cx="240" cy="236.2" r="3.2"/><circle cx="296" cy="243.1" r="3.2"/><circle cx="744" cy="250" r="5"/>
+  </g>
+
+  <text x="470" y="54" font-family="ui-monospace, monospace" font-size="12" fill="var(--coop)">γ above critical  →  p = 1 − 2⁻⁽ᵗ⁺¹⁾</text>
+  <text x="470" y="234" font-family="ui-monospace, monospace" font-size="12" fill="var(--defect)">γ below critical  →  p = 2⁻⁽ᵗ⁺¹⁾</text>
+
+  <line x1="744" y1="20" x2="744" y2="258" stroke="var(--accent)" stroke-width="1.4" stroke-dasharray="4 3"/>
+  <g font-family="ui-monospace, monospace" font-size="11">
+    <text x="756" y="110" fill="var(--accent)">convergence test fires</text>
+    <text x="756" y="126" fill="var(--accent)">at round 12</text>
+    <text x="756" y="148" fill="currentColor">measured: 0.999878</text>
+    <text x="756" y="164" fill="var(--ink-2)">= 1 − 2⁻¹³ exactly</text>
+  </g>
+
+  <text x="72" y="312" font-family="-apple-system, Helvetica, sans-serif" font-size="11.5" fill="var(--ink-3)">Markers are the closed form. The engine's measured values coincide with them to every printed digit.</text>
+</svg>
+</div>
+<figcaption><span class="fignum">Figure 4.</span>The trajectory is a halving of the gap to the boundary, and nothing else. The measured terminal value 0.999878 equals 1 − 2⁻¹³ to six decimal places; the defecting branch's 0.000122 equals 2⁻¹³ likewise.</figcaption>
+</figure>
+</div>
+
+<div class="col">
+
+<h3><span class="n">4.3</span> Measured: the answer doesn't depend on N</h3>
+
+<p>If the trajectory is a scalar recurrence, N should affect run time and nothing else. Measured across three orders of magnitude on the unmodified engine, with a 20-round cap:</p>
+
+<div class="tblwrap">
+<table class="data">
+<thead><tr><th class="num">N</th><th class="num">Rounds run</th><th class="num">Wall time</th><th class="num">µs per agent-round</th><th class="num">Final p</th></tr></thead>
+<tbody>
+<tr><td class="num">1,000</td><td class="num">12</td><td class="num">0.024 s</td><td class="num">2.033</td><td class="num">0.999878</td></tr>
+<tr><td class="num">10,000</td><td class="num">12</td><td class="num">0.094 s</td><td class="num">0.787</td><td class="num">0.999878</td></tr>
+<tr><td class="num">100,000</td><td class="num">12</td><td class="num">0.914 s</td><td class="num">0.761</td><td class="num">0.999878</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>Two readings, both true. The favourable one: <mark>wall time is genuinely linear in N</mark> — ten times the agents costs 9.7 times the time, and per-agent cost is flat once the interpreter is warm. The O(N) claim is empirically supported, and that was the headline claim. The other reading: the final value is bit-identical across a hundredfold change in population, because the population never enters the answer.</p>
+
+<h3><span class="n">4.4</span> Measured: the phase transition is a step</h3>
+
+<div class="tblwrap">
+<table class="data">
+<thead><tr><th class="num">γ</th><th class="num">1.30</th><th class="num">1.40</th><th class="num">1.44</th><th class="num">1.45</th><th class="num">1.50</th><th class="num">1.60</th></tr></thead>
+<tbody>
+<tr><td>final p</td><td class="num">0.000122</td><td class="num">0.999878</td><td class="num">0.999878</td><td class="num">0.999878</td><td class="num">0.999878</td><td class="num">0.999878</td></tr>
+</tbody>
+</table>
+</div>
+<p class="fnote">N = 1000, τ = 0.30, 25-round cap. The transition sits between 1.30 and 1.40, and it is a hard step — there is no γ at which the population partially cooperates. This is what Section 7's calibrator is built to find, and it explains why that search converges so cleanly: it is bisecting a step function, the easiest possible target.</p>
+
+<h3><span class="n">4.5</span> The ledger</h3>
+
+<div class="tblwrap">
+<table class="data">
+<thead><tr><th>Claim</th><th>Status</th><th>Evidence</th></tr></thead>
+<tbody>
+<tr><td>Runs in O(N) time</td><td><span class="tag ok">Holds</span></td><td>Flat per-agent cost, §4.3</td></tr>
+<tr><td>Memory is O(N); no graph stored</td><td><span class="tag ok">Holds</span></td><td>Three flat arrays; the <code>neighbors</code> field is declared and never populated</td></tr>
+<tr><td>Scales to a million agents</td><td><span class="tag ok">Holds</span></td><td>Extrapolates to ~9 s in Python; the Rust kernel does 100k in 2.5 ms</td></tr>
+<tr><td>Sharp cooperation phase transition in γ</td><td><span class="tag ok">Holds</span></td><td>Measured, §4.4</td></tr>
+<tr><td>Converges to a stable equilibrium</td><td><span class="tag ok">Holds</span></td><td>Provably — the recurrence is a contraction with ratio ½</td></tr>
+<tr><td>Agents coordinate <em>with each other</em></td><td><span class="tag no">Does not hold</span></td><td>All agents share one decision, §4.1–4.2</td></tr>
+<tr><td>τ (hub influence) changes the outcome</td><td><span class="tag no">Does not hold</span></td><td>τ enters only via wᵢ, which cancels. It <em>does</em> matter in the TypeScript engine and both domain bridges.</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="why">
+<span class="lbl">Why this happened, and the one-line repair</span>
+<p>The design instinct was right. Scaling each agent's payoff by its influence is exactly what you'd want in a heterogeneous population, and it's what makes the model more than a single differential equation. The slip is that the scaling was applied <em>symmetrically</em> — to both sides of a comparison — and a comparison is invariant to positive scaling. Had the same factor been applied to an additive term, or to only one side, or inside a nonlinearity, it would have survived.</p>
+<p>Which is precisely what the TypeScript port does: <code>1 / (1 + exp(−γ·wᵢ·Δu))</code> puts the weight inside an exponential, where scaling changes the result. That formulation is already in this repository, already written, already working. Adopting it in <code>_update_strategies</code> restores per-agent heterogeneity, keeps the O(N) property, keeps the phase transition, and changes no public interface.</p>
+</div>
+
+</div>
+
+<div class="col">
+
+<!-- ==================== 5 ==================== -->
+
+<h2 class="sec" id="s5"><span class="n">Section Five</span>Engine B: the market kernel</h2>
+<p class="dek">A second algorithm, sharing only vocabulary with the first. It is the better-engineered of the two, and nothing in the product can reach it.</p>
+
+<p>Inside <code>btut_market_simulator</code> is a kernel with no games, no strategy labels, and no phase transition. Cooperation is a continuous number in [0,1] per agent, and each round every agent moves a fraction of the way toward a weighted population average. How large that fraction is depends on an exponential kernel over the agent's "distance from the centre of the market."</p>
+
+<p>It is also the most carefully written code in the repository: structure-of-arrays memory layout, optional Rayon parallelism behind a feature flag, tracing instrumentation on the hot paths, and a scratch buffer that gets swapped rather than reallocated.</p>
+
+<h3><span class="n">5.1</span> How an agent becomes two numbers</h3>
+
+<p>Two derived quantities give agents their individuality. <em>Weight</em> decides how much an agent's opinion counts toward the average. <em>Distance</em> decides how strongly that average pulls back on the agent.</p>
+
+<div class="src">
+<div class="src-hd"><span class="path">btut_market_simulator/src/btut/kernel.rs</span><span>lines 155–181</span></div>
+<pre><code>fn compute_weight(agent: &amp;AgentState) -&gt; f64 {
+    let type_weight = match agent.agent_type {
+        AgentType::Retail =&gt; 1.0,
+        AgentType::HFT =&gt; 5.0,
+        AgentType::Institution =&gt; 20.0,
+        AgentType::MarketMaker =&gt; 10.0,
+    };
+    // Weight scales with sqrt of capital (diminishing influence)
+    type_weight * agent.capital.sqrt().max(1.0)
+}
+
+fn compute_distance(agent: &amp;AgentState) -&gt; f64 {
+    let type_distance = match agent.agent_type {
+        AgentType::MarketMaker =&gt; 0.1, // Closest to the market
+        AgentType::HFT =&gt; 0.3,
+        AgentType::Institution =&gt; 0.6,
+        AgentType::Retail =&gt; 1.0, // Farthest from core
+    };
+
+    let capital_factor = 1.0 / (1.0 + (agent.capital / 10000.0).ln().max(0.0));
+    type_distance * capital_factor
+}</code></pre>
+</div>
+
+<div class="tblwrap">
+<table class="data">
+<thead><tr><th>Trader class</th><th class="num">Weight</th><th class="num">Distance</th><th class="num">Kernel K</th><th>Reading</th></tr></thead>
+<tbody>
+<tr><td>Market maker</td><td class="num">10.0</td><td class="num">0.1</td><td class="num">0.990</td><td>Sits on the book — adapts fastest to consensus</td></tr>
+<tr><td>HFT</td><td class="num">5.0</td><td class="num">0.3</td><td class="num">0.970</td><td>Near the book, fast, small size</td></tr>
+<tr><td>Institution</td><td class="num">20.0</td><td class="num">0.6</td><td class="num">0.942</td><td>Heaviest vote, slowest to move</td></tr>
+<tr><td>Retail</td><td class="num">1.0</td><td class="num">1.0</td><td class="num">0.905</td><td>Lightest vote, least responsive</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="why">
+<span class="lbl">Why square root of capital, and why the classes are ordered this way</span>
+<p>The square root is a deliberate choice of diminishing returns. A fund with a hundred times the capital of another should have more influence on the market's consensus — but not a hundred times more, or the model becomes a single fund and some noise. Square-root scaling gives it ten times. This is the same instinct behind the square-root law of market impact in real execution research.</p>
+<p>The distance ordering encodes a genuine market intuition. A market maker's entire business is reading and reacting to consensus, so it should adapt almost instantly (K = 0.99). A retail trader looks at their portfolio once a week (K = 0.905). Institutions get the heaviest weight but the slower kernel: they move the market when they act, and they act slowly.</p>
+<p>Note the spread of K values is narrow at the default decay λ = 0.1 — from 0.905 to 0.990, less than 10%. The class distinctions are designed in but barely bite until λ is raised. That looks like an untuned default rather than a decision.</p>
+</div>
+
+<h3><span class="n">5.2</span> The update</h3>
+
+<div class="src">
+<div class="src-hd"><span class="path">btut_market_simulator/src/btut/kernel.rs</span><span>lines 241–314, parallel branch</span></div>
+<pre><code>fn update_iteration(&amp;mut self) -&gt; f64 {
+    // Step 1: Compute weighted mean field (global cooperation level)
+    let total_weight: f64 = self.weights.sum();
+    let weighted_sum: f64 = Zip::from(&amp;self.strategies)
+        .and(&amp;self.weights)
+        .fold(0.0, |acc, &amp;s, &amp;w| acc + s * w);
+
+    let global_cooperation = if total_weight &gt; 0.0 {
+        weighted_sum / total_weight
+    } else {
+        0.5
+    };
+
+    // Step 2: Update each agent's strategy
+    self.new_strategies
+        .as_slice_mut()
+        .unwrap()
+        .par_iter_mut()
+        .enumerate()
+        .for_each(|(i, new_s)| {
+            let old_s = strategies[i];
+            let k = kernel_values[i];
+
+            // Target strategy based on mean field + bias
+            let target = (global_cooperation + config.bias).clamp(0.0, 1.0);
+
+            // Softmax-style update with temperature
+            let influence = k * (target - old_s) / config.temperature;
+
+            // Momentum-based update
+            *new_s = config.momentum * old_s + (1.0 - config.momentum) * (old_s + influence);
+            *new_s = new_s.clamp(0.0, 1.0);
+        });
+
+    // Step 3: Compute max delta and swap strategies
+    let max_delta = Zip::from(&amp;self.strategies)
+        .and(&amp;self.new_strategies)
+        .fold(0.0f64, |acc, &amp;old, &amp;new| acc.max((new - old).abs()));
+
+    std::mem::swap(&amp;mut self.strategies, &amp;mut self.new_strategies);
+
+    max_delta
+}</code></pre>
+</div>
+
+<p>The momentum line looks like a blend of two candidate states, but expanding it collapses to something simpler:</p>
+
+<div class="src">
+<div class="src-hd"><span class="path">algebraic identity, verified numerically</span><span></span></div>
+<pre><code>  α·s + (1−α)·(s + i)  =  α·s + (1−α)·s + (1−α)·i  =  s + (1−α)·i
+
+so:  sᵢ  ←  sᵢ  +  (1 − momentum) · Kᵢ · (mean + bias − sᵢ) / temperature
+                  └── 0.30 by default ──┘</code></pre>
+</div>
+<p class="fnote">Momentum is not blending states; it is a step size on the correction. At the default 0.7, each agent closes 30% × Kᵢ of its gap per round. Checked numerically: both forms give 0.459000000000 for α = 0.7, s = 0.42, i = 0.13.</p>
+
+<p>Unlike Lineage A, here the per-agent term genuinely survives — Kᵢ scales a <em>step size</em>, not both sides of a comparison, so agents with different kernels really do converge at different rates. This is the mechanism Lineage A was reaching for and missed.</p>
+
+<div class="why">
+<span class="lbl">Why structure-of-arrays instead of a vector of agent structs</span>
+<p>The hot loop touches only two of the five per-agent quantities: <code>strategies</code> and <code>kernel_values</code>. In a vector-of-structs layout, walking a million agents would pull the weight, distance and scratch fields into cache alongside them and waste most of every cache line.</p>
+<p>Five parallel flat arrays means the loop streams two contiguous runs of <code>f64</code> — SIMD-friendly and cache-dense. It also makes the parallel version nearly free: <code>par_iter_mut()</code> on a slice splits it into disjoint ranges with no copying and no synchronisation. And the double buffer means the update never allocates: <code>mem::swap</code> exchanges two pointers.</p>
+<p>The price is that array index is no longer the agent's identity. The kernel's arrays and the simulation's <code>AgentState</code> vector must stay in the same order forever, or <code>sync_to_agents</code> silently writes each agent's cooperation into a different agent. Nothing in the type system enforces that.</p>
+</div>
+
+<h3><span class="n">5.3</span> Shocks, and why three of the four are permanent</h3>
+
+<div class="tblwrap">
+<table class="data">
+<thead><tr><th>Shock</th><th>Effect</th><th>Who it hits</th><th>What happens after</th></tr></thead>
+<tbody>
+<tr><td>Liquidity crisis</td><td class="m">s − 0.5·severity</td><td>Everyone, uniformly</td><td>Moves the mean itself — new lower equilibrium, permanent</td></tr>
+<tr><td>Flash crash</td><td class="m">s × 0.3</td><td>Only agents with distance &lt; 0.5 — market makers and HFT</td><td>Moves the mean partly — partial permanent drop</td></tr>
+<tr><td>Regeneration</td><td class="m">s + 0.3·strength</td><td>Everyone, uniformly</td><td>The inverse of a liquidity crisis</td></tr>
+<tr><td>Noise</td><td class="m">s + N(0, σ)</td><td>Independent draw per agent</td><td>Mean roughly preserved — the one shock that is recovered from</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>The kernel's only restoring force is the population mean, so any shock that moves the mean moves the equilibrium with it. Only the noise shock, which perturbs agents in both directions and leaves the mean intact, gets relaxed away. That is a real property of the design rather than a bug, but it means "recovery from a liquidity crisis" is not something this model can exhibit without an external target. The <code>FlashCrash</code> variant's <code>duration</code> field is destructured to <code>_</code> and never read — the crash is instantaneous whatever value you pass.</p>
+
+<!-- ==================== 6 ==================== -->
+
+<h2 class="sec" id="s6"><span class="n">Section Six</span>The market simulator</h2>
+<p class="dek">The kernel is one stage of a six-stage loop that generates orders, matches them in a real limit order book, and scores the result for crashes.</p>
+
+</div>
+
+<div class="wide">
+<figure>
+<div class="figwrap">
+<svg viewBox="0 0 960 420" role="img" aria-label="Six-stage market timestep: shocks, volatility, BTUT kernel, sync, order flow into the order book, then metrics, looping back">
+  <defs>
+    <marker id="a4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+    </marker>
+    <marker id="a4b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/>
+    </marker>
+  </defs>
+
+  <text x="8" y="24" font-family="-apple-system, Helvetica, sans-serif" font-size="11" letter-spacing="1.2" fill="var(--ink-3)">Simulation::step()  —  simulation.rs lines 283–320</text>
+
+  <g font-family="ui-monospace, Menlo, monospace" font-size="11.5">
+    <rect x="8" y="38" width="150" height="74" fill="var(--raised)" stroke="currentColor"/>
+    <text x="18" y="57" fill="var(--accent)" font-size="10.5">1 · SHOCKS</text>
+    <text x="18" y="76" fill="currentColor">scheduled_shocks</text>
+    <text x="18" y="92" fill="var(--ink-2)" font-size="10">filtered by timestep</text>
+    <text x="18" y="106" fill="var(--ink-2)" font-size="10">→ kernel.apply_shock</text>
+
+    <rect x="176" y="38" width="150" height="74" fill="var(--raised)" stroke="currentColor"/>
+    <text x="186" y="57" fill="var(--accent)" font-size="10.5">2 · VOLATILITY</text>
+    <text x="186" y="76" fill="currentColor">generator.update_</text>
+    <text x="186" y="91" fill="currentColor">volatility()</text>
+    <text x="186" y="106" fill="var(--ink-2)" font-size="10">synthetic process</text>
+
+    <rect x="344" y="38" width="184" height="74" fill="var(--accent-2)" stroke="var(--accent)" stroke-width="1.8"/>
+    <text x="354" y="57" fill="var(--accent)" font-size="10.5">3 · BTUT KERNEL</text>
+    <text x="354" y="76" fill="currentColor">update_cycle(vol)</text>
+    <text x="354" y="91" fill="var(--ink-2)" font-size="10">up to 25 inner iterations</text>
+    <text x="354" y="106" fill="var(--ink-2)" font-size="10">all of Section 5</text>
+
+    <rect x="546" y="38" width="150" height="74" fill="var(--raised)" stroke="currentColor"/>
+    <text x="556" y="57" fill="var(--accent)" font-size="10.5">4 · SYNC</text>
+    <text x="556" y="76" fill="currentColor">sync_to_agents()</text>
+    <text x="556" y="92" fill="var(--ink-2)" font-size="10">write sᵢ back into the</text>
+    <text x="556" y="106" fill="var(--ink-2)" font-size="10">AgentState vector</text>
+
+    <rect x="714" y="38" width="238" height="74" fill="var(--raised)" stroke="currentColor"/>
+    <text x="724" y="57" fill="var(--accent)" font-size="10.5">5 · ORDER FLOW</text>
+    <text x="724" y="76" fill="currentColor">generate_scaled_flow()</text>
+    <text x="724" y="92" fill="var(--ink-2)" font-size="10">sample a trader class, read its sᵢ,</text>
+    <text x="724" y="106" fill="var(--ink-2)" font-size="10">emit the matching order type</text>
+  </g>
+
+  <path d="M158,74 L176,74" stroke="currentColor" stroke-width="1.3" marker-end="url(#a4)" fill="none"/>
+  <path d="M326,74 L344,74" stroke="currentColor" stroke-width="1.3" marker-end="url(#a4)" fill="none"/>
+  <path d="M528,74 L546,74" stroke="currentColor" stroke-width="1.3" marker-end="url(#a4)" fill="none"/>
+  <path d="M696,74 L714,74" stroke="currentColor" stroke-width="1.3" marker-end="url(#a4)" fill="none"/>
+
+  <path d="M833,112 L833,154" stroke="currentColor" stroke-width="1.3" marker-end="url(#a4)" fill="none"/>
+  <rect x="650" y="154" width="302" height="98" fill="var(--raised)" stroke="currentColor" stroke-width="1.5"/>
+  <g font-family="ui-monospace, Menlo, monospace" font-size="11">
+    <text x="662" y="174" fill="var(--defect)" font-size="10.5">LIMIT ORDER BOOK — price-time priority</text>
+    <text x="662" y="194" fill="currentColor">bids: BTreeMap&lt;OrderedFloat, PriceLevel&gt;</text>
+    <text x="662" y="210" fill="currentColor">asks: BTreeMap&lt;OrderedFloat, PriceLevel&gt;</text>
+    <text x="662" y="226" fill="currentColor">orders: FxHashMap&lt;OrderId, (Side, Price)&gt;</text>
+    <text x="662" y="243" fill="var(--ink-2)" font-size="10">match, execute, rest the remainder on the book</text>
+  </g>
+
+  <path d="M650,202 L570,202" stroke="currentColor" stroke-width="1.3" marker-end="url(#a4)" fill="none"/>
+  <rect x="310" y="154" width="256" height="98" fill="var(--raised)" stroke="currentColor"/>
+  <g font-family="ui-monospace, Menlo, monospace" font-size="11">
+    <text x="322" y="174" fill="var(--accent)" font-size="10.5">6 · METRICS — metrics.rs</text>
+    <text x="322" y="194" fill="currentColor">book snapshot → depth at 1/5/10%</text>
+    <text x="322" y="210" fill="currentColor">rolling volatility, 20-sample window</text>
+    <text x="322" y="226" fill="currentColor">regeneration and drag scores</text>
+    <text x="322" y="243" fill="currentColor">CrashDetector.update()</text>
+  </g>
+
+  <path d="M310,202 L56,202 L56,122" stroke="var(--accent)" stroke-width="1.6" marker-end="url(#a4b)" fill="none"/>
+  <text x="66" y="222" font-family="ui-monospace, monospace" font-size="11" fill="var(--accent)">next timestep</text>
+
+  <rect x="8" y="282" width="944" height="56" fill="none" stroke="var(--rule-2)" stroke-dasharray="4 3"/>
+  <text x="20" y="302" font-family="-apple-system, Helvetica, sans-serif" font-size="11" letter-spacing="1.2" fill="var(--ink-3)">BEFORE THE LOOP — warm-up, no metrics collected</text>
+  <text x="20" y="322" font-family="ui-monospace, monospace" font-size="11.5" fill="currentColor">kernel.update_cycle → generator.update_price → ten random orders around the mid. Lets the kernel settle and the book acquire depth before measurement starts.</text>
+
+  <rect x="8" y="352" width="944" height="56" fill="var(--accent-2)" stroke="var(--accent)"/>
+  <text x="20" y="372" font-family="-apple-system, Helvetica, sans-serif" font-size="11" letter-spacing="1.2" fill="var(--accent)">MEASURED — 100,000 agents × 1,000 timesteps, release build, this container</text>
+  <text x="20" y="393" font-family="ui-monospace, monospace" font-size="12.5" fill="currentColor">wall 6.93 s  ·  6.93 ms per timestep  ·  mean spread 1.00 bps  ·  flash crashes 0  ·  cooperation constant at 0.5001</text>
+</svg>
+</div>
+<figcaption><span class="fignum">Figure 5.</span>The market timestep. Stage 3 is the whole of Section 5; stages 5 and 6 are the market machinery around it. The bottom strip is a real run of this exact loop.</figcaption>
+</figure>
+</div>
+
+<div class="col">
+
+<h3><span class="n">6.1</span> How cooperation becomes an order</h3>
+
+<p>This is the coupling that makes it a market model rather than an abstract one. An agent's cooperation level decides what <em>kind</em> of order it sends. Cooperators post passive limit orders and two-sided quotes — they supply liquidity. Defectors send aggressive market orders — they consume it.</p>
+
+<div class="tblwrap">
+<table class="data">
+<thead><tr><th>Agent condition</th><th>Order emitted</th><th>Effect on the book</th></tr></thead>
+<tbody>
+<tr><td>Cooperative and a liquidity provider<br><span style="color:var(--ink-3);font-size:14px;">market makers, HFT with s &gt; 0.5</span></td><td>Two-sided quote at mid ± h, where<br><code>h = spread × (0.3 + 0.7·(1 − mean))</code></td><td>Adds depth on both sides. More cooperation → tighter quotes.</td></tr>
+<tr><td>Cooperative, not a provider</td><td>Passive limit order, one side, offset <code>spread × U(0.5, 2.0)</code></td><td>Adds depth on one side</td></tr>
+<tr><td>Defecting</td><td>Market order at half size — crosses the spread</td><td>Consumes depth. This is how low cooperation widens spreads and trips crash detection.</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>Notice the quote-width term in the first row: it reads <code>mean_coop</code>, which the kernel produced, and sets the spread, which becomes the next timestep's offsets. Cooperation is genuinely in the loop here, not decorative.</p>
+
+<h3><span class="n">6.2</span> The one approximation, stated honestly</h3>
+
+<p>The order-flow stage does not simulate every agent. It computes how many orders the population <em>would</em> produce, then caps the number actually generated and inflates their sizes to compensate.</p>
+
+<div class="src">
+<div class="src-hd"><span class="path">btut_market_simulator/src/simulation.rs</span><span>lines 380–401</span></div>
+<pre><code>/// Generate scaled order flow based on agent population statistics
+///
+/// This is an O(1) approximation of agent behavior that scales to millions of agents.
+fn generate_scaled_flow(&amp;mut self) {
+    let num_agents = self.config.simulation.num_agents;
+    ...
+    let total_activity = retail_activity + hft_activity + inst_activity + mm_activity;
+    let expected_orders = (num_agents as f64 * total_activity) as usize;
+
+    // Scale down to reasonable number while preserving statistics
+    let actual_orders = expected_orders.min(1000);
+    let order_scale = expected_orders as f64 / actual_orders as f64;</code></pre>
+</div>
+
+<div class="why">
+<span class="lbl">Why cap the order flow, and what it costs</span>
+<p>A million agents at market-maker activity rates would generate hundreds of thousands of orders per timestep. Each one walks the book, allocates a trade record, and mutates two BTreeMaps. That is not a hundred times slower than a thousand orders — it is a hundred times slower <em>and</em> the book grows without bound, so every subsequent match walks a longer structure. The simulation would not finish.</p>
+<p>Capping at a thousand orders with proportionally larger sizes preserves the first moment of order flow — total volume is right — at the cost of the distribution. A thousand orders of size 100 do not hit a book the way a hundred thousand orders of size 1 do: the price impact is lumpier, the queue dynamics are wrong, and rare events involving many small orders can't occur.</p>
+<p>The honest summary is that <mark>the kernel is genuinely O(N) in agents, while the market it feeds is a fixed-resolution sample of that population.</mark> "One million agents" describes the kernel's workload accurately and the order book's inaccurately. The code says so in its own doc comment, which is more than most such approximations get.</p>
+</div>
+
+<h3><span class="n">6.3</span> The matching engine</h3>
+
+<p>The book is two <code>BTreeMap</code>s keyed by price — bids read in reverse for best-first, asks read forward. Each price level holds a <code>SmallVec&lt;[Order; 8]&gt;</code>, an inline array that only touches the heap past eight resting orders at one price. Price priority comes from the map ordering, time priority from FIFO position within the level.</p>
+
+<div class="src">
+<div class="src-hd"><span class="path">btut_market_simulator/src/market/order_book.rs</span><span>match_bid — the price-time priority walk</span></div>
+<pre><code>fn match_bid(&amp;mut self, order: &amp;mut Order, trades: &amp;mut Vec&lt;Trade&gt;) {
+    // Collect prices to process (ascending order - best ask first)
+    let prices_to_check: Vec&lt;Price&gt; = self.asks.keys().cloned().collect();
+
+    for ask_price in prices_to_check {
+        // For limit orders, stop if we've passed the limit price
+        if order.order_type == OrderType::Limit &amp;&amp; ask_price &gt; order.price {
+            break;
+        }
+        if order.remaining &lt;= 0.0 { break; }
+
+        let trade_price = ask_price.0;
+
+        if let Some(level) = self.asks.get_mut(&amp;ask_price) {
+            let mut i = 0;
+            while i &lt; level.orders.len() &amp;&amp; order.remaining &gt; 0.0 {
+                let passive = &amp;mut level.orders[i];
+                let fill_qty = order.remaining.min(passive.remaining);
+
+                if fill_qty &gt; 0.0 {
+                    let trade = Trade { /* aggressor, passive, price, quantity */ };
+                    order.remaining   -= fill_qty;
+                    passive.remaining -= fill_qty;
+                    level.total_quantity -= fill_qty;
+                    trades.push(trade);
+                }
+
+                if passive.remaining &lt;= 0.0 { level.orders.remove(i); } else { i += 1; }
+            }
+        }
+    }
+    self.asks.retain(|_, level| !level.is_empty());
+}</code></pre>
+</div>
+<p class="fnote">The trade price is always the <em>passive</em> order's price — the resting order sets the terms. That is correct for a continuous double auction, and it is the detail most toy order books get wrong. Seven unit tests cover this path and all pass.</p>
+
+<h3><span class="n">6.4</span> What a real run does</h3>
+
+<div class="stats">
+  <div><div class="k">Wall clock</div><div class="v">6.93 <small>s</small></div></div>
+  <div><div class="k">Per timestep</div><div class="v">6.93 <small>ms</small></div></div>
+  <div><div class="k">Kernel, 100k agents</div><div class="v">2.49 <small>ms</small></div></div>
+  <div><div class="k">Mean spread</div><div class="v">1.00 <small>bps</small></div></div>
+  <div><div class="k">Flash crashes</div><div class="v">0</div></div>
+  <div><div class="k">Cooperation</div><div class="v">0.5001</div></div>
+  <div><div class="k">Min cooperation</div><div class="v">0.5001</div></div>
+  <div><div class="k">Realised volatility</div><div class="v">0.0000</div></div>
+</div>
+
+<p>The simulator's own summary printer describes the cooperation series as <em>"Constant value 0.5001."</em> Everything is frozen. The reason is the fixed point from Section 5.2: agents start near 0.5, so the weighted mean is 0.5, so every agent's target equals its current value, so the correction is zero. The kernel reports convergence in a single iteration for 999 of the 1,000 timesteps, and spread and volatility flatline in sympathy because order flow is driven by cooperation.</p>
+
+<div class="why">
+<span class="lbl">Why the default configuration sits exactly on the fixed point — and how to move it</span>
+<p>The machinery is sound; the defaults are on the one configuration where nothing happens. <code>cooperation_bias</code> is 0, so the target is the current mean. <code>cooperation_noise</code> is low, so agents start together and there's no gap to close. And no shock is scheduled.</p>
+<p>Three levers move it off: set a non-zero bias so the target differs from the mean; raise the initial noise so agents start dispersed and the kernel has work to do; or schedule shocks, which the CLI already exposes as <code>--shock-at</code>. The <code>shock</code> preset does the third — it is the one preset configured to produce a moving series, which strongly suggests the defaults were never run and looked at.</p>
+</div>
+
+</div>
+
+<div class="col">
+
+<!-- ==================== 7 ==================== -->
+
+<h2 class="sec" id="s7"><span class="n">Section Seven</span>Calibration: choosing gamma</h2>
+<p class="dek">Because the outcome is a step function in γ, picking γ <em>is</em> the configuration problem. This is the machinery built to pick it automatically.</p>
+
+<p>Section 4.4 measured it: below the critical γ the population collapses to universal defection, above it saturates at universal cooperation, and there is no middle. Getting γ wrong doesn't degrade the result gracefully — it inverts it. The critical point finder's own docstring calls this "THE key systematic step that must run before any simulation," which is the right emphasis.</p>
+
+<p>The algorithm is a bisection. Run the engine at the bottom of a bracket, run it at the top, confirm they land on opposite sides, then repeatedly halve.</p>
+
+</div>
+
+<div class="wide">
+<figure>
+<div class="figwrap">
+<svg viewBox="0 0 940 330" role="img" aria-label="Binary search bisecting the cooperation step function to find critical gamma, then adding a safety margin to get the recommended operating point">
+  <defs>
+    <marker id="a5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/>
+    </marker>
+  </defs>
+
+  <line x1="72" y1="32" x2="72" y2="216" stroke="currentColor" stroke-width="1.2"/>
+  <line x1="72" y1="216" x2="700" y2="216" stroke="currentColor" stroke-width="1.2"/>
+  <g font-family="ui-monospace, Menlo, monospace" font-size="11" fill="var(--ink-2)">
+    <text x="64" y="36" text-anchor="end">1.0</text>
+    <text x="64" y="128" text-anchor="end">0.5</text>
+    <text x="64" y="220" text-anchor="end">0.0</text>
+    <text x="72"  y="236" text-anchor="middle">1.00</text>
+    <text x="330" y="236" text-anchor="middle">γ_c</text>
+    <text x="700" y="236" text-anchor="middle">2.00</text>
+  </g>
+  <text x="26" y="124" text-anchor="middle" font-family="-apple-system, Helvetica, sans-serif" font-size="11.5" fill="var(--ink-3)" transform="rotate(-90 26 124)">final p</text>
+  <text x="386" y="256" text-anchor="middle" font-family="-apple-system, Helvetica, sans-serif" font-size="11.5" fill="var(--ink-3)">γ — search bracket comes from the domain config</text>
+
+  <polyline points="72,216 330,216 330,32 700,32" fill="none" stroke="var(--coop)" stroke-width="2.6"/>
+
+  <g font-family="ui-monospace, Menlo, monospace" font-size="10.5">
+    <line x1="72" y1="284" x2="700" y2="284" stroke="var(--rule-2)"/>
+    <line x1="386" y1="278" x2="386" y2="290" stroke="var(--accent)" stroke-width="1.8"/>
+    <text x="386" y="306" text-anchor="middle" fill="var(--accent)">round 0 · midpoint 1.50 → cooperates → high ← mid</text>
+    <line x1="72" y1="284" x2="386" y2="284" stroke="var(--accent)" stroke-width="2.4"/>
+    <line x1="229" y1="278" x2="229" y2="290" stroke="var(--defect)" stroke-width="1.8"/>
+    <text x="229" y="322" text-anchor="middle" fill="var(--defect)">round 1 · 1.25 → defects → low ← mid   … bracket halves until width &lt; 0.005</text>
+  </g>
+
+  <line x1="358" y1="32" x2="358" y2="216" stroke="var(--accent)" stroke-width="1.6" stroke-dasharray="4 3"/>
+  <path d="M330,58 L356,58" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#a5)" fill="none"/>
+  <g font-family="ui-monospace, Menlo, monospace" font-size="11">
+    <text x="368" y="54" fill="var(--accent)">+ margin, default 0.05</text>
+    <text x="368" y="72" fill="currentColor">recommended_gamma = γ_c + margin</text>
+    <text x="368" y="90" fill="var(--ink-2)">the value handed to every downstream run</text>
+  </g>
+
+  <rect x="736" y="32" width="196" height="184" fill="var(--raised)" stroke="currentColor"/>
+  <g font-family="ui-monospace, Menlo, monospace" font-size="11">
+    <text x="748" y="52" fill="var(--accent)" font-size="10.5">WHAT IT RETURNS</text>
+    <text x="748" y="76" fill="currentColor">gamma_critical</text>
+    <text x="748" y="93" fill="currentColor">gamma_lower / upper</text>
+    <text x="748" y="110" fill="currentColor">transition_sharpness</text>
+    <text x="748" y="127" fill="currentColor">recommended_gamma</text>
+    <text x="748" y="144" fill="currentColor">search_iterations</text>
+    <text x="748" y="161" fill="currentColor">confidence</text>
+    <text x="748" y="178" fill="currentColor">domain, config_used</text>
+    <text x="748" y="202" fill="var(--ink-2)">cached to JSON by key</text>
+  </g>
+</svg>
+</div>
+<figcaption><span class="fignum">Figure 6.</span>Bisection against the step function measured in Section 4.4. Because the target really is a step, the search is unusually well-conditioned — twenty rounds at tolerance 0.005 is far more resolution than the problem needs.</figcaption>
+</figure>
+</div>
+
+<div class="col">
+
+<div class="src">
+<div class="src-hd"><span class="path">lib/simulation/critical_point_finder.py</span><span>lines 226–281</span></div>
+<pre><code># Verify bounds
+coop_low  = self._run_simulation(low, tau, N)
+coop_high = self._run_simulation(high, tau, N)
+
+if coop_low &gt; 0.5:
+    logger.warning(f"Lower bound gamma={low} already shows cooperation. Extending search.")
+    low = max(0.5, low - 0.5)
+    coop_low = self._run_simulation(low, tau, N)
+
+if coop_high &lt; 0.5:
+    logger.warning(f"Upper bound gamma={high} still shows defection. Extending search.")
+    high = high + 0.5
+    coop_high = self._run_simulation(high, tau, N)
+
+# Binary search
+while high - low &gt; tolerance and iterations &lt; max_iterations:
+    mid = (low + high) / 2
+    coop_mid = self._run_simulation(mid, tau, N)
+
+    if coop_mid &lt; 0.5:
+        low = mid
+    else:
+        high = mid
+
+    iterations += 1
+
+gamma_critical = (low + high) / 2
+
+# Validate transition sharpness
+test_gammas = np.linspace(gamma_critical - 0.05, gamma_critical + 0.05, 11)
+test_coops = [self._run_simulation(g, tau, N) for g in test_gammas]
+
+transition_width = 0.0
+for i in range(len(test_coops) - 1):
+    if test_coops[i] &lt; 0.1 and test_coops[i+1] &gt; 0.9:
+        transition_width = test_gammas[i+1] - test_gammas[i]
+        break
+
+sharpness = 1.0 - min(1.0, transition_width / 0.1)
+recommended_gamma = gamma_critical + margin</code></pre>
+</div>
+
+<div class="why">
+<span class="lbl">Why the bounds check, and why the safety margin</span>
+<p>The bounds check is the best part of this design. Bisection silently returns garbage if both endpoints are on the same side of the boundary — it just converges to whichever endpoint, with no error. Testing both ends first, and widening once in each direction when they agree, converts a silent wrong answer into a warning and a retry.</p>
+<p>The margin exists because γ_c is estimated from finite simulations with a random seed, so the true boundary is somewhere in a small interval around it. Operating <em>at</em> γ_c means operating in the bistable regime where the outcome depends on initial conditions and could flip between runs. Sitting 0.05 above buys determinism. The cost is that you are no longer at the cheapest configuration that achieves cooperation — which for a real deployment is a sensible price.</p>
+</div>
+
+<p>Four domains ship with pre-tuned brackets and costs. Note that <code>traffic</code>'s costs are identical to <code>abstract</code> — only N and the search bracket differ — while <code>drone</code> and <code>robot</code> carry genuinely distinct cost structures.</p>
+
+<div class="tblwrap">
+<table class="data">
+<thead><tr><th>Domain</th><th class="num">N</th><th>γ bracket</th><th class="num">cA_SH</th><th class="num">cB_SH</th><th class="num">cA_PD</th><th class="num">cB_PD</th><th class="num">α</th></tr></thead>
+<tbody>
+<tr><td>abstract</td><td class="num">1,000</td><td class="m">1.0 – 2.0</td><td class="num">0.40</td><td class="num">0.10</td><td class="num">0.20</td><td class="num">0.08</td><td class="num">0.60</td></tr>
+<tr><td>traffic</td><td class="num">500</td><td class="m">1.2 – 1.8</td><td class="num">0.40</td><td class="num">0.10</td><td class="num">0.20</td><td class="num">0.08</td><td class="num">0.60</td></tr>
+<tr><td>drone</td><td class="num">100</td><td class="m">1.2 – 2.0</td><td class="num">0.35</td><td class="num">0.12</td><td class="num">0.18</td><td class="num">0.10</td><td class="num">0.50</td></tr>
+<tr><td>robot</td><td class="num">50</td><td class="m">1.1 – 1.8</td><td class="num">0.45</td><td class="num">0.08</td><td class="num">0.22</td><td class="num">0.06</td><td class="num">0.70</td></tr>
+</tbody>
+</table>
+</div>
+<p class="fnote">Results are cached to JSON keyed by <code>{domain}_tau{τ}_N{N}</code>, so a repeat calibration is free. The cache path is <em>relative</em> — it lands wherever the process working directory happens to be, which on a read-only serverless filesystem is where the write fails.</p>
+
+<!-- ==================== 8 ==================== -->
+
+<h2 class="sec" id="s8"><span class="n">Section Eight</span>The service layer</h2>
+<p class="dek">834 lines of FastAPI exposing the Python engine — single runs, batches, sweeps, benchmarks, calibration, and a WebSocket.</p>
+
+<div class="tblwrap">
+<table class="data">
+<thead><tr><th>Route</th><th class="num">Rate limit</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td class="m">GET /health</td><td class="num">—</td><td>Status, running count, uptime</td></tr>
+<tr><td class="m">GET /api/presets</td><td class="num">—</td><td>Six named configurations</td></tr>
+<tr><td class="m">POST /api/simulate</td><td class="num">100/min</td><td>One run. <code>async_mode</code> chooses inline or background execution</td></tr>
+<tr><td class="m">GET · DELETE /api/simulate/{id}</td><td class="num">—</td><td>Fetch or drop a stored result</td></tr>
+<tr><td class="m">POST /api/simulate/batch</td><td class="num">10/min</td><td>Up to 100 configs, gathered concurrently or run in sequence</td></tr>
+<tr><td class="m">POST /api/simulate/sweep</td><td class="num">10/min</td><td>Vary one of γ, τ, N, α across 2–50 values</td></tr>
+<tr><td class="m">POST /api/benchmark</td><td class="num">5/min</td><td>Timing across agent counts, plus a hard-coded comparison table</td></tr>
+<tr><td class="m">POST /api/calibrate</td><td class="num">10/min</td><td>Critical point discovery for one domain</td></tr>
+<tr><td class="m">GET /api/calibrate/recommended/{domain}</td><td class="num">—</td><td>Just the γ number</td></tr>
+<tr><td class="m">POST /api/calibrate/all</td><td class="num">5/min</td><td>abstract, traffic and drone in one call</td></tr>
+<tr><td class="m">GET /api/stats</td><td class="num">—</td><td>Aggregate counts and mean runtime</td></tr>
+<tr><td class="m">POST · GET /api/projects</td><td class="num">100/min</td><td>Grouping container; owner hard-coded to <code>"anonymous"</code></td></tr>
+<tr><td class="m">WS /ws</td><td class="num">—</td><td>Broadcasts completion and failure events</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>The executor is straightforward: mark the record running, build the simulator, call <code>run()</code>, extract the final state and the convergence history, mark it complete, and broadcast on the socket. Errors are caught, recorded as <code>failed</code> with the message, and broadcast too — so a failing simulation doesn't take down a request.</p>
+
+<div class="why">
+<span class="lbl">Why the three shortcuts here are worth knowing about</span>
+<p><strong>The blocking call.</strong> <code>simulator.run()</code> is synchronous CPU work — measured at 0.91 s for N = 100,000, and the API accepts N up to ten million. It is awaited inside a coroutine with no thread-pool hand-off, so it holds the event loop for its entire duration and stalls every other request on that worker. The fix is <code>await asyncio.to_thread(simulator.run)</code>, one line. This is the single highest-impact defect in the service.</p>
+<p><strong>The in-memory stores.</strong> <code>simulations_db</code>, <code>projects_db</code> and <code>rate_limit_db</code> are module-level dictionaries. Not shared across the four uvicorn workers the Dockerfile starts, not persisted across restarts. A client can POST a simulation, get an ID back, and receive a 404 on the follow-up GET because the request landed on a different worker. The code comments say "Use Redis/PostgreSQL in production" and the compose file already provisions Redis — the wiring was just never done.</p>
+<p><strong>The rate limiter follows the same fate.</strong> Per-worker dictionaries mean the effective limit is four times the configured one, and it resets on deploy.</p>
+<p>All three are the same shape of decision: a correct single-process implementation shipped with a note describing the multi-process fix, and the fix not yet applied. That's a reasonable way to move fast; it stops being reasonable once the thing is deployed behind <code>--workers 4</code>, which it is.</p>
+</div>
+
+<!-- ==================== 9 ==================== -->
+
+<h2 class="sec" id="s9"><span class="n">Section Nine</span>The client surfaces</h2>
+<p class="dek">Two web applications, two browser engines, and an SDK that doesn't contain the algorithm.</p>
+
+<h3><span class="n">9.1</span> The web application</h3>
+
+<p>Nine Next.js routes. The landing page is results-first — stress test, strategy comparison, τ sweep, an embedded live simulator, a scaling proof. <code>/simulator</code> is the full control surface with presets, live metrics, a network view and JSON export. <code>/traffic</code> and <code>/robotics</code> are control panels for the domain bridges and need a running TraCI or rosbridge to do anything. <code>/docs</code> is 565 lines of mathematical exposition.</p>
+
+<p>The notable architectural decision is that simulations run <em>in the browser</em>, not on a server.</p>
+
+<div class="why">
+<span class="lbl">Why run the engine client-side</span>
+<p>A public demo that computes server-side needs capacity planning, a queue, per-visitor rate limits, and a cold-start story — and every visitor costs money. A demo that computes in the visitor's own browser has none of those. It also means the interactive simulator can animate at frame rate, stepping and redrawing continuously, which a network round trip per step could never do.</p>
+<p>The cost is that you now need the algorithm compiled for the browser, and a fallback for when that fails — which is where the third and fourth implementations came from, and where the model divergence of Section 3.4 crept in.</p>
+</div>
+
+<div class="src">
+<div class="src-hd"><span class="path">lib/simulation/index.ts</span><span>lines 45–58 — the selection</span></div>
+<pre><code>export class BTUTUnifiedSimulator {
+  private simulator: TypeScriptSimulator | BTUTWasmSimulator;
+  private usingWasm: boolean;
+
+  constructor(config: SimulationConfig) {
+    this.usingWasm = isWasmAvailable();
+
+    if (this.usingWasm) {
+      console.log('Using WASM implementation');
+      this.simulator = new BTUTWasmSimulator(config);
+    } else {
+      console.log('Using TypeScript implementation');
+      this.simulator = new TypeScriptSimulator(config);
+    }
+  }</code></pre>
+</div>
+<p class="fnote">Both are wrapped behind one <code>step()</code> / <code>run()</code> / <code>reset()</code> interface, so callers can't tell which model they got. The page does surface a badge — "Rust/WASM Accelerated" or "TypeScript Engine" — but as a performance note, not a model note.</p>
+
+<h3><span class="n">9.2</span> There are two web applications</h3>
+
+<p>The root <code>app/</code> tree is the nine-route application described above, and it is what <code>npm run build</code> compiles. A second, smaller Next.js app lives in <code>frontend/src/app/</code> with its own package.json, tsconfig and lockfile — a single landing page with Hero, StatCard, PriceChart, CooperationChart and AgentDistribution components, built for the market simulator of Sections 5 and 6.</p>
+
+<p><code>vercel.json</code> routes production traffic to the second one, while <code>.vercelignore</code> excludes the Python API that the same file lists as a build target. Section 12 has the details.</p>
+
+<h3><span class="n">9.3</span> The Python SDK is a client</h3>
+
+<p>Worth stating plainly, because the README's quick-start implies otherwise: <code>python-sdk/btut</code> imports <code>requests</code> and posts to the API. It contains no copy of the algorithm. <code>pip install btut-sdk</code> followed by <code>Simulator(agents=100000).run()</code> needs a reachable API host. The ROS node and the AWS Lambda handler both import this SDK, so both inherit the same dependency.</p>
+
+<!-- ==================== 10 ==================== -->
+
+<h2 class="sec" id="s10"><span class="n">Section Ten</span>The domain bridges</h2>
+<p class="dek">Traffic, drones and robots. This is where the mean-field model meets physical space — and where, quietly, it becomes a better model.</p>
+
+<p>The abstract engine has no geometry. Real vehicles and drones do. The bridges solve this by computing <em>degree</em> from actual spatial proximity: a vehicle's degree is the number of other vehicles within a 50-metre communication radius; a drone's is the number of drones within its 3-D communication range. Hubs are no longer a statistical fiction — they are the cars sitting in the middle of a busy intersection.</p>
+
+<div class="src">
+<div class="src-hd"><span class="path">integrations/sumo/btut_sumo_bridge.py</span><span>strategy update, spatial variant</span></div>
+<pre><code>for vid, vehicle in vehicles.items():
+    w = weights.get(vid, 0.01)
+    k = vehicle.degree
+
+    # Weighted utility comparison
+    agent_U_A = EU_A * w * (k + 1)  # +1 to avoid zero
+    agent_U_B = EU_B * w * (k + 1)
+
+    if agent_U_A &gt; agent_U_B:
+        strategies[vid] = "A"
+        weighted_A += w
+    else:
+        strategies[vid] = "B"
+
+    total_weight += w
+
+new_p = weighted_A / total_weight if total_weight &gt; 0 else 0.5
+smoothed_p = 0.5 * p_current + 0.5 * new_p</code></pre>
+</div>
+
+<div class="why">
+<span class="lbl">Why the bridges are more than a wrapper — and where they inherit the same flaw</span>
+<p>The genuine contribution here is that <code>degree</code> becomes a measured quantity. In the abstract engine it is drawn from a distribution and is pure fiction; in the SUMO bridge it is recomputed every step from real positions, so it changes as traffic flows, congestion forms, and vehicles cluster at intersections. The weights <code>(k/k_max)^τ</code> then vary over time in a way that tracks the actual road network. That is a real model, and it is what the validation experiments in <code>integrations/sumo/</code> are exercising.</p>
+<p>But look at the comparison: <code>EU_A · w · (k+1)</code> against <code>EU_B · w · (k+1)</code>. The same positive factor on both sides. <mark>The spatial bridge reproduces the cancellation of Section 4.1 exactly</mark> — the carefully measured degrees are computed, multiplied in, and divided back out. The drone swarm core has the same shape.</p>
+<p>This is the strongest argument for fixing the update rule. The bridges did the hard part: they made degree mean something physical. One change to how that number enters the decision would make all three domains genuinely spatial.</p>
+</div>
+
+<!-- ==================== 11 ==================== -->
+
+<h2 class="sec" id="s11"><span class="n">Section Eleven</span>Deployment and verification</h2>
+<p class="dek">Four deployment targets, and what is actually tested.</p>
+
+<div class="tblwrap">
+<table class="data">
+<thead><tr><th>Target</th><th>Config</th><th>What it runs</th></tr></thead>
+<tbody>
+<tr><td>Docker Compose</td><td class="m">docker-compose.yml</td><td>Backend, frontend, Redis, nginx — all four with health checks. The most complete definition.</td></tr>
+<tr><td>Fly.io</td><td class="m">fly.toml</td><td>API only. 2 GB / 2 CPU, autostop, HTTP health check on <code>/health</code>.</td></tr>
+<tr><td>Vercel</td><td class="m">vercel.json</td><td>The <code>frontend/</code> app plus the Python API as a serverless function — see Section 12.</td></tr>
+<tr><td>AWS Lambda</td><td class="m">lambda/handler.py</td><td>A thin handler that parses the event body and calls the SDK.</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>On verification: the Rust market simulator is well covered. <strong>36 tests, all passing</strong> on this checkout — kernel initialisation, convergence, shock application, cooperation by type, large scale, seven order-book tests including matching and cancellation, crash detection, the regeneration score, CSV export, RNG reproducibility and forking, the synthetic generator, config validation and TOML round-tripping, plus four simulation-level tests including the baseline comparison.</p>
+
+<p>The Python side has 66 test functions across unit, integration and end-to-end files. What no test covers is the thing that matters most: <mark>nothing asserts that the Python, TypeScript and Rust engines produce the same output for the same seed.</mark> That single test would have caught the divergence in Section 3.4 the day it appeared.</p>
+
+<!-- ==================== 12 ==================== -->
+
+<h2 class="sec" id="s12"><span class="n">Section Twelve</span>Everything that is wrong or unfinished</h2>
+<p class="dek">The complete list, with evidence, ordered by consequence.</p>
+
+<div class="tblwrap">
+<table class="data">
+<thead><tr><th style="width:34px"></th><th>Finding</th><th>Where</th><th>Consequence</th></tr></thead>
+<tbody>
+<tr><td class="num">1</td><td>The per-agent factor cancels from both sides of the strategy comparison, so all N agents make one identical decision</td><td class="m">btut_engine.py:181<br>rust-engine/lib.rs:239</td><td>Heterogeneity, τ, and the degree distribution have no effect on the deterministic engines. Measured in §4.2.</td></tr>
+<tr><td class="num">2</td><td>The same cancellation is reproduced in the SUMO and drone bridges</td><td class="m">btut_sumo_bridge.py<br>btut_swarm_core.py</td><td>Carefully measured spatial degrees are computed and then have no influence.</td></tr>
+<tr><td class="num">3</td><td>TypeScript uses logistic switching where Python and Rust use argmax; TypeScript also has no momentum</td><td class="m">btut-engine.ts:154–178</td><td>The browser silently runs a different model when WASM fails to load.</td></tr>
+<tr><td class="num">4</td><td>Blocking CPU work awaited on the event loop</td><td class="m">api/main.py:227</td><td>One large simulation stalls every concurrent request on that worker.</td></tr>
+<tr><td class="num">5</td><td>All state is in module-level dicts</td><td class="m">api/main.py:63–65</td><td>Results are invisible across workers and lost on restart; rate limits are per-worker.</td></tr>
+<tr><td class="num">6</td><td>Market kernel defaults sit exactly on the fixed point</td><td class="m">config.rs defaults</td><td>A 1,000-timestep run produces a completely static market. Measured in §6.4.</td></tr>
+<tr><td class="num">7</td><td><code>.vercelignore</code> excludes <code>api/</code> and <code>**/*.py</code>, which <code>vercel.json</code> lists as a build source</td><td class="m">.vercelignore<br>vercel.json</td><td>The serverless API cannot be built from that configuration.</td></tr>
+<tr><td class="num">8</td><td>Two Next.js applications; the root one is built by npm, the <code>frontend/</code> one is routed by Vercel</td><td class="m">package.json<br>vercel.json</td><td>Local development and production serve different applications.</td></tr>
+<tr><td class="num">9</td><td>The market simulator is unreachable from any product surface</td><td class="m">btut_market_simulator/</td><td>5,264 lines of the best code here, available only via its own CLI.</td></tr>
+<tr><td class="num">10</td><td>Order flow is capped at 1,000 orders per timestep</td><td class="m">simulation.rs:399</td><td>Past ~3,000 agents the order book stops scaling with N. Documented in-code.</td></tr>
+<tr><td class="num">11</td><td>No cross-implementation equivalence test</td><td class="m">tests/</td><td>The three engines can drift apart indefinitely without failing anything.</td></tr>
+<tr><td class="num">12</td><td>Calibration cache writes to a relative path</td><td class="m">critical_point_finder.py:383</td><td>Fails on read-only or ephemeral filesystems; lands unpredictably otherwise.</td></tr>
+<tr><td class="num">13</td><td>Dead and unused code: <code>kernelWeight()</code> never called (and uses the opposite exponent sign), <code>Agent.neighbors</code> never populated, <code>callback_url</code> accepted and ignored, <code>gamma_history</code> accumulated and discarded, <code>FlashCrash.duration</code> destructured to <code>_</code></td><td class="m">five files</td><td>Individually harmless; collectively they suggest features that were started and abandoned.</td></tr>
+<tr><td class="num">14</td><td>TypeScript convergence window is 100 samples where Python's is 5</td><td class="m">btut-engine.ts:55</td><td>The browser engine can rarely evaluate convergence at all.</td></tr>
+<tr><td class="num">15</td><td>Seventeen root-level markdown files with overlapping and contradictory deployment instructions</td><td class="m">repository root</td><td>No single source of truth for how to run or deploy the system.</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- ==================== 13 ==================== -->
+
+<h2 class="sec" id="s13"><span class="n">Section Thirteen</span>What to do next</h2>
+<p class="dek">An ordered plan. Cheapest and highest-value first.</p>
+
+<h3><span class="n">13.1</span> First, make the claims true</h3>
+
+<p>These four changes are small and they change what the system <em>is</em>, not just how it runs.</p>
+
+<ol class="body">
+<li><strong>Fix the update rule.</strong> Replace the symmetric comparison in <code>_update_strategies</code> with the logistic form already written in the TypeScript port: <code>P(switch) = 1/(1 + exp(−γ·wᵢ·Δu))</code>. This restores per-agent heterogeneity, makes τ meaningful, keeps O(N), keeps the phase transition, and changes no public interface. Apply the identical change in the Rust WASM engine and both domain bridges.</li>
+<li><strong>Add one equivalence test.</strong> Run all three engines on the same seed and assert the trajectories agree within tolerance. This is the test whose absence allowed every divergence in Section 12 to happen.</li>
+<li><strong>Move the blocking call off the event loop.</strong> <code>await asyncio.to_thread(simulator.run)</code>. One line.</li>
+<li><strong>Re-baseline the phase transition after the fix.</strong> With heterogeneous agents the transition should become a sigmoid rather than a step, and the calibrator's <code>transition_sharpness</code> metric will start reporting something informative instead of always maximal.</li>
+</ol>
+
+<h3><span class="n">13.2</span> Second, make the market simulator move</h3>
+
+<p>The kernel, order book and metrics are all sound and tested. The default configuration is the problem. Set a non-zero <code>cooperation_bias</code>, raise <code>cooperation_noise</code> so agents start dispersed, and make the shipped default preset one that produces a moving series — the <code>shock</code> preset already does. Then raise the kernel decay λ, because at 0.1 the four trader classes adapt at within 10% of each other and the class distinctions the code carefully models never show up in the output.</p>
+
+<h3><span class="n">13.3</span> Third, connect what already exists</h3>
+
+<p>The market simulator is the most sophisticated thing in this repository and nothing can reach it. Two routes on the existing FastAPI service — one to run a market scenario, one to fetch its metrics — would put 5,264 lines of working, tested code in front of users. The <code>frontend/</code> application was evidently built for exactly this and is currently serving a static page.</p>
+
+<h3><span class="n">13.4</span> Fourth, tidy the operational story</h3>
+
+<ol class="body">
+<li>Resolve the Vercel contradiction: decide whether the Python API deploys there, and make <code>vercel.json</code> and <code>.vercelignore</code> agree.</li>
+<li>Pick one of the two Next.js applications and delete or clearly scope the other.</li>
+<li>Wire the Redis that compose already provisions into the simulation store and rate limiter, or run a single worker and say so.</li>
+<li>Collapse seventeen root markdown files into one README, one DEPLOYMENT, and an archive directory.</li>
+</ol>
+
+<hr class="br">
+
+<p style="color:var(--ink-2); font-size:17px;">Nothing in Sections 12 and 13 changes the assessment that the underlying idea is sound and the engineering is often good. The mean-field substitution is a legitimate answer to a real complexity problem; the O(N) scaling claim measures out correctly; the order book is properly implemented; the calibrator's bounds check shows real care. The gap is between what the code was designed to do and what one symmetric multiplication currently lets it do — and that gap is a few lines wide.</p>
+
+</div>
+</div>
