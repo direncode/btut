@@ -6,51 +6,23 @@
    Single column, serif, read front to back.
    ============================================================ */
 
+/* Committed single light theme — soft paper white, never pure #FFF on pure
+   #000. Renders identically whatever theme the viewer is in, so every colour
+   below is stated explicitly rather than inherited. */
+
 :root {
-  --ground:  #FBFBF8;
-  --raised:  #F3F3EE;
-  --ink:     #1B1B19;
-  --ink-2:   #5F625B;
-  --ink-3:   #8A8D85;
-  --rule:    #E1E1D8;
-  --rule-2:  #C8C9BE;
+  --ground:  #F8F8F4;  /* soft paper, not glare white */
+  --raised:  #F0F0E9;
+  --ink:     #262722;  /* soft near-black — 13.7:1 on ground, not 21:1 */
+  --ink-2:   #575A51;
+  --ink-3:   #6E7167;
+  --rule:    #E3E3DA;
+  --rule-2:  #CBCCC1;
   --accent:  #1F4E6B;
-  --accent-2:#EDF1F3;
+  --accent-2:#EBF0F3;
   --coop:    #0B6257;
-  --defect:  #99361A;
-  --mark:    #FBF0D8;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --ground:  #15171A;
-    --raised:  #1D2024;
-    --ink:     #E3E4DF;
-    --ink-2:   #9DA199;
-    --ink-3:   #767A72;
-    --rule:    #292C31;
-    --rule-2:  #3A3E44;
-    --accent:  #85B8D6;
-    --accent-2:#1B2A33;
-    --coop:    #3ACFBA;
-    --defect:  #F0805A;
-    --mark:    #33290F;
-  }
-}
-
-:root[data-theme="dark"] {
-  --ground:  #15171A;
-  --raised:  #1D2024;
-  --ink:     #E3E4DF;
-  --ink-2:   #9DA199;
-  --ink-3:   #767A72;
-  --rule:    #292C31;
-  --rule-2:  #3A3E44;
-  --accent:  #85B8D6;
-  --accent-2:#1B2A33;
-  --coop:    #3ACFBA;
-  --defect:  #F0805A;
-  --mark:    #33290F;
+  --defect:  #92331A;
+  --mark:    #FAF0D6;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -276,6 +248,58 @@ hr.br { border: none; border-top: 1px solid var(--rule); margin: 44px auto; widt
   .title { padding-top: 54px; }
 }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+/* ---------- print / PDF ---------- */
+
+@page { size: letter; margin: 17mm 15mm 15mm 15mm; }
+
+@media print {
+  html, body {
+    background: #FFFFFF;
+    font-size: 10.8pt;
+    line-height: 1.6;
+  }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  /* Hold the reading measure near 70 characters. Figures and wide tables
+     still run the full text block to the right. */
+  .page { max-width: none; padding: 0; }
+  .col  { max-width: 136mm; margin: 0; }
+  .wide { max-width: none; }
+
+  .title { padding-top: 0; }
+  .title h1 { font-size: 30pt; }
+  .title .standfirst { font-size: 12.5pt; }
+
+  /* each numbered section opens a fresh page */
+  h2.sec { break-before: page; page-break-before: always; margin-top: 0; font-size: 19pt; }
+  h3, h4 { break-after: avoid; page-break-after: avoid; }
+
+  /* never split these across a page boundary */
+  figure, .src, .why, .tblwrap, blockquote.key, .stats {
+    break-inside: avoid; page-break-inside: avoid;
+  }
+  tr, li, p { break-inside: avoid; page-break-inside: avoid; orphans: 3; widows: 3; }
+
+  /* Code listings and data tables run the full 186mm text block rather than
+     the narrower prose measure. Without this they overflow .col and Chromium
+     bakes a clipped scrollbar into the page. */
+  .src, .tblwrap { width: 186mm; max-width: 186mm; overflow: visible; }
+  .src pre {
+    font-size: 7.2pt;      /* longest listing is 118 chars ≈ 180mm at this size */
+    line-height: 1.5;
+    overflow: visible;
+    white-space: pre-wrap; /* safety net; should not trigger */
+  }
+  table.data { width: 100%; font-size: 9pt; }
+  table.data td.m, table.data .num { font-size: 8.4pt; }
+  figcaption { font-size: 8.8pt; }
+  .fnote { font-size: 8.8pt; }
+  .why { font-size: 10.2pt; }
+
+  figure svg { max-height: 195mm; }
+  a { text-decoration: none; }
+}
 </style>
 
 <div class="page">
@@ -431,7 +455,7 @@ hr.br { border: none; border-top: 1px solid var(--rule); margin: 44px auto; widt
   <text x="700" y="200" font-size="10.5" font-family="ui-monospace, monospace" fill="var(--ink-2)">POST /api/simulate</text>
 
   <path d="M656,116 L656,166 L920,166 L920,306" fill="none" stroke="var(--defect)" stroke-width="1.3" stroke-dasharray="5 3" marker-end="url(#a1)"/>
-  <text x="668" y="161" font-size="10.5" font-family="ui-monospace, monospace" fill="var(--defect)">reachable only from its own CLI — nothing else calls it</text>
+  <text x="668" y="161" font-size="10.5" font-family="ui-monospace, monospace" fill="var(--defect)">reachable only from its own CLI</text>
 
   <g font-family="ui-monospace, Menlo, monospace" font-size="11.5">
     <rect x="8" y="360" width="212" height="80" fill="none" stroke="currentColor"/>
@@ -455,7 +479,7 @@ hr.br { border: none; border-top: 1px solid var(--rule); margin: 44px auto; widt
     <rect x="692" y="360" width="300" height="80" fill="none" stroke="var(--defect)"/>
     <text x="704" y="380" fill="var(--defect)" font-size="10.5">FINANCIAL MARKET</text>
     <text x="704" y="398" fill="currentColor">btut_market_simulator/ — 5,264 lines</text>
-    <text x="704" y="414" fill="var(--ink-2)" font-size="10">limit order book, 4 trader classes, crash detection</text>
+    <text x="704" y="414" fill="var(--ink-2)" font-size="10">order book, 4 trader classes, crash detection</text>
     <text x="704" y="430" fill="var(--ink-2)" font-size="10">distance = proximity to the book</text>
   </g>
 
@@ -606,7 +630,7 @@ hr.br { border: none; border-top: 1px solid var(--rule); margin: 44px auto; widt
   <path d="M738,115 L758,115" stroke="currentColor" stroke-width="1.3" marker-end="url(#a2)" fill="none"/>
 
   <path d="M857,154 L857,196 L433,196 L433,154" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#a2b)"/>
-  <text x="560" y="214" font-family="ui-monospace, monospace" font-size="11" fill="var(--accent)">p fed back — this single edge is the entire channel between agents</text>
+  <text x="560" y="214" font-family="ui-monospace, monospace" font-size="11" fill="var(--accent)">p fed back — the entire channel between agents</text>
 
   <path d="M905,154 L905,236" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="3 3" marker-end="url(#a2)"/>
   <text x="905" y="252" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="var(--ink-2)">converged → return</text>
@@ -1221,7 +1245,8 @@ so:  sᵢ  ←  sᵢ  +  (1 − momentum) · Kᵢ · (mean + bias − sᵢ) / te
 
   <rect x="8" y="282" width="944" height="56" fill="none" stroke="var(--rule-2)" stroke-dasharray="4 3"/>
   <text x="20" y="302" font-family="-apple-system, Helvetica, sans-serif" font-size="11" letter-spacing="1.2" fill="var(--ink-3)">BEFORE THE LOOP — warm-up, no metrics collected</text>
-  <text x="20" y="322" font-family="ui-monospace, monospace" font-size="11.5" fill="currentColor">kernel.update_cycle → generator.update_price → ten random orders around the mid. Lets the kernel settle and the book acquire depth before measurement starts.</text>
+  <text x="20" y="318" font-family="ui-monospace, monospace" font-size="11.5" fill="currentColor">kernel.update_cycle → generator.update_price → ten random orders around the mid.</text>
+  <text x="20" y="333" font-family="ui-monospace, monospace" font-size="11" fill="var(--ink-2)">Lets the kernel settle and the book acquire depth before measurement starts.</text>
 
   <rect x="8" y="352" width="944" height="56" fill="var(--accent-2)" stroke="var(--accent)"/>
   <text x="20" y="372" font-family="-apple-system, Helvetica, sans-serif" font-size="11" letter-spacing="1.2" fill="var(--accent)">MEASURED — 100,000 agents × 1,000 timesteps, release build, this container</text>
